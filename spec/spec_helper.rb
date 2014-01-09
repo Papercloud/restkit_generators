@@ -11,6 +11,7 @@ require "generator_spec"
 Rails.backtrace_cleaner.remove_silencers!
 
 # Load generators
+require "active_model_serializers"
 Dir["./lib/generators/**/*.rb"].each { |f| require f }
 
 # Load support files

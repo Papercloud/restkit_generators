@@ -1,0 +1,18 @@
+#import "<%= filename %>.h"
+
+@implementation RKManagedObject (<%= category_name %>)
+
++ (RKObjectMapping *)<%= category_name.camelize(:lower) %>
+{
+  RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[<%= serializer.model_class.name %> class]];
+  [mapping addAttributeMappingsFromDictionary:
+  @{
+<%= serializer.schema[:attributes].keys.map{|atr| 
+"   @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }.join(",\n")
+%>
+  }];
+  
+  return paginationMapping;
+}
+
+@end
