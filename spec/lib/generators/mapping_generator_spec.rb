@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe RestkitGenerators::MappingGenerator do
 
-  destination File.expand_path(MyEngine::Engine.root + "/tmp", __FILE__)
+  destination File.join(RestkitGenerators::Engine.root, 'tmp')
   arguments %w( Post )
 
   before(:all) do
