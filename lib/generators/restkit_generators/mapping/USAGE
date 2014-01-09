@@ -1,0 +1,9 @@
+Description:
+    Create a notification, from which you can customise copy and aggregation settings.
+
+Example:
+    rails generate restkit:mapping Post
+
+    This will create:
+        tmp/restkit_generators/RKManagedObject+PostSerializerMapping.h
+        tmp/restkit_generators/RKManagedObject+PostSerializerMapping.m
