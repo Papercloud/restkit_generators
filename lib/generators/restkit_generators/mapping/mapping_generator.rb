@@ -3,14 +3,14 @@ module RestkitGenerators
     source_root File.expand_path('../templates', __FILE__)
 
     def generate_mapping_protocol
-      template "interface.h.erb",       "tmp/restkit_generators/#{filename}.h"
-      template "implementation.m.erb",  "tmp/restkit_generators/#{filename}.m"
+      template "interface.h.erb",       "gen/#{filename}.h"
+      template "implementation.m.erb",  "gen/#{filename}.m"
     end
 
     private
 
     def filename
-      "RKManagedObject+" + category_name
+      "RKObjectMapping+" + category_name
     end
 
     def category_name
@@ -30,7 +30,15 @@ module RestkitGenerators
     end
 
     def ios_attr_name(attr_name)
-      { "id" => "primaryKey" }[attr_name.to_s] ||= attr_name.to_s.camelize(:lower)
+      { "id" => id_name }[attr_name.to_s] ||= attr_name.to_s.camelize(:lower)
+    end
+
+    def ios_class_name(name)
+      name.to_s.camelize
+    end
+
+    def id_name
+      "primaryKey"
     end
 
   end

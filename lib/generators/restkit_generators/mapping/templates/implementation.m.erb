@@ -1,18 +1,52 @@
 #import "<%= filename %>.h"
 
-@implementation RKManagedObject (<%= category_name %>)
+@implementation RKObjectMapping (<%= category_name %>)
 
 + (RKObjectMapping *)<%= category_name.camelize(:lower) %>
 {
-  RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[<%= serializer.model_class.name %> class]];
+  RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
+  RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"<%= ios_class_name(serializer.model_class.name) %>"
+                                                 inManagedObjectStore:managedObjectStore];
+  mapping.identificationAttributes = @[@"primaryKey"];
+
+  // Plain attributes
   [mapping addAttributeMappingsFromDictionary:
   @{
 <%= serializer.schema[:attributes].keys.map{|atr| 
 "   @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }.join(",\n")
 %>
   }];
+
+<% serializer.schema[:associations].each do |k,v| %>
+<% if v.keys.first == :has_many || v.keys.first == :has_and_belongs_to_many %>
+
+  // Has Many <%= ios_class_name(k).pluralize %> 
+  [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"<%= k %>"
+                                                                          toKeyPath:@"<%= ios_attr_name(k) %>"
+                                                                        withMapping:[<%= ios_class_name(k) %> mapping]]];
+  NSRelationshipDescription *<%= ios_attr_name(k) %>Relationship =
+  [[mapping.entity relationshipsByName] valueForKey:@"<%= ios_attr_name(k) %>"];
+
+  RKConnectionDescription *<%= ios_attr_name(k) %>Connection =
+  [[RKConnectionDescription alloc] initWithRelationship:<%= ios_attr_name(k) %>Relationship
+                                             attributes:@{ @"<%= ios_attr_name(k) %>" : @"<%= id_name %>" }];
+  [mapping addConnection:<%= ios_attr_name(k) %>Connection];
+
+<% elsif v.keys.first == :belongs_to %>
+
+  // Has One <%= ios_class_name(k) %>
+  NSRelationshipDescription *<%= ios_attr_name(k) %>Relationship =
+  [[mapping.entity relationshipsByName] valueForKey:@"<%= ios_attr_name(k) %>"];
   
-  return paginationMapping;
+  RKConnectionDescription *<%= ios_attr_name(k) %>Connection =
+  [[RKConnectionDescription alloc] initWithRelationship:<%= ios_attr_name(k) %>Relationship
+                                             attributes:@{ @"<%= k %>_id" : @"<%= id_name %>" }];
+  [mapping addConnection:<%= ios_attr_name(k) %>Connection];
+
+<% end %>
+<% end %>
+
+  return mapping;
 }
 
 @end

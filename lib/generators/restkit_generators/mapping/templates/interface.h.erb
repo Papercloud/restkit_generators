@@ -1,6 +1,7 @@
-#import "PCDefaults.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/CoreData.h>
 
-@interface RKManagedObject (<%= category_name %>)
+@interface RKObjectMapping (<%= category_name %>)
 
 + (RKObjectMapping *)<%= category_name.camelize(:lower) %>;
 

@@ -1,0 +1,11 @@
+platform :ios, '6.1'
+
+inhibit_all_warnings!
+
+pod 'Generated', :path => './'
+pod 'RestKit'
+
+target 'DummyTests', :exclusive => true do
+  pod 'KIF', '~> 2.0'
+  pod 'OCMock', '~> 2.2'
+end
