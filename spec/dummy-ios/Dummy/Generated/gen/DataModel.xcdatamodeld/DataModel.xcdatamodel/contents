@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13A603" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+        <entity name="Post" representedClassName="Post" syncable="YES">
+      <attribute name="primaryKey" optional="YES" attributeType="Integer 32" syncable="YES"/>
+      <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+      <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+      <attribute name="views" optional="YES" attributeType="Integer 32" syncable="YES"/>
+      <attribute name="userId" optional="YES" attributeType="Integer 32" syncable="YES"/>
+      <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comments" syncable="YES"/>  
+      <relationship name="user" optional="YES"  deletionRule="Nullify" destinationEntity="User" syncable="YES"/>  
+      <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tags" syncable="YES"/>  
+    </entity>
+<elements>
+    <element name="Post" positionX="0" positionY="0" width="0" height="0"/>
+</elements>
+</model>
