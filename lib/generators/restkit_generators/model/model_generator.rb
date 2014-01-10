@@ -4,12 +4,33 @@ module RestkitGenerators
 
     class_option :include_timestamps, type: :boolean, default: false
 
-    def generate_mapping_protocol
+    def generate_model_classes
       template "interface.h.erb",       "gen/#{filename}.h"
       template "implementation.m.erb",  "gen/#{filename}.m"
     end
 
+    def generate_shared_header_inclusion
+      create_file "gen/Generated.h", skip: true
+      append_file "gen/Generated.h", "#include \"#{overwrite_filename}.h\""
+    end
+
     private
+
+    def user_overwritten?
+      ios_includes_file? "#{overwrite_filename}.h"
+    end
+
+    def overwrite_filename
+      model_name
+    end
+
+    def ios_includes_file?(filename)
+      # TODO: This will need to be a setting. Maybe a dotfile that isn't checked in to source control.
+      ios_project_root = File.join(RestkitGenerators::Engine.root, "spec/dummy-ios/Dummy")
+      raise "Couldn't find iOS project at #{ios_project_root}" unless File.directory? ios_project_root
+
+      return Dir.glob("./**/#{filename}").length > 0
+    end
 
     def filename
       "_#{model_name}"
