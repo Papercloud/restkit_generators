@@ -1,5 +1,5 @@
 module RestkitGenerators
-  class MappingGenerator < Rails::Generators::NamedBase
+  class MappingGenerator < IosGenerator
     source_root File.expand_path('../templates', __FILE__)
 
     def generate_mapping_protocol

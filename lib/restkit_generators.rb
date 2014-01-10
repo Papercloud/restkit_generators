@@ -1,5 +1,5 @@
 require "restkit_generators/engine"
-require "generators/restkit_generators/ios_generator"
+require "restkit_generators/railtie"
 
 module RestkitGenerators
 end
