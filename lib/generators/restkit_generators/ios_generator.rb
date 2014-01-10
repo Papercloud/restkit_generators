@@ -33,7 +33,7 @@ module RestkitGenerators
     end
 
     def ios_class_name(name)
-      name.to_s.camelize
+      name.to_s.singularize.camelize
     end
 
   end

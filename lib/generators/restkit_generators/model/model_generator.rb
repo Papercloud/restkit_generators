@@ -11,12 +11,12 @@ module RestkitGenerators
 
     def generate_shared_header_inclusion
       create_file destination_path("Generated.h"), skip: true
-      append_file destination_path("Generated.h"), "#include \"#{overwrite_filename}.h\""
+      append_file destination_path("Generated.h"), "@class #{overwrite_filename};\n"
     end
 
     def generate_core_data_schema
-      empty_directory destination_path("DataModel.xcdatamodeld")
-      empty_directory destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel")
+      empty_directory destination_path("DataModel.xcdatamodeld"), skip: true
+      empty_directory destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel"), skip: true
       template "core_data.xcdatamodeld.erb", destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents"), skip: true
       
       # Inject entity
@@ -36,6 +36,7 @@ module RestkitGenerators
       type = {
         "integer" => "Integer 32",
         "string" => "String",
+        "text" => "String",
         "date" => "Date"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type
@@ -68,10 +69,29 @@ module RestkitGenerators
       model.reflect_on_all_associations
     end
 
+    def has_many_associations
+      associations.select{|a| macro_to_many?(a.macro) }
+    end
+
+    def belongs_to_associations
+      associations.select{|a| not macro_to_many?(a.macro) }
+    end
+
+    def inverse_of(association)
+      explicit_inverse = association.options[:inverse_of]
+      associated_class = association.class_name.constantize 
+      if explicit_inverse
+        associated_class.reflect_on_assocation(explicit_inverse)
+      else
+        associated_class.reflect_on_association(association.active_record.name.underscore.to_sym) || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.to_sym)
+      end
+    end
+
     def ios_type(ruby_type)
       type = {
         "integer" => "NSNumber *",
         "string" => "NSString *",
+        "text" => "NSString *",
         "date" => "NSDate *",
         "datetime" => "NSDate *"
       }[ruby_type.to_s]

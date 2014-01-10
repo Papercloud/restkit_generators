@@ -2,7 +2,10 @@
 <% columns.each do |column| -%>
   <attribute name="<%= ios_attr_name(column.name) %>" optional="YES" attributeType="<%= core_data_type(column.type) %>" syncable="YES"/>
 <% end -%>
-<% associations.each do |ass| -%>
-  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" <% if macro_to_many?(ass.macro) %>toMany="YES"<% end %> deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.name) %>" syncable="YES"/>  
+<% has_many_associations.each do |ass| -%>
+  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.name) %>" syncable="YES" inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.name) %>"/>  
+<% end -%>
+<% belongs_to_associations.each do |ass| -%>
+  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.name) %>" syncable="YES"/>  
 <% end -%>
 </entity>

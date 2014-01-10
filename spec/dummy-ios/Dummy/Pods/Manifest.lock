@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
-  Generated: 73c925edc41da2c6c7f66f43ce19b48772ba34b6
+  Generated: e7510aa19373135d761d89cef1abf1046b64d075
   ISO8601DateFormatterValueTransformer: d0af1f50a9df42db72d7418db31938b8473e0af8
   KIF: ff3b46deb62ce3f8e99c6a2c786729e1eea241ba
   OCMock: ffba68873fd32cfd35d885bddad23bfa816da4a3
