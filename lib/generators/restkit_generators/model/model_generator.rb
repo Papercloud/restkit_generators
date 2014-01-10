@@ -1,31 +1,31 @@
 module RestkitGenerators
-  class ModelGenerator < Rails::Generators::NamedBase
+  class ModelGenerator < IosGenerator
     source_root File.expand_path('../templates', __FILE__)
 
     class_option :include_timestamps, type: :boolean, default: false
 
     def generate_model_classes
-      template "interface.h.erb",       "gen/#{filename}.h"
-      template "implementation.m.erb",  "gen/#{filename}.m"
+      template "interface.h.erb",       destination_path("#{filename}.h")
+      template "implementation.m.erb",  destination_path("#{filename}.m")
     end
 
     def generate_shared_header_inclusion
-      create_file "gen/Generated.h", skip: true
-      append_file "gen/Generated.h", "#include \"#{overwrite_filename}.h\""
+      create_file destination_path("Generated.h"), skip: true
+      append_file destination_path("Generated.h"), "#include \"#{overwrite_filename}.h\""
     end
 
     def generate_core_data_schema
-      empty_directory "gen/DataModel.xcdatamodeld"
-      empty_directory "gen/DataModel.xcdatamodeld/DataModel.xcdatamodel"
-      template "core_data.xcdatamodeld.erb", "gen/DataModel.xcdatamodeld/DataModel.xcdatamodel/contents", skip: true
+      empty_directory destination_path("DataModel.xcdatamodeld")
+      empty_directory destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel")
+      template "core_data.xcdatamodeld.erb", destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents"), skip: true
       
       # Inject entity
-      inject_into_file "gen/DataModel.xcdatamodeld/DataModel.xcdatamodel/contents", before: "<elements>" do |config|
+      inject_into_file destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents"), before: "<elements>" do |config|
         embed_template("entity.xml.erb", "    ")
       end
 
       # Add to elements list
-      inject_into_file "gen/DataModel.xcdatamodeld/DataModel.xcdatamodel/contents", before: "</elements>" do |config|
+      inject_into_file destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents"), before: "</elements>" do |config|
         "<element name=\"#{model_name}\" positionX=\"0\" positionY=\"0\" width=\"0\" height=\"0\"/>\n"
       end
     end
@@ -42,25 +42,8 @@ module RestkitGenerators
       type
     end
 
-    def embed_template(source, indent='')
-      template = File.join(self.class.source_root, source)
-      ERB.new(IO.read(template), nil, '-').result(binding).gsub(/^/, indent)
-    end
-
-    def user_overwritten?
-      ios_includes_file? "#{overwrite_filename}.h"
-    end
-
     def overwrite_filename
       model_name
-    end
-
-    def ios_includes_file?(filename)
-      # TODO: This will need to be a setting. Maybe a dotfile that isn't checked in to source control.
-      ios_project_root = File.join(RestkitGenerators::Engine.root, "spec/dummy-ios/Dummy")
-      raise "Couldn't find iOS project at #{ios_project_root}" unless File.directory? ios_project_root
-
-      return Dir.glob("./**/#{filename}").length > 0
     end
 
     def filename
@@ -83,18 +66,6 @@ module RestkitGenerators
 
     def associations
       model.reflect_on_all_associations
-    end
-
-    def ios_attr_name(attr_name)
-      { "id" => id_name }[attr_name.to_s] ||= attr_name.to_s.camelize(:lower)
-    end
-
-    def id_name
-      "primaryKey"
-    end
-
-    def ios_class_name(name)
-      name.to_s.camelize
     end
 
     def ios_type(ruby_type)

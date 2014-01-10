@@ -3,8 +3,8 @@ module RestkitGenerators
     source_root File.expand_path('../templates', __FILE__)
 
     def generate_mapping_protocol
-      template "interface.h.erb",       "gen/#{filename}.h"
-      template "implementation.m.erb",  "gen/#{filename}.m"
+      template "interface.h.erb",       destination_path("#{filename}.h")
+      template "implementation.m.erb",  destination_path("#{filename}.m")
     end
 
     private
@@ -27,18 +27,6 @@ module RestkitGenerators
 
     def serializer
       serializer_name.constantize
-    end
-
-    def ios_attr_name(attr_name)
-      { "id" => id_name }[attr_name.to_s] ||= attr_name.to_s.camelize(:lower)
-    end
-
-    def ios_class_name(name)
-      name.to_s.camelize
-    end
-
-    def id_name
-      "primaryKey"
     end
 
     def included_has_many_associations
