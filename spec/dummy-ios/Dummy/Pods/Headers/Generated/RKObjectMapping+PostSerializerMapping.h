@@ -1,0 +1,1 @@
+../../../Generated/gen/RKObjectMapping+PostSerializerMapping.h

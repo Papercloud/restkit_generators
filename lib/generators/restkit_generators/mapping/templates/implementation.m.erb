@@ -17,9 +17,7 @@
 %>
   }];
 
-<% serializer.schema[:associations].each do |k,v| %>
-<% if v.keys.first == :has_many || v.keys.first == :has_and_belongs_to_many %>
-
+<% included_has_many_associations.each do |k| -%>
   // Has Many <%= ios_class_name(k).pluralize %> 
   [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"<%= k %>"
                                                                           toKeyPath:@"<%= ios_attr_name(k) %>"
@@ -32,8 +30,9 @@
                                              attributes:@{ @"<%= ios_attr_name(k) %>" : @"<%= id_name %>" }];
   [mapping addConnection:<%= ios_attr_name(k) %>Connection];
 
-<% elsif v.keys.first == :belongs_to %>
+<% end -%>
 
+<% included_belongs_to_associations.each do |k| -%>
   // Has One <%= ios_class_name(k) %>
   NSRelationshipDescription *<%= ios_attr_name(k) %>Relationship =
   [[mapping.entity relationshipsByName] valueForKey:@"<%= ios_attr_name(k) %>"];
@@ -42,9 +41,7 @@
   [[RKConnectionDescription alloc] initWithRelationship:<%= ios_attr_name(k) %>Relationship
                                              attributes:@{ @"<%= k %>_id" : @"<%= id_name %>" }];
   [mapping addConnection:<%= ios_attr_name(k) %>Connection];
-
-<% end %>
-<% end %>
+<% end -%>
 
   return mapping;
 }

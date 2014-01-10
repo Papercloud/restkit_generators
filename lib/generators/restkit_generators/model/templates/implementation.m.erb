@@ -1,0 +1,8 @@
+#import "<%= filename %>.h"
+
+@implementation <%= filename %>
+
+@dynamic <%= columns.map{|c| ios_attr_name(c.name) }.join(", ") %>;
+@dynamic <%= associations.map{|a| ios_attr_name(a.name) }.join(", ") %>;
+
+@end

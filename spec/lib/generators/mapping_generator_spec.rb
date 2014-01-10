@@ -3,7 +3,7 @@ require "spec_helper"
 describe RestkitGenerators::MappingGenerator do
 
   destination File.join(RestkitGenerators::Engine.root, "spec/dummy-ios/Dummy/Generated")
-  arguments %w( Comment )  
+  arguments %w( Post )  
 
   before(:all) do
     prepare_destination
@@ -21,7 +21,7 @@ describe RestkitGenerators::MappingGenerator do
   end
 
   it "creates an interface file" do
-    assert_file File.join(destination_root, "gen/RKObjectMapping+CommentSerializerMapping.h")
+    assert_file File.join(destination_root, "gen/RKObjectMapping+PostSerializerMapping.h")
   end
 
   # it "generates a connection for belongs_to relationship" do

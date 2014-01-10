@@ -4,6 +4,7 @@ class CreatePosts < ActiveRecord::Migration
       t.string :name
       t.date :date
       t.integer :views
+      t.references :user, index: true
 
       t.timestamps
     end

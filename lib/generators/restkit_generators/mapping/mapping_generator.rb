@@ -41,5 +41,13 @@ module RestkitGenerators
       "primaryKey"
     end
 
+    def included_has_many_associations
+      serializer.schema[:associations].select{|k,v| v.keys.first == :has_many || v.keys.first == :has_and_belongs_to_many }.keys
+    end
+
+    def included_belongs_to_associations
+      serializer.schema[:associations].select{|k,v| v.keys.first == :belongs_to }.keys
+    end
+
   end
 end
