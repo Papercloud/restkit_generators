@@ -1,6 +1,7 @@
 module RestkitGenerators
-  class IosGenerator < Rails::Generators::NamedBase
+  class IosModelGenerator < Rails::Generators::NamedBase
     class_option :ios_path, type: :string, default: Rails.root
+    class_option :include_timestamps, type: :boolean, default: false
 
     protected
 
@@ -34,6 +35,40 @@ module RestkitGenerators
 
     def ios_class_name(name)
       name.to_s.singularize.camelize
+    end
+
+    def ios_base_class_name(class_name=nil)
+      "_" + ios_class_name(class_name || model_name)
+    end
+
+    def model_name
+      name.capitalize
+    end
+
+    def model
+      model_name.constantize
+    end
+
+    def associations
+      model.reflect_on_all_associations
+    end
+
+    def has_many_associations
+      associations.select{|a| macro_to_many?(a.macro) }
+    end
+
+    def belongs_to_associations
+      associations.select{|a| not macro_to_many?(a.macro) }
+    end
+
+    def macro_to_many?(macro)
+      (macro == :has_many or macro == :has_and_belongs_to_many)
+    end
+
+    def columns
+      columns = model.columns
+      columns = columns.select{|c| not c.name.in? ["created_at", "updated_at"]} if not options[:skip_namespace]
+      columns
     end
 
   end

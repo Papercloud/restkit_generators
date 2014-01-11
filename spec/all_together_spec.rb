@@ -13,6 +13,11 @@ describe "a whole app" do
     Rails::Generators.invoke("restkit_generators:model", ["Tag"] + params)
     Rails::Generators.invoke("restkit_generators:model", ["User"] + params)
 
+    Rails::Generators.invoke("restkit_generators:mapping", ["Post"] + params)
+    Rails::Generators.invoke("restkit_generators:mapping", ["Comment"] + params)
+    Rails::Generators.invoke("restkit_generators:mapping", ["Tag"] + params)
+    Rails::Generators.invoke("restkit_generators:mapping", ["User"] + params)
+
     Dir.chdir(ios_path) {
       Bundler.with_clean_env {
         system 'pod install --no-repo-update'

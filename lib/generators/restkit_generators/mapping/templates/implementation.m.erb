@@ -1,27 +1,30 @@
 #import "<%= filename %>.h"
+<% associations.each do |ass| -%>
+#import "<%= ios_base_class_name(ass.name) %>+Mapping.h"
+<% end -%>
 
-@implementation RKObjectMapping (<%= category_name %>)
+@implementation <%= ios_base_class_name %> (<%= category_name %>)
 
 + (RKObjectMapping *)<%= category_name.camelize(:lower) %>
 {
   RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
-  RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"<%= ios_class_name(serializer.model_class.name) %>"
+  RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"<%= ios_class_name(model_name) %>"
                                                  inManagedObjectStore:managedObjectStore];
   mapping.identificationAttributes = @[@"primaryKey"];
 
   // Plain attributes
   [mapping addAttributeMappingsFromDictionary:
   @{
-<%= serializer.schema[:attributes].keys.map{|atr| 
+<%= columns.map(&:name).map{ |atr| 
 "   @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }.join(",\n")
 %>
   }];
 
-<% included_has_many_associations.each do |k| -%>
+<% has_many_associations.map(&:name).each do |k| -%>
   // Has Many <%= ios_class_name(k).pluralize %> 
   [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"<%= k %>"
                                                                           toKeyPath:@"<%= ios_attr_name(k) %>"
-                                                                        withMapping:[<%= ios_class_name(k) %> mapping]]];
+                                                                        withMapping:[<%= ios_base_class_name(k) %> mapping]]];
   NSRelationshipDescription *<%= ios_attr_name(k) %>Relationship =
   [[mapping.entity relationshipsByName] valueForKey:@"<%= ios_attr_name(k) %>"];
 
@@ -32,7 +35,7 @@
 
 <% end -%>
 
-<% included_belongs_to_associations.each do |k| -%>
+<% belongs_to_associations.map(&:name).each do |k| -%>
   // Has One <%= ios_class_name(k) %>
   NSRelationshipDescription *<%= ios_attr_name(k) %>Relationship =
   [[mapping.entity relationshipsByName] valueForKey:@"<%= ios_attr_name(k) %>"];

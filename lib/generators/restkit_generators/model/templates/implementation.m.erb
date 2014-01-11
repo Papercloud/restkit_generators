@@ -6,3 +6,10 @@
 @dynamic <%= associations.map{|a| ios_attr_name(a.name) }.join(", ") %>;
 
 @end
+
+<% if not user_overwritten? -%>
+// Stub out '<%= overwrite_filename %>' as scaffolding and for testing.
+// This will be removed if you add a <%= overwrite_filename %>.h file within 
+// your project directory and re-run the generator.
+@implementation <%= overwrite_filename %> @end
+<% end -%>

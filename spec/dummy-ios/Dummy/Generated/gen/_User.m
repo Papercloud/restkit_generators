@@ -6,3 +6,4 @@
 @dynamic posts;
 
 @end
+

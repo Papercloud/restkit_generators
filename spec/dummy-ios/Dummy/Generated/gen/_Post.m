@@ -6,3 +6,8 @@
 @dynamic comments, user, tags;
 
 @end
+
+// Stub out 'Post' as scaffolding and for testing.
+// This will be removed if you add a Post.h file within 
+// your project directory and re-run the generator.
+@implementation Post @end

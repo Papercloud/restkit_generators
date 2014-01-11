@@ -1,8 +1,6 @@
 module RestkitGenerators
-  class ModelGenerator < IosGenerator
+  class ModelGenerator < IosModelGenerator
     source_root File.expand_path('../templates', __FILE__)
-
-    class_option :include_timestamps, type: :boolean, default: false
 
     def generate_model_classes
       template "interface.h.erb",       destination_path("#{filename}.h")
@@ -10,8 +8,13 @@ module RestkitGenerators
     end
 
     def generate_shared_header_inclusion
-      create_file destination_path("Generated.h"), skip: true
-      append_file destination_path("Generated.h"), "@class #{overwrite_filename};\n"
+      template "shared_header.h.erb", destination_path("Generated.h"), skip: true
+      inject_into_file destination_path("Generated.h"), after: "// Forward class declarations\n" do
+        "@class #{overwrite_filename};\n"
+      end
+      inject_into_file destination_path("Generated.h"), after: "// Header includes\n" do
+        "#import \"#{filename}.h\"\n"
+      end
     end
 
     def generate_core_data_schema
@@ -44,37 +47,11 @@ module RestkitGenerators
     end
 
     def overwrite_filename
-      model_name
+      ios_class_name(model_name)
     end
 
     def filename
-      "_#{model_name}"
-    end
-
-    def model_name
-      name.capitalize
-    end
-
-    def model
-      model_name.constantize
-    end
-
-    def columns
-      columns = model.columns
-      columns = columns.select{|c| not c.name.in? ["created_at", "updated_at"]} if not options[:skip_namespace]
-      columns
-    end
-
-    def associations
-      model.reflect_on_all_associations
-    end
-
-    def has_many_associations
-      associations.select{|a| macro_to_many?(a.macro) }
-    end
-
-    def belongs_to_associations
-      associations.select{|a| not macro_to_many?(a.macro) }
+      ios_base_class_name
     end
 
     def inverse_of(association)
@@ -111,10 +88,6 @@ module RestkitGenerators
       end
       raise "Don't know how to turn association '#{macro}` '#{name}' into an Objective-C property" unless type
       type
-    end
-
-    def macro_to_many?(macro)
-      (macro == :has_many or macro == :has_and_belongs_to_many)
     end
 
   end

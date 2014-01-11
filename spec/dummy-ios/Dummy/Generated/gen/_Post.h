@@ -20,4 +20,3 @@
 // This will be removed if you add a Post.h file within 
 // your project directory and re-run the generator.
 @interface Post : _Post @end
-@implementation Post @end
