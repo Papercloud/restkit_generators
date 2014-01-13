@@ -7,28 +7,42 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <RestKit/RestKit.h>
+#import <RestKit/Testing.h>
+#import "Generated.h"
+#import "Generated/_Post+Mapping.h"
 
-@interface DummyTests : XCTestCase
-
+@interface PostTests : XCTestCase
+@property (nonatomic, strong) RKMappingTest *test;
 @end
 
-@implementation DummyTests
+@implementation PostTests
 
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    [RKTestFactory setUp];
+    NSBundle *testTargetBundle = [NSBundle bundleForClass:[self class]];
+    [RKTestFixture setFixtureBundle:testTargetBundle];
+    
+    [RKManagedObjectStore setDefaultStore:[RKTestFactory managedObjectStore]];
+    
+    id parsedJSON = [RKTestFixture parsedObjectWithContentsOfFixture:@"post.json"];
+    self.test = [RKMappingTest testForMapping:[Post mapping] sourceObject:parsedJSON destinationObject:nil];
+    self.test.managedObjectContext = [RKTestFactory managedObjectStore].persistentStoreManagedObjectContext;
 }
 
 - (void)tearDown
 {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [RKTestFactory tearDown];
     [super tearDown];
 }
 
 - (void)testExample
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    [self.test addExpectation:[RKPropertyMappingTestExpectation expectationWithSourceKeyPath:@"name"
+                                                                     destinationKeyPath:@"name"
+                                                                                  value:@"My First Post"]];
 }
 
 @end

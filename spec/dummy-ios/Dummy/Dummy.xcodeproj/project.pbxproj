@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		27F9A368F41F458FACE2351C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 961E3A8BA3144EE5AE4198F8 /* libPods.a */; };
+		C31CCF571883EE68005CFF3C /* PostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C31CCF561883EE68005CFF3C /* PostTests.m */; };
+		C31CCF5B1883EEC9005CFF3C /* comment.json in Resources */ = {isa = PBXBuildFile; fileRef = C31CCF591883EEC9005CFF3C /* comment.json */; };
+		C31CCF5C1883EEC9005CFF3C /* post.json in Resources */ = {isa = PBXBuildFile; fileRef = C31CCF5A1883EEC9005CFF3C /* post.json */; };
 		C38D921C187EC592000C8CB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38D921B187EC592000C8CB2 /* Foundation.framework */; };
 		C38D921E187EC592000C8CB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38D921D187EC592000C8CB2 /* CoreGraphics.framework */; };
 		C38D9220187EC592000C8CB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38D921F187EC592000C8CB2 /* UIKit.framework */; };
@@ -21,7 +24,6 @@
 		C38D923C187EC592000C8CB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38D921B187EC592000C8CB2 /* Foundation.framework */; };
 		C38D923D187EC592000C8CB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38D921F187EC592000C8CB2 /* UIKit.framework */; };
 		C38D9245187EC592000C8CB2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C38D9243187EC592000C8CB2 /* InfoPlist.strings */; };
-		C38D9247187EC592000C8CB2 /* DummyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C38D9246187EC592000C8CB2 /* DummyTests.m */; };
 		C38D9256187FE2B9000C8CB2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C38D9255187FE2B9000C8CB2 /* User.m */; };
 		E1E547BB60734B5893C4FEBB /* libPods-DummyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1088CF93C6499A97510A05 /* libPods-DummyTests.a */; };
 /* End PBXBuildFile section */
@@ -41,6 +43,9 @@
 		30B65C0260BA4AB9BB19DDDC /* Pods-DummyTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DummyTests.xcconfig"; path = "Pods/Pods-DummyTests.xcconfig"; sourceTree = "<group>"; };
 		6E1088CF93C6499A97510A05 /* libPods-DummyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DummyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		961E3A8BA3144EE5AE4198F8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C31CCF561883EE68005CFF3C /* PostTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTests.m; sourceTree = "<group>"; };
+		C31CCF591883EEC9005CFF3C /* comment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = comment.json; sourceTree = "<group>"; };
+		C31CCF5A1883EEC9005CFF3C /* post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = post.json; sourceTree = "<group>"; };
 		C38D9218187EC592000C8CB2 /* Dummy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dummy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C38D921B187EC592000C8CB2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C38D921D187EC592000C8CB2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,7 +64,6 @@
 		C38D923A187EC592000C8CB2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C38D9242187EC592000C8CB2 /* DummyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DummyTests-Info.plist"; sourceTree = "<group>"; };
 		C38D9244187EC592000C8CB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C38D9246187EC592000C8CB2 /* DummyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DummyTests.m; sourceTree = "<group>"; };
 		C38D9254187FE2B9000C8CB2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		C38D9255187FE2B9000C8CB2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C31CCF581883EEC9005CFF3C /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				C31CCF591883EEC9005CFF3C /* comment.json */,
+				C31CCF5A1883EEC9005CFF3C /* post.json */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
 		C38D920F187EC592000C8CB2 = {
 			isa = PBXGroup;
 			children = (
@@ -154,7 +167,8 @@
 		C38D9240187EC592000C8CB2 /* DummyTests */ = {
 			isa = PBXGroup;
 			children = (
-				C38D9246187EC592000C8CB2 /* DummyTests.m */,
+				C31CCF581883EEC9005CFF3C /* Fixtures */,
+				C31CCF561883EE68005CFF3C /* PostTests.m */,
 				C38D9241187EC592000C8CB2 /* Supporting Files */,
 			);
 			path = DummyTests;
@@ -260,6 +274,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C38D9245187EC592000C8CB2 /* InfoPlist.strings in Resources */,
+				C31CCF5B1883EEC9005CFF3C /* comment.json in Resources */,
+				C31CCF5C1883EEC9005CFF3C /* post.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,7 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C38D9247187EC592000C8CB2 /* DummyTests.m in Sources */,
+				C31CCF571883EE68005CFF3C /* PostTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
