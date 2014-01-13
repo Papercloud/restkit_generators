@@ -1,0 +1,23 @@
+{
+  "tags": [{
+    "id": 1,
+    "name": "Awesome"
+  }],
+  "comments": [{
+    "id": 1,
+    "body": "This is such a great post!",
+    "post_id": 1
+  }],
+  "users": [{
+    "id": 1,
+    "name": "Joe"
+  }],
+  "post": {
+    "id": 1,
+    "name": "My First Post",
+    "date": "2014-01-12",
+    "tag_ids": [1],
+    "comment_ids": [1],
+    "user_id": 1
+  }
+}

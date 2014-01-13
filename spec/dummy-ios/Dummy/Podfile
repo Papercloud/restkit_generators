@@ -3,9 +3,12 @@ platform :ios, '6.1'
 inhibit_all_warnings!
 
 pod 'Generated', :path => './'
-pod 'RestKit'
+pod 'RestKit', :git => 'https://github.com/tspacek/RestKit', :commit => 'f5b8e68b7f22c83bbb89335ac8f58cb6bb9f1a3b'
 
-target 'DummyTests', :exclusive => true do
-  pod 'KIF', '~> 2.0'
+
+
+target 'DummyTests' do
   pod 'OCMock', '~> 2.2'
+  pod 'RestKit/Testing', '~> 0.22.0'
+  pod 'RestKit/Search', '~> 0.22.0' # Refuses to compile without this
 end
