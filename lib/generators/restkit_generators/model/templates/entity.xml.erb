@@ -6,6 +6,6 @@
   <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.name) %>" syncable="YES" inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.name) %>"/>  
 <% end -%>
 <% belongs_to_associations.each do |ass| -%>
-  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.name) %>" syncable="YES"/>  
+  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.name) %>" syncable="YES" inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.name) %>"/>  
 <% end -%>
 </entity>
