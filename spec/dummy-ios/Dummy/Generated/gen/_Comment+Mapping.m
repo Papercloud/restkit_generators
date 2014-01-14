@@ -20,14 +20,7 @@
   }];
 
 
-  // Has One Post
-  NSRelationshipDescription *postRelationship =
-  [[mapping.entity relationshipsByName] valueForKey:@"post"];
-  
-  RKConnectionDescription *postConnection =
-  [[RKConnectionDescription alloc] initWithRelationship:postRelationship
-                                             attributes:@{ @"post_id" : @"primaryKey" }];
-  [mapping addConnection:postConnection];
+  [mapping addConnectionForRelationship:@"post" connectedBy:@{ @"postId" : @"primaryKey"}];
 
   return mapping;
 }

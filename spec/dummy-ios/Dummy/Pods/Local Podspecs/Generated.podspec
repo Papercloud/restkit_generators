@@ -7,4 +7,5 @@ Pod::Spec.new do |s|
   s.source_files = 'Generated/**/*{h,m}'
   s.ios.deployment_target = '6.0'
   s.resources = 'Generated/**/DataModel.xcdatamodeld'
+  s.dependency 'RestKit'
 end

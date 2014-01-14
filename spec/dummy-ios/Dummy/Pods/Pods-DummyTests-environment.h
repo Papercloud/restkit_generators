@@ -24,12 +24,6 @@
 #define COCOAPODS_VERSION_MINOR_ISO8601DateFormatterValueTransformer 5
 #define COCOAPODS_VERSION_PATCH_ISO8601DateFormatterValueTransformer 0
 
-// OCMock
-#define COCOAPODS_POD_AVAILABLE_OCMock
-#define COCOAPODS_VERSION_MAJOR_OCMock 2
-#define COCOAPODS_VERSION_MINOR_OCMock 2
-#define COCOAPODS_VERSION_PATCH_OCMock 2
-
 // RKValueTransformers
 #define COCOAPODS_POD_AVAILABLE_RKValueTransformers
 #define COCOAPODS_VERSION_MAJOR_RKValueTransformers 1

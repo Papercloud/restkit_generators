@@ -14,21 +14,11 @@
   [mapping addAttributeMappingsFromDictionary:
   @{
    @"id" : @"primaryKey",
-   @"name" : @"name"
+   @"name" : @"name",
+   @"post_ids" : @"postIds"
   }];
 
-  // Has Many Posts 
-  [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"posts"
-                                                                          toKeyPath:@"posts"
-                                                                        withMapping:[_Post mapping]]];
-  NSRelationshipDescription *postsRelationship =
-  [[mapping.entity relationshipsByName] valueForKey:@"posts"];
-
-  RKConnectionDescription *postsConnection =
-  [[RKConnectionDescription alloc] initWithRelationship:postsRelationship
-                                             attributes:@{ @"posts" : @"primaryKey" }];
-  [mapping addConnection:postsConnection];
-
+  [mapping addConnectionForRelationship:@"posts" connectedBy:@{ @"postIds" : @"primaryKey"}];
 
 
   return mapping;

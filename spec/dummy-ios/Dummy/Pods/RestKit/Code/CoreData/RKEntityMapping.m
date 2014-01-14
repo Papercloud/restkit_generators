@@ -210,9 +210,7 @@ static BOOL entityIdentificationInferenceEnabled = YES;
 
 - (RKConnectionDescription *)connectionForRelationship:(id)relationshipOrName
 {
-    if (!([relationshipOrName isKindOfClass:[NSString class]] || [relationshipOrName isKindOfClass:[NSRelationshipDescription class]])) {
-        [NSException raise:NSInvalidArgumentException format:@"Relationship specifier must be a name or a relationship description"];
-    }
+    NSAssert([relationshipOrName isKindOfClass:[NSString class]] || [relationshipOrName isKindOfClass:[NSRelationshipDescription class]], @"Relationship specifier must be a name or a relationship description");
     NSString *relationshipName = [relationshipOrName isKindOfClass:[NSRelationshipDescription class]] ? [(NSRelationshipDescription *)relationshipOrName name] : relationshipOrName;
     for (RKConnectionDescription *connection in self.connections) {
         if ([[connection.relationship name] isEqualToString:relationshipName]) {
@@ -224,9 +222,9 @@ static BOOL entityIdentificationInferenceEnabled = YES;
 
 - (void)addConnection:(RKConnectionDescription *)connection
 {
-    if (! connection) [NSException raise:NSInvalidArgumentException format:@"connection cannot be nil."];
+    NSParameterAssert(connection);
     RKConnectionDescription *existingConnection = [self connectionForRelationship:connection.relationship];
-    if (existingConnection) [NSException raise:NSInternalInconsistencyException format:@"Cannot add connection: An existing connection already exists for the '%@' relationship.", connection.relationship.name];
+    NSAssert(existingConnection == nil, @"Cannot add connection: An existing connection already exists for the '%@' relationship.", connection.relationship.name);
     NSAssert(self.mutableConnections, @"self.mutableConnections should not be nil");
     [self.mutableConnections addObject:connection];
 }

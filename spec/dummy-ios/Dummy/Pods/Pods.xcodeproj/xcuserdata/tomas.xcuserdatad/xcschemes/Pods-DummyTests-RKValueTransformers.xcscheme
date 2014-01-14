@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "139A6C19A5EA4D4E98E59836"
+               BlueprintIdentifier = "941F4B80E6514AC4BA9F0BA3"
                BuildableName = "libPods-DummyTests-RKValueTransformers.a"
                BlueprintName = "Pods-DummyTests-RKValueTransformers"
                ReferencedContainer = "container:Pods.xcodeproj">

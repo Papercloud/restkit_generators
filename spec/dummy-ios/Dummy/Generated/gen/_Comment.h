@@ -9,6 +9,7 @@
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSNumber *postId;
 
+
 @property (nonatomic, retain) Post *post;
 
 @end

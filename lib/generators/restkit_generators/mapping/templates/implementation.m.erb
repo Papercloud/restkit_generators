@@ -15,35 +15,19 @@
   // Plain attributes
   [mapping addAttributeMappingsFromDictionary:
   @{
-<%= columns.map(&:name).map{ |atr| 
-"   @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }.join(",\n")
+<%= (columns.map(&:name).map { |atr| 
+"   @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }\
++ has_many_associations.map { |a| 
+"   @\"" + a.name.to_s.singularize + "_ids\" : @\"" + ios_attr_name(a.name.to_s.singularize + "_ids") + "\"" }).join(",\n")
 %>
   }];
 
 <% has_many_associations.map(&:name).each do |k| -%>
-  // Has Many <%= ios_class_name(k).pluralize %> 
-  [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"<%= k %>"
-                                                                          toKeyPath:@"<%= ios_attr_name(k) %>"
-                                                                        withMapping:[<%= ios_base_class_name(k) %> mapping]]];
-  NSRelationshipDescription *<%= ios_attr_name(k) %>Relationship =
-  [[mapping.entity relationshipsByName] valueForKey:@"<%= ios_attr_name(k) %>"];
-
-  RKConnectionDescription *<%= ios_attr_name(k) %>Connection =
-  [[RKConnectionDescription alloc] initWithRelationship:<%= ios_attr_name(k) %>Relationship
-                                             attributes:@{ @"<%= ios_attr_name(k) %>" : @"<%= id_name %>" }];
-  [mapping addConnection:<%= ios_attr_name(k) %>Connection];
-
+  [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_ids") %>" : @"<%= id_name %>"}];
 <% end -%>
 
 <% belongs_to_associations.map(&:name).each do |k| -%>
-  // Has One <%= ios_class_name(k) %>
-  NSRelationshipDescription *<%= ios_attr_name(k) %>Relationship =
-  [[mapping.entity relationshipsByName] valueForKey:@"<%= ios_attr_name(k) %>"];
-  
-  RKConnectionDescription *<%= ios_attr_name(k) %>Connection =
-  [[RKConnectionDescription alloc] initWithRelationship:<%= ios_attr_name(k) %>Relationship
-                                             attributes:@{ @"<%= ios_attr_name(k.to_s + "_id") %>" : @"<%= id_name %>" }];
-  [mapping addConnection:<%= ios_attr_name(k) %>Connection];
+  [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_id") %>" : @"<%= id_name %>"}];
 <% end -%>
 
   return mapping;

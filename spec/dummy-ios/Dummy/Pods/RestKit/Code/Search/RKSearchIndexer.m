@@ -288,7 +288,7 @@ NSString * const RKSearchableAttributeNamesUserInfoKey = @"RestKitSearchableAttr
     NSSet *candidateObjects = [[NSSet setWithSet:[userInfo objectForKey:NSInsertedObjectsKey]] setByAddingObjectsFromSet:[userInfo objectForKey:NSUpdatedObjectsKey]];
     NSSet *objectsToIndex = [self objectsToIndexFromCandidateObjects:candidateObjects checkChangedValues:NO];    
     
-    NSMutableSet *__unused failedObjectIDs = [NSMutableSet set];
+    NSMutableSet *failedObjectIDs = [NSMutableSet set];
     
     // Enqueue an operation for each object to index
     NSArray *objectIDsForObjectsToIndex = [objectsToIndex valueForKey:@"objectID"];

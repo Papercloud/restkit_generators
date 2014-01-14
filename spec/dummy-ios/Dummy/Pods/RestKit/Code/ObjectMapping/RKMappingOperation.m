@@ -94,7 +94,7 @@ NSArray *RKApplyNestingAttributeValueToMappings(NSString *attributeName, id valu
         }
         nestedPropertyMapping.propertyValueClass = propertyMapping.propertyValueClass;
         nestedPropertyMapping.valueTransformer = propertyMapping.valueTransformer;
-        if (nestedPropertyMapping) [nestedMappings addObject:nestedPropertyMapping];
+        [nestedMappings addObject:nestedPropertyMapping];
     }
     
     return nestedMappings;

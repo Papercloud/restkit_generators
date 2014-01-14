@@ -19,42 +19,15 @@
    @"name" : @"name",
    @"date" : @"date",
    @"views" : @"views",
-   @"user_id" : @"userId"
+   @"user_id" : @"userId",
+   @"comment_ids" : @"commentIds",
+   @"tag_ids" : @"tagIds"
   }];
 
-  // Has Many Comments 
-  [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"comments"
-                                                                          toKeyPath:@"comments"
-                                                                        withMapping:[_Comment mapping]]];
-  NSRelationshipDescription *commentsRelationship =
-  [[mapping.entity relationshipsByName] valueForKey:@"comments"];
+  [mapping addConnectionForRelationship:@"comments" connectedBy:@{ @"commentIds" : @"primaryKey"}];
+  [mapping addConnectionForRelationship:@"tags" connectedBy:@{ @"tagIds" : @"primaryKey"}];
 
-  RKConnectionDescription *commentsConnection =
-  [[RKConnectionDescription alloc] initWithRelationship:commentsRelationship
-                                             attributes:@{ @"comments" : @"primaryKey" }];
-  [mapping addConnection:commentsConnection];
-
-  // Has Many Tags 
-  [mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"tags"
-                                                                          toKeyPath:@"tags"
-                                                                        withMapping:[_Tag mapping]]];
-  NSRelationshipDescription *tagsRelationship =
-  [[mapping.entity relationshipsByName] valueForKey:@"tags"];
-
-  RKConnectionDescription *tagsConnection =
-  [[RKConnectionDescription alloc] initWithRelationship:tagsRelationship
-                                             attributes:@{ @"tags" : @"primaryKey" }];
-  [mapping addConnection:tagsConnection];
-
-
-  // Has One User
-  NSRelationshipDescription *userRelationship =
-  [[mapping.entity relationshipsByName] valueForKey:@"user"];
-  
-  RKConnectionDescription *userConnection =
-  [[RKConnectionDescription alloc] initWithRelationship:userRelationship
-                                             attributes:@{ @"user_id" : @"primaryKey" }];
-  [mapping addConnection:userConnection];
+  [mapping addConnectionForRelationship:@"user" connectedBy:@{ @"userId" : @"primaryKey"}];
 
   return mapping;
 }

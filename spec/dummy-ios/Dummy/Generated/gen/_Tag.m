@@ -4,6 +4,7 @@
 
 @dynamic primaryKey, name;
 @dynamic posts;
+@dynamic postIds;
 
 @end
 
