@@ -4,6 +4,7 @@
 
 @dynamic <%= columns.map{|c| ios_attr_name(c.name) }.join(", ") %>;
 @dynamic <%= associations.map{|a| ios_attr_name(a.name) }.join(", ") %>;
+@dynamic <%= has_many_associations.map{|a| ios_attr_name(a.name.to_s.singularize + "_ids") }.join(", ") %>;
 
 @end
 

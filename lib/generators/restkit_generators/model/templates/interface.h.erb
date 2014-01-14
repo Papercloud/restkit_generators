@@ -8,6 +8,10 @@
 @property (nonatomic, retain) <%= ios_type(column.type) %><%= ios_attr_name(column.name) %>;
 <% end -%>
 
+<% has_many_associations.each do |association| -%>
+@property (nonatomic, retain) NSArray *<%= ios_attr_name(association.name.to_s.singularize + "_ids") %>;
+<% end -%>
+
 <% associations.each do |association| -%>
 @property (nonatomic, retain) <%= ios_association_type(association) %><%= ios_attr_name(association.name) %>;
 <% end -%>

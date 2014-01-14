@@ -1,6 +1,9 @@
 <entity name="<%= model_name %>" representedClassName="<%= model_name %>" syncable="YES">
 <% columns.each do |column| -%>
-  <attribute name="<%= ios_attr_name(column.name) %>" optional="YES" attributeType="<%= core_data_type(column.type) %>" syncable="YES"/>
+  <attribute name="<%= ios_attr_name(column.name) %>" optional="YES" attributeType="<%= core_data_type(column.type) %>" syncable="YES" <% if column.name == 'id' -%>indexed="YES"<% end -%> />
+<% end -%>
+<% has_many_associations.each do |a| -%>
+  <attribute name="<%= ios_attr_name(a.name.to_s.singularize + "_ids") %>" optional="YES" attributeType="Transformable" syncable="YES"/>
 <% end -%>
 <% has_many_associations.each do |ass| -%>
   <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.name) %>" syncable="YES" inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.name) %>"/>  

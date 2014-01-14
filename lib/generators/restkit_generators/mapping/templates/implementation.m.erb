@@ -42,7 +42,7 @@
   
   RKConnectionDescription *<%= ios_attr_name(k) %>Connection =
   [[RKConnectionDescription alloc] initWithRelationship:<%= ios_attr_name(k) %>Relationship
-                                             attributes:@{ @"<%= k %>_id" : @"<%= id_name %>" }];
+                                             attributes:@{ @"<%= ios_attr_name(k.to_s + "_id") %>" : @"<%= id_name %>" }];
   [mapping addConnection:<%= ios_attr_name(k) %>Connection];
 <% end -%>
 
