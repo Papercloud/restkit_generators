@@ -1,0 +1,1 @@
+PODS_PCDEFAULTS_OTHER_LDFLAGS = -framework CoreData

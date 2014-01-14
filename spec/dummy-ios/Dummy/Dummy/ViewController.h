@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PCDefaults.h"
+#import "Generated.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UITableViewController
 
 @end

@@ -9,7 +9,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+@property (nonatomic, strong) PCDCollectionTableViewManager *tableManager;
 @end
 
 @implementation ViewController
@@ -17,13 +17,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-}
+    
+    RKLogConfigureByName("*", RKLogLevelDebug);
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    PCDCollectionManager *collectionManager = [PCDCollectionManager collectionManagerWithClass:[Post class]];
+    self.tableManager = [[PCDCollectionTableViewManager alloc] initWithDecoratedObject:nil
+                                                                     collectionManager:collectionManager
+                                                                             tableView:self.tableView];
+
 }
 
 @end

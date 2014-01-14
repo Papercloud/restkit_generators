@@ -8,6 +8,7 @@
 
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+#import "PCDefaults.h"
 #import "_User.h"
 
 @interface User : _User

@@ -24,11 +24,35 @@
 #define COCOAPODS_VERSION_MINOR_ISO8601DateFormatterValueTransformer 5
 #define COCOAPODS_VERSION_PATCH_ISO8601DateFormatterValueTransformer 0
 
+// Inflections
+#define COCOAPODS_POD_AVAILABLE_Inflections
+#define COCOAPODS_VERSION_MAJOR_Inflections 1
+#define COCOAPODS_VERSION_MINOR_Inflections 0
+#define COCOAPODS_VERSION_PATCH_Inflections 0
+
+// MagicalRecord
+#define COCOAPODS_POD_AVAILABLE_MagicalRecord
+#define COCOAPODS_VERSION_MAJOR_MagicalRecord 2
+#define COCOAPODS_VERSION_MINOR_MagicalRecord 2
+#define COCOAPODS_VERSION_PATCH_MagicalRecord 0
+
+// PCDefaults
+#define COCOAPODS_POD_AVAILABLE_PCDefaults
+#define COCOAPODS_VERSION_MAJOR_PCDefaults 0
+#define COCOAPODS_VERSION_MINOR_PCDefaults 0
+#define COCOAPODS_VERSION_PATCH_PCDefaults 5
+
 // RKValueTransformers
 #define COCOAPODS_POD_AVAILABLE_RKValueTransformers
 #define COCOAPODS_VERSION_MAJOR_RKValueTransformers 1
 #define COCOAPODS_VERSION_MINOR_RKValueTransformers 0
 #define COCOAPODS_VERSION_PATCH_RKValueTransformers 1
+
+// RegexKitLite
+#define COCOAPODS_POD_AVAILABLE_RegexKitLite
+#define COCOAPODS_VERSION_MAJOR_RegexKitLite 4
+#define COCOAPODS_VERSION_MINOR_RegexKitLite 0
+#define COCOAPODS_VERSION_PATCH_RegexKitLite 0
 
 // RestKit
 #define COCOAPODS_POD_AVAILABLE_RestKit

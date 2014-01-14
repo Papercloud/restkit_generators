@@ -12,6 +12,8 @@
 	<dict>
 		<key>B6EEBFF6-8216-42B4-9640-15A71DB17E8B</key>
 		<string>ssh://github.com/Papercloud/restkit_generators.git</string>
+		<key>DBEF69CF-5694-4D64-95D2-BE2EEBBA9106</key>
+		<string>ssh://github.com/Papercloud/PCDefaults.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>spec/dummy-ios/Dummy/Dummy.xcworkspace</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>B6EEBFF6-8216-42B4-9640-15A71DB17E8B</key>
 		<string>../../../..</string>
+		<key>DBEF69CF-5694-4D64-95D2-BE2EEBBA9106</key>
+		<string>../../../../../PCDefaultsDemo</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/Papercloud/restkit_generators.git</string>
@@ -28,6 +32,14 @@
 	<string>B6EEBFF6-8216-42B4-9640-15A71DB17E8B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DBEF69CF-5694-4D64-95D2-BE2EEBBA9106</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PCDefaultsDemo</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

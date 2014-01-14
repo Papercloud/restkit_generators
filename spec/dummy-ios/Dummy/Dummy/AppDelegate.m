@@ -7,12 +7,18 @@
 //
 
 #import "AppDelegate.h"
+#import "PCDefaults.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [PCDAPIClient setupWithBaseURL:@"http://0.0.0.0:3000"];
+    [RKManagedObjectStore setupDefaultStore];
+    
+    RKObjectManager *manager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://0.0.0.0:3000"]];
+    manager.managedObjectStore = [RKManagedObjectStore defaultStore];
+    [RKObjectManager setSharedManager:manager];
     return YES;
 }
 							

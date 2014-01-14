@@ -3,6 +3,7 @@ platform :ios, '6.1'
 inhibit_all_warnings!
 
 pod 'Generated', :path => './'
+pod 'PCDefaults', :path => '~/Work/Tools/PCDefaultsDemo'
 
 target 'DummyTests', :exclusive => false do
 pod 'RestKit/Testing'

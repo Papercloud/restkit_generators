@@ -1,0 +1,1 @@
+../../../../../../../PCDefaultsDemo/PCDefaults/tmp/restkit_generators/RKObjectMapping+CommentSerializerMapping.h

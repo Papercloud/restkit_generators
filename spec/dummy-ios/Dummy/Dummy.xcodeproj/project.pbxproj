@@ -23,6 +23,7 @@
 		C3B255DA1884FB4300C11B4D /* post.json in Resources */ = {isa = PBXBuildFile; fileRef = C31CCF5A1883EEC9005CFF3C /* post.json */; };
 		C3B255DB1884FB4500C11B4D /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = C31CCF5D1884C718005CFF3C /* user.json */; };
 		C3B255DC1884FB4800C11B4D /* tag.json in Resources */ = {isa = PBXBuildFile; fileRef = C31CCF5F1884C730005CFF3C /* tag.json */; };
+		C3B255DF188529DB00C11B4D /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = C3B255DE188529DB00C11B4D /* Post.m */; };
 		C3BB86881884FA2600370006 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38D923A187EC592000C8CB2 /* XCTest.framework */; };
 		C3BB86891884FA2600370006 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38D921B187EC592000C8CB2 /* Foundation.framework */; };
 		C3BB868A1884FA2600370006 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38D921F187EC592000C8CB2 /* UIKit.framework */; };
@@ -68,6 +69,8 @@
 		C38D9244187EC592000C8CB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C38D9254187FE2B9000C8CB2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		C38D9255187FE2B9000C8CB2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		C3B255DD188529DB00C11B4D /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		C3B255DE188529DB00C11B4D /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
 		C3BB86871884FA2600370006 /* DummyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DummyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -154,6 +157,8 @@
 				C38D9222187EC592000C8CB2 /* Supporting Files */,
 				C38D9254187FE2B9000C8CB2 /* User.h */,
 				C38D9255187FE2B9000C8CB2 /* User.m */,
+				C3B255DD188529DB00C11B4D /* Post.h */,
+				C3B255DE188529DB00C11B4D /* Post.m */,
 			);
 			path = Dummy;
 			sourceTree = "<group>";
@@ -355,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3B255DF188529DB00C11B4D /* Post.m in Sources */,
 				C38D9256187FE2B9000C8CB2 /* User.m in Sources */,
 				C38D9232187EC592000C8CB2 /* ViewController.m in Sources */,
 				C38D922C187EC592000C8CB2 /* AppDelegate.m in Sources */,
