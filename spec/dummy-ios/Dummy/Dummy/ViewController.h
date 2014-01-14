@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PCDefaults.h"
-#import "Generated.h"
+#import "Post.h"
+#import "_Comment+Mapping.h"
+
 
 @interface ViewController : UITableViewController
 

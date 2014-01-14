@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Papercloud. All rights reserved.
 //
 
-#import "_Post.h"
+#import "Generated.h"
 
 @interface Post : _Post
 

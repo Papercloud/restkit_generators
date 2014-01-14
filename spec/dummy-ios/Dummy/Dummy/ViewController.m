@@ -19,8 +19,19 @@
     [super viewDidLoad];
     
     RKLogConfigureByName("*", RKLogLevelDebug);
+    
+    
 
     PCDCollectionManager *collectionManager = [PCDCollectionManager collectionManagerWithClass:[Post class]];
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[Comment mapping]
+                                                                      method:RKRequestMethodGET
+                                                                 pathPattern:@"/api/posts.json"
+                                                                     keyPath:@"comments"
+                                                                 statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    [collectionManager.objectManager addResponseDescriptor:responseDescriptor];
+    
     self.tableManager = [[PCDCollectionTableViewManager alloc] initWithDecoratedObject:nil
                                                                      collectionManager:collectionManager
                                                                              tableView:self.tableView];
