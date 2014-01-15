@@ -1,1 +1,1 @@
-../../../Generated/gen/RKObjectManager+PostCommentsRoute.h
+../../../Generated/Routes/RKObjectManager+PostCommentsRoute.h

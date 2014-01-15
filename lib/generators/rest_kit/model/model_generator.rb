@@ -35,6 +35,10 @@ module RestKit
 
     private
 
+    def destination_path(path)
+      super(File.join("Models", path))
+    end
+
     def core_data_type(ruby_type)
       type = {
         "integer" => "Integer 32",

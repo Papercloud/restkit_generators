@@ -9,6 +9,10 @@ module RestKit
 
     private
 
+    def destination_path(path)
+      super(File.join("Mappings", path))
+    end
+
     def filename
       ios_base_class_name + "+" + category_name
     end

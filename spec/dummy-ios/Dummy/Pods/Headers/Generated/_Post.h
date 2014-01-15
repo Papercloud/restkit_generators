@@ -1,1 +1,1 @@
-../../../Generated/gen/_Post.h
+../../../Generated/Models/_Post.h

@@ -6,7 +6,7 @@ module RestKit
     protected
 
     def destination_path(filename=nil)
-      File.join(File.expand_path(options[:ios_path]), 'Generated', 'gen', filename)
+      File.join(File.expand_path(options[:ios_path]), 'Generated', filename)
     end
 
     def embed_template(source, indent='', binding=binding)

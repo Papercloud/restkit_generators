@@ -9,6 +9,7 @@ module RestKit
      desc: "Name of the active_model_serializer from which infer RKResponseDescriptors"
 
     def generate_route
+      empty_directory destination_path("")
       template "interface.h.erb",       destination_path("#{filename}.h")
       template "implementation.m.erb",  destination_path("#{filename}.m")
     end
@@ -36,6 +37,10 @@ module RestKit
     end
 
     private
+
+    def destination_path(path)
+      super(File.join("Routes", path))
+    end
 
     def ios_route_name
       strip = options[:strip_namespace]

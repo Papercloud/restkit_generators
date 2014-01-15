@@ -25,7 +25,6 @@
     self.tableManager = [[PCDCollectionTableViewManager alloc] initWithDecoratedObject:nil
                                                                      collectionManager:collectionManager
                                                                              tableView:self.tableView];
-
 }
 
 @end

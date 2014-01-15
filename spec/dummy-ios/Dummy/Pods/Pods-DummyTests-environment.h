@@ -18,6 +18,24 @@
 #define COCOAPODS_VERSION_MINOR_Generated 0
 #define COCOAPODS_VERSION_PATCH_Generated 0
 
+// Generated/Mappings
+#define COCOAPODS_POD_AVAILABLE_Generated_Mappings
+#define COCOAPODS_VERSION_MAJOR_Generated_Mappings 0
+#define COCOAPODS_VERSION_MINOR_Generated_Mappings 0
+#define COCOAPODS_VERSION_PATCH_Generated_Mappings 0
+
+// Generated/Models
+#define COCOAPODS_POD_AVAILABLE_Generated_Models
+#define COCOAPODS_VERSION_MAJOR_Generated_Models 0
+#define COCOAPODS_VERSION_MINOR_Generated_Models 0
+#define COCOAPODS_VERSION_PATCH_Generated_Models 0
+
+// Generated/Routes
+#define COCOAPODS_POD_AVAILABLE_Generated_Routes
+#define COCOAPODS_VERSION_MAJOR_Generated_Routes 0
+#define COCOAPODS_VERSION_MINOR_Generated_Routes 0
+#define COCOAPODS_VERSION_PATCH_Generated_Routes 0
+
 // ISO8601DateFormatterValueTransformer
 #define COCOAPODS_POD_AVAILABLE_ISO8601DateFormatterValueTransformer
 #define COCOAPODS_VERSION_MAJOR_ISO8601DateFormatterValueTransformer 0

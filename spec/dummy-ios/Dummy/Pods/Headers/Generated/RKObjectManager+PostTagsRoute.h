@@ -1,1 +1,1 @@
-../../../Generated/gen/RKObjectManager+PostTagsRoute.h
+../../../Generated/Routes/RKObjectManager+PostTagsRoute.h
