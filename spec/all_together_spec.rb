@@ -8,15 +8,21 @@ describe "a whole app" do
     system "rm -rf #{ios_path}/Generated"
 
     params = ["--ios-path=#{ios_path}"]
-    Rails::Generators.invoke("restkit_generators:model", ["Comment"] + params)
-    Rails::Generators.invoke("restkit_generators:model", ["Post"] + params)
-    Rails::Generators.invoke("restkit_generators:model", ["Tag"] + params)
-    Rails::Generators.invoke("restkit_generators:model", ["User"] + params)
+    Rails::Generators.invoke("rest_kit:model", ["Comment"] + params)
+    Rails::Generators.invoke("rest_kit:model", ["Post"] + params)
+    Rails::Generators.invoke("rest_kit:model", ["Tag"] + params)
+    Rails::Generators.invoke("rest_kit:model", ["User"] + params)
 
-    Rails::Generators.invoke("restkit_generators:mapping", ["Post"] + params)
-    Rails::Generators.invoke("restkit_generators:mapping", ["Comment"] + params)
-    Rails::Generators.invoke("restkit_generators:mapping", ["Tag"] + params)
-    Rails::Generators.invoke("restkit_generators:mapping", ["User"] + params)
+    Rails::Generators.invoke("rest_kit:mapping", ["Post"] + params)
+    Rails::Generators.invoke("rest_kit:mapping", ["Comment"] + params)
+    Rails::Generators.invoke("rest_kit:mapping", ["Tag"] + params)
+    Rails::Generators.invoke("rest_kit:mapping", ["User"] + params)
+
+    Rails::Generators.invoke("rest_kit:route", ["api_post"] + params)
+    Rails::Generators.invoke("rest_kit:route", ["api_posts"] + params)
+    Rails::Generators.invoke("rest_kit:route", ["api_post_tags"] + params)
+    Rails::Generators.invoke("rest_kit:route", ["api_post_comments"] + params)
+    Rails::Generators.invoke("rest_kit:route", ["api_post_user"] + params)
 
     Dir.chdir(ios_path) {
       Bundler.with_clean_env {

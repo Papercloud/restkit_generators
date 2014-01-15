@@ -1,0 +1,5 @@
+Description:
+    Create a RKRoute and any RKResponseDescriptor instances required to map its response.
+
+Example:
+    rails generate restkit:route api_posts --serializer=PostSerializer

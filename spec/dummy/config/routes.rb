@@ -6,7 +6,11 @@ Dummy::Application.routes.draw do
   # root 'welcome#index'
 
   namespace :api do
-    resources :posts, only: [:index]
+    resources :posts, only: [:index, :show] do
+      resources :comments, only: [:index]
+      resources :tags, only: [:index]
+      resource :user, only: [:show]
+    end
   end
 
   # Example of regular route:

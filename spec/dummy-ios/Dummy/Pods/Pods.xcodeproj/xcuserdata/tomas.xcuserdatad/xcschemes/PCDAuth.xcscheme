@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "29DA09B03D8D4203B2B793E1"
+               BlueprintIdentifier = "C6FF4CD74E2947C39C80241B"
                BuildableName = "PCDAuth.bundle"
                BlueprintName = "PCDAuth"
                ReferencedContainer = "container:Pods.xcodeproj">

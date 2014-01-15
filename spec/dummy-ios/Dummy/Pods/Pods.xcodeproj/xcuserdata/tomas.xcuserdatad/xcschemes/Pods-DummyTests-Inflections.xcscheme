@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E0541B974EE34257BB1FC6F4"
+               BlueprintIdentifier = "773117D5C6E34C839D3F5337"
                BuildableName = "libPods-DummyTests-Inflections.a"
                BlueprintName = "Pods-DummyTests-Inflections"
                ReferencedContainer = "container:Pods.xcodeproj">

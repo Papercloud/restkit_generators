@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "PCDefaults.h"
+#import "Generated/RKObjectManager+Routes.h"
 
 @implementation AppDelegate
 
@@ -19,6 +20,9 @@
     RKObjectManager *manager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://0.0.0.0:3000"]];
     manager.managedObjectStore = [RKManagedObjectStore defaultStore];
     [RKObjectManager setSharedManager:manager];
+    
+    [RKObjectManager setupRoutes];
+    
     return YES;
 }
 							

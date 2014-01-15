@@ -1,4 +1,4 @@
-module RestkitGenerators
+module RestKit
   class IosModelGenerator < Rails::Generators::NamedBase
     class_option :ios_path, type: :string, default: Rails.root
     class_option :include_timestamps, type: :boolean, default: false
@@ -9,7 +9,7 @@ module RestkitGenerators
       File.join(File.expand_path(options[:ios_path]), 'Generated', 'gen', filename)
     end
 
-    def embed_template(source, indent='')
+    def embed_template(source, indent='', binding=binding)
       template = File.join(self.class.source_root, source)
       ERB.new(IO.read(template), nil, '-').result(binding).gsub(/^/, indent)
     end

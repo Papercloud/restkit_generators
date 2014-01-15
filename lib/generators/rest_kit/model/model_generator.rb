@@ -1,4 +1,4 @@
-module RestkitGenerators
+module RestKit
   class ModelGenerator < IosModelGenerator
     source_root File.expand_path('../templates', __FILE__)
 

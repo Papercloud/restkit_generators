@@ -1,0 +1,9 @@
+#import <RestKit/RestKit.h>
+#import "Generated.h"
+<% (associations + [root_name]).each do |association| -%>
+#import "<%= ios_base_class_name(association) %>+Mapping.h"
+<% end -%>
+
+@interface RKObjectManager (<%= category_name %>)
++ (void)setup<%= category_name %>WithObjectManager:(RKObjectManager *)objectManager;
+@end
