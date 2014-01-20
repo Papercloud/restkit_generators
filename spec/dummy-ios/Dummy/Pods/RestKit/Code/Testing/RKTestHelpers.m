@@ -80,7 +80,7 @@
     
     // Extract the dynamic portions of the path pattern to construct a set of parameters
     SOCPattern *pattern = [SOCPattern patternWithString:pathPattern];
-    NSArray *parameterNames = [pattern valueForKey:@"parameters.string"];
+    NSArray *parameterNames = [pattern valueForKeyPath:@"parameters.string"];
     NSMutableDictionary *stubbedParameters = [NSMutableDictionary dictionaryWithCapacity:[parameterNames count]];
     for (NSString *parameter in parameterNames) {
         [stubbedParameters setValue:@"value" forKey:parameter];
@@ -126,7 +126,7 @@
     [[NSURLCache sharedURLCache] storeCachedResponse:cachedResponse forRequest:request];
     
     // Verify that we can get the cached response back
-    NSCachedURLResponse *storedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
+    NSCachedURLResponse *__unused storedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
     NSAssert(storedResponse, @"Expected to retrieve cached response for request '%@', instead got nil.", request);
     
     return cachedResponse;

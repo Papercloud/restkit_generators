@@ -58,7 +58,19 @@
 #define COCOAPODS_POD_AVAILABLE_PCDefaults
 #define COCOAPODS_VERSION_MAJOR_PCDefaults 0
 #define COCOAPODS_VERSION_MINOR_PCDefaults 0
-#define COCOAPODS_VERSION_PATCH_PCDefaults 5
+#define COCOAPODS_VERSION_PATCH_PCDefaults 9
+
+// PCDefaults/Auth
+#define COCOAPODS_POD_AVAILABLE_PCDefaults_Auth
+#define COCOAPODS_VERSION_MAJOR_PCDefaults_Auth 0
+#define COCOAPODS_VERSION_MINOR_PCDefaults_Auth 0
+#define COCOAPODS_VERSION_PATCH_PCDefaults_Auth 9
+
+// PCDefaults/Core
+#define COCOAPODS_POD_AVAILABLE_PCDefaults_Core
+#define COCOAPODS_VERSION_MAJOR_PCDefaults_Core 0
+#define COCOAPODS_VERSION_MINOR_PCDefaults_Core 0
+#define COCOAPODS_VERSION_PATCH_PCDefaults_Core 9
 
 // RKValueTransformers
 #define COCOAPODS_POD_AVAILABLE_RKValueTransformers

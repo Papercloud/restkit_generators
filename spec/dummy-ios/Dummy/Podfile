@@ -2,9 +2,10 @@ platform :ios, '6.1'
 
 inhibit_all_warnings!
 
-pod 'Generated', :path => './'
-pod 'PCDefaults', :path => '~/Work/Tools/PCDefaultsDemo'
-
+pod 'Generated', :path => './Generated.podspec'
+pod 'PCDefaults', :path => '~/Work/Tools/PCDefaultsDemo/PCDefaults.podspec'
+pod 'PCDefaults/Auth', :path => '~/Work/Tools/PCDefaultsDemo/PCDefaults.podspec'
+pod 'RestKit', git: 'git@github.com:markst/RestKit.git', commit: '5ea7f9c510dd440dcc686ee0b64c358be8515430'
 target 'DummyTests', :exclusive => false do
 pod 'RestKit/Testing'
 pod 'RestKit/Search'

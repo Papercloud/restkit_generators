@@ -7,11 +7,28 @@ module RestKit
       template "implementation.m.erb",  destination_path("#{filename}.m")
     end
 
+    def generate_stub_model_class
+      if not user_overwritten?
+        template "temp_scaffold_interface.h.erb",       destination_path("#{overwrite_filename}.h")
+        template "temp_scaffold_implementation.m.erb",  destination_path("#{overwrite_filename}.m")
+      end
+    end
+
     def generate_shared_header_inclusion
       template "shared_header.h.erb", destination_path("Generated.h"), skip: true
+      
       inject_into_file destination_path("Generated.h"), after: "// Forward class declarations\n" do
-        "@class #{overwrite_filename};\n"
+        "@class #{filename};\n"
       end
+
+      if not user_overwritten?
+        inject_into_file destination_path("Generated.h"), after: "// Temporary stub headers.\n" do
+          "#import \"#{overwrite_filename}.h\"\n"
+        end
+      else
+        gsub_file(destination_path("Generated.h"), /#import "Post.h"\n/, '')
+      end
+      
       inject_into_file destination_path("Generated.h"), after: "// Header includes\n" do
         "#import \"#{filename}.h\"\n"
       end

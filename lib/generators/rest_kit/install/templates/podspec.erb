@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Generated/*{h,m}'
   s.ios.deployment_target = '6.0'
   s.resources = 'Generated/**/DataModel.xcdatamodeld'
-  s.dependency 'RestKit'
+  s.dependency 'RestKit', git: 'git@github.com:markst/RestKit.git', commit: '5ea7f9c510dd440dcc686ee0b64c358be8515430'
 
   s.subspec 'Routes' do |ss|
     ss.source_files = 'Generated/Routes/*{h,m}'

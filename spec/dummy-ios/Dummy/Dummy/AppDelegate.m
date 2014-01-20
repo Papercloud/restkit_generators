@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "PCDefaults.h"
+#import "PCDefaults/Auth.h"
 #import "Generated/RKObjectManager+Routes.h"
 
 @implementation AppDelegate

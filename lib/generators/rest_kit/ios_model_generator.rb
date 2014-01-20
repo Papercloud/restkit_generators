@@ -22,7 +22,10 @@ module RestKit
       ios_project_root = options[:ios_path]
       raise "Couldn't find iOS project at #{ios_project_root}" unless File.directory? File.expand_path(ios_project_root)
 
-      return Dir.glob(File.join(File.expand_path(ios_project_root), "**/#{filename}")).length > 0
+      return Dir[File.join(File.expand_path(ios_project_root), "**/#{filename}")].reject{ |f| 
+        f.include? File.join(File.expand_path(ios_project_root), "Generated") \
+        or f.include? File.join(File.expand_path(ios_project_root), "Pods")
+      }.length > 0
     end
 
     def ios_attr_name(attr_name)

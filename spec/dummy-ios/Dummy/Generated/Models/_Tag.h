@@ -1,6 +1,6 @@
-#import "Generated.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+@class Post;
 
 @interface _Tag : NSManagedObject
 
@@ -12,8 +12,3 @@
 @property (nonatomic, retain) NSOrderedSet *posts;
 
 @end
-
-// Stub out 'Tag' as scaffolding and for testing.
-// This will be removed if you add a Tag.h file within 
-// your project directory and re-run the generator.
-@interface Tag : _Tag @end

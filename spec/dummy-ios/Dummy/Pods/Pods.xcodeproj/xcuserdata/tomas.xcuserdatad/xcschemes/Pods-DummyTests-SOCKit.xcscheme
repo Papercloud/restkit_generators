@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "53D519A45D8F4DBCBBD27124"
+               BlueprintIdentifier = "6F8B2F1755D04EE8B4D50B05"
                BuildableName = "libPods-DummyTests-SOCKit.a"
                BlueprintName = "Pods-DummyTests-SOCKit"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -1,6 +1,8 @@
-#import "Generated.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+<% associations.each do |association| -%>
+@class <%= ios_class_name(association.name) %>;
+<% end -%>
 
 @interface <%= filename %> : NSManagedObject
 
@@ -17,10 +19,3 @@
 <% end -%>
 
 @end
-
-<% if not user_overwritten? -%>
-// Stub out '<%= overwrite_filename %>' as scaffolding and for testing.
-// This will be removed if you add a <%= overwrite_filename %>.h file within 
-// your project directory and re-run the generator.
-@interface <%= overwrite_filename %> : <%= filename %> @end
-<% end %>

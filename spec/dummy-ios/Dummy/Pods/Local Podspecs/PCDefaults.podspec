@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'PCDefaults'
-  s.version  = '0.0.5'
+  s.version  = '0.0.9'
   s.platform = :ios
   s.license  = { :type => 'Custom', :text => 'Copyright (c) 2013 Papercloud. All rights reserved.' }
   s.summary  = 'Helpers to quickly create patterns we use often.'
@@ -9,12 +9,24 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/Papercloud/PCDefaults.git',
            :tag => s.version.to_s }
   s.requires_arc = true
-  s.source_files = 'PCDefaults/**/*{h,m}'
   s.ios.deployment_target = '6.0'
   s.dependency 'RestKit'
   s.dependency 'Inflections'
   s.dependency 'MagicalRecord'
-  s.frameworks = 'CoreData'
-  s.resource_bundles = { 'PCDAuth' => ['PCDefaults/Authentication/PCDAuth.storyboard'] }
+  s.frameworks = 'CoreData', 'CoreLocation'
+  s.default_subspec = 'Core'
 
+  s.subspec 'Core' do |ss|
+    ss.source_files = 'PCDefaults/Core/*{h,m}'
+  end
+
+  s.subspec 'Map' do |ss|
+    ss.source_files = 'PCDefaults/Map/*{h,m}'
+    ss.dependency     'Google-Maps-iOS-SDK'
+  end
+
+  s.subspec 'Auth' do |ss|
+    ss.source_files = 'PCDefaults/Authentication/**/*{h,m}'
+    ss.resource_bundles = { 'PCDAuth' => ['PCDefaults/Authentication/PCDAuth.storyboard'] }
+  end
 end

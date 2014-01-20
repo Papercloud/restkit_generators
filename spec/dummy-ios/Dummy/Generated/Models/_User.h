@@ -1,6 +1,6 @@
-#import "Generated.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+@class Post;
 
 @interface _User : NSManagedObject
 
@@ -12,4 +12,3 @@
 @property (nonatomic, retain) NSOrderedSet *posts;
 
 @end
-

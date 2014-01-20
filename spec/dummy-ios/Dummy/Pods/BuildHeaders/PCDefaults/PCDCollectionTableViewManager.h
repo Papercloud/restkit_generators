@@ -1,1 +1,1 @@
-../../../../../../../PCDefaultsDemo/PCDefaults/PCDCollectionTableViewManager.h
+../../../../../../../PCDefaultsDemo/PCDefaults/Core/PCDCollectionTableViewManager.h

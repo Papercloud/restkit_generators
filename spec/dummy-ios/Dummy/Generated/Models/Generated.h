@@ -1,8 +1,12 @@
 // Forward class declarations
-@class User;
-@class Tag;
-@class Post;
-@class Comment;
+@class _User;
+@class _Tag;
+@class _Post;
+@class _Comment;
+
+// Temporary stub headers.
+#import "Tag.h"
+#import "Comment.h"
 
 // Header includes
 #import "_User.h"

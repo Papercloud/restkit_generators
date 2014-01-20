@@ -1,6 +1,8 @@
-#import "Generated.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+@class Comment;
+@class User;
+@class Tag;
 
 @interface _Post : NSManagedObject
 
@@ -18,4 +20,3 @@
 @property (nonatomic, retain) NSOrderedSet *tags;
 
 @end
-

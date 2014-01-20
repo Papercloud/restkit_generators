@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A15220B5B5E94E648C2E3631"
+               BlueprintIdentifier = "C783F6D2EC274E52B3B75A36"
                BuildableName = "libPods-DummyTests-MagicalRecord.a"
                BlueprintName = "Pods-DummyTests-MagicalRecord"
                ReferencedContainer = "container:Pods.xcodeproj">
