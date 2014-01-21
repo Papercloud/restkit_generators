@@ -11,6 +11,9 @@ module RestKit
       if not user_overwritten?
         template "temp_scaffold_interface.h.erb",       destination_path("#{overwrite_filename}.h")
         template "temp_scaffold_implementation.m.erb",  destination_path("#{overwrite_filename}.m")
+      else
+        remove_file destination_path("#{overwrite_filename}.h")
+        remove_file destination_path("#{overwrite_filename}.m")
       end
     end
 
