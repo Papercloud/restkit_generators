@@ -68,7 +68,8 @@ module RestKit
         "integer" => "Integer 32",
         "string" => "String",
         "text" => "String",
-        "date" => "Date"
+        "date" => "Date",
+        "boolean" => "Boolean"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type
       type
@@ -98,7 +99,8 @@ module RestKit
         "string" => "NSString *",
         "text" => "NSString *",
         "date" => "NSDate *",
-        "datetime" => "NSDate *"
+        "datetime" => "NSDate *",
+        "boolean" => "BOOL"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into an Objective-C type" unless type
       type
