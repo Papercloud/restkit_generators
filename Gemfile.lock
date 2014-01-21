@@ -3,6 +3,7 @@ PATH
   specs:
     restkit_generators (0.0.1)
       rails (~> 4.0.2)
+      xcodeproj
 
 GEM
   remote: https://rubygems.org/
@@ -97,6 +98,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
+    xcodeproj (0.1.0)
 
 PLATFORMS
   ruby

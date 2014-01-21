@@ -1,0 +1,5 @@
+Description:
+    Creates a directory and group structure under the Screens group, with sub-folders for Controllers, Views and XIBs
+
+Example:
+    rails generate rest_kit:screen Sales
