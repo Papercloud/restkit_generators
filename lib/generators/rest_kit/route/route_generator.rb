@@ -33,7 +33,10 @@ module RestKit
       inject_into_file destination_path("RKObjectManager+Routes.m"), after: "{\n" do |config|
         "  [self setup#{category_name}WithObjectManager:[RKObjectManager sharedManager]];\n"
       end
+    end
 
+    def update_project
+      pod_install
     end
 
     private

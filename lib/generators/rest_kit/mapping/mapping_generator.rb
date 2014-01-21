@@ -7,6 +7,10 @@ module RestKit
       template "implementation.m.erb",  destination_path("#{filename}.m")
     end
 
+    def update_project
+      pod_install
+    end
+
     private
 
     def destination_path(path)
