@@ -45,7 +45,7 @@ module RestKit
     end
 
     def model_name
-      name.capitalize
+      name.camelize
     end
 
     def model
