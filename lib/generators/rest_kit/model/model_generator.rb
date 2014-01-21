@@ -100,7 +100,7 @@ module RestKit
         "text" => "NSString *",
         "date" => "NSDate *",
         "datetime" => "NSDate *",
-        "boolean" => "BOOL"
+        "boolean" => "BOOL "
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into an Objective-C type" unless type
       type
