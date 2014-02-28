@@ -1,6 +1,7 @@
 module RestKit
   class ModelGenerator < IosModelGenerator
     source_root File.expand_path('../templates', __FILE__)
+    class_option :data_model_path, type: :string, required: false, description: "Path to an existing /contents file with an xcdatamodel. Usually for your most recent model version."
 
     def generate_model_classes
       template "interface.h.erb",       destination_path("#{filename}.h")
@@ -38,17 +39,26 @@ module RestKit
     end
 
     def generate_core_data_schema
-      empty_directory destination_path("DataModel.xcdatamodeld"), skip: true
-      empty_directory destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel"), skip: true
-      template "core_data.xcdatamodeld.erb", destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents"), skip: true
+
+      # See if we're altering an existing data model.
+      data_model_path = options[:data_model_path]
+
+      if not data_model_path
+        empty_directory destination_path("DataModel.xcdatamodeld"), skip: true
+        empty_directory destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel"), skip: true
+        template "core_data.xcdatamodeld.erb", destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents"), skip: true
+        data_model_path = destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents")
+      else
+        data_model_path = File.join(File.expand_path(options[:ios_path]), data_model_path)
+      end
       
       # Inject entity
-      inject_into_file destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents"), before: "<elements>" do |config|
+      inject_into_file data_model_path, before: "<elements>" do |config|
         embed_template("entity.xml.erb", "    ")
       end
 
       # Add to elements list
-      inject_into_file destination_path("DataModel.xcdatamodeld/DataModel.xcdatamodel/contents"), before: "</elements>" do |config|
+      inject_into_file data_model_path, before: "</elements>" do |config|
         "<element name=\"#{model_name}\" positionX=\"0\" positionY=\"0\" width=\"0\" height=\"0\"/>\n"
       end
     end
