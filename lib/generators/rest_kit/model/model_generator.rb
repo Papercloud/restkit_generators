@@ -30,7 +30,7 @@ module RestKit
           "#import \"#{overwrite_filename}.h\"\n"
         end
       else
-        gsub_file(destination_path("Generated.h"), /#import "Post.h"\n/, '')
+        gsub_file(destination_path("Generated.h"), /#import "#{overwrite_filename}.h"\n/, '')
       end
       
       inject_into_file destination_path("Generated.h"), after: "// Header includes\n" do
