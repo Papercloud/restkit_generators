@@ -79,6 +79,7 @@ module RestKit
         "string" => "String",
         "text" => "String",
         "date" => "Date",
+        "datetime" => "Date",
         "boolean" => "Boolean"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type

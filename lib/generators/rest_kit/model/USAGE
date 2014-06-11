@@ -2,4 +2,4 @@ Description:
     Create an NSManagedObject subclass from an ActiveModel subclass, with Core Data entity and properties.
 
 Example:
-    rails generate restkit:model Post
+    rails generate rest_kit:model Post
