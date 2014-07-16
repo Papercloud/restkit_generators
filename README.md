@@ -1,6 +1,8 @@
 ## RestKit Generators for Rails
 ##### Generate iOS code to talk to your Rails API
 
+**Warning: This is a work in progress and isn't ready for public consumption. It may still depend on other private libraries.**
+
 ### Getting Started
 
 Add the gem to your Gemfile in Rails:
