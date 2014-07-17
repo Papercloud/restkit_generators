@@ -96,10 +96,10 @@ module RestKit
 
     def inverse_of(association)
       explicit_inverse = association.options[:inverse_of]
-      associated_class = association.class_name.constantize 
+      associated_class = association.class_name.constantize rescue nil
       if explicit_inverse
         associated_class.reflect_on_assocation(explicit_inverse)
-      else
+      elsif associated_class
         associated_class.reflect_on_association(association.active_record.name.underscore.to_sym) || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.to_sym)
       end
     end
