@@ -1,9 +1,0 @@
-= RestkitGenerators
-
-Generate RestKit models, Core Data entities and mappings from ActiveRecord.
-
-Assumes active_model_serializers with 
-```
-embed :ids, include: true
-```
-Which is a global config in AMS 0.9 anyway.
