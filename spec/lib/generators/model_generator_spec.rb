@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe RestkitGenerators::ModelGenerator do
+describe RestKit::ModelGenerator do
 
   destination File.join(RestkitGenerators::Engine.root, "spec/dummy-ios/Dummy/Generated")
-  arguments %w( Post )
+  arguments ["Post", "--ios-path=#{File.join(RestkitGenerators::Engine.root, 'spec/dummy-ios/Dummy/')}"]
 
   before(:all) do
     prepare_destination
@@ -11,11 +11,11 @@ describe RestkitGenerators::ModelGenerator do
   end
 
   it "creates an interface file" do
-    assert_file File.join(destination_root, "gen/_Post.h")
+    assert_file File.join(destination_root, "Models/_Post.h")
   end
 
   it "creates an implementation file" do
-    assert_file File.join(destination_root, "gen/_Post.m")
+    assert_file File.join(destination_root, "Models/_Post.m")
   end
   
 end
