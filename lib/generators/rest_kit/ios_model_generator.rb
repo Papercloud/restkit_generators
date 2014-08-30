@@ -6,6 +6,7 @@ module RestKit
     class_option :ios_path, type: :string, required: true
     class_option :include_timestamps, type: :boolean, default: false
     class_option :skip_pod_install, type: :boolean, required: false, default: false
+    class_option :exclude_columns, type: :string, required: false, description: "Comma separated list of columns to exclude"
 
     protected
 
@@ -72,9 +73,16 @@ module RestKit
       (macro == :has_many or macro == :has_and_belongs_to_many)
     end
 
+    def excluded_columns
+      excluded_columns = []
+      excluded_columns += ["created_at", "updated_at"] unless options[:include_timestamps]
+      excluded_columns += options[:exclude_columns].split(",") if options[:exclude_columns]
+      excluded_columns
+    end
+
     def columns
       columns = model.columns
-      columns = columns.select{|c| not c.name.in? ["created_at", "updated_at"]} if not options[:skip_namespace]
+      columns = columns.select{|c| not c.name.in? excluded_columns }
       columns
     end
 

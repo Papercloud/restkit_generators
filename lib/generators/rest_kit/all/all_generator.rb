@@ -19,10 +19,13 @@ class RestKit::AllGenerator < Rails::Generators::Base
 
     # Generate model classes and Core Data entities.
     model_class_names.each do |name|
-      args = name
+      args = ''
+      args << name
       args << " --ios-path=#{options[:ios_path]}" if options[:ios_path]
       args << " --data-model-path=#{options[:data_model_path]}" if options[:data_model_path]
       args << " --skip-pod-install=true"
+      args << " --exclude-columns=#{excluded_columns_for_model(name).join(',')}"
+      puts "Invoking rest_kit:model " + args
       generate "rest_kit:model", args
     end
 
@@ -74,6 +77,13 @@ class RestKit::AllGenerator < Rails::Generators::Base
     {
       'exclude_models' => default_excluded_model_class_names
     }
+  end
+
+  # @param model_name [String] The model's name
+  # @return [Array<String>] Columns to exclude for this model. Returns an empty array if none.
+  def excluded_columns_for_model(model_name)
+    # config[:models][model_name][:exclude]
+    config.fetch(:models, {}).fetch(model_name, {}).fetch(:exclude, [])
   end
 
   # Path of the YAML config file used to persist settings for excluding classes between runs
