@@ -64,7 +64,7 @@ module RestKit
     end
 
     def update_project
-      pod_install
+      pod_install unless options[:skip_pod_install]
     end
 
     private
@@ -80,7 +80,8 @@ module RestKit
         "text" => "String",
         "date" => "Date",
         "datetime" => "Date",
-        "boolean" => "Boolean"
+        "boolean" => "Boolean",
+        "inet" => "String"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type
       type
@@ -111,7 +112,8 @@ module RestKit
         "text" => "NSString *",
         "date" => "NSDate *",
         "datetime" => "NSDate *",
-        "boolean" => "BOOL "
+        "boolean" => "BOOL ",
+        "inet" => "NSString *"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into an Objective-C type" unless type
       type

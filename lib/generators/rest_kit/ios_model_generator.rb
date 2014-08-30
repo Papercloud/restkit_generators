@@ -1,8 +1,11 @@
+require_relative './helpers'
+
 module RestKit
   # Abstract base class for iOS Mapping, Model and Route generators.
   class IosModelGenerator < Rails::Generators::NamedBase
     class_option :ios_path, type: :string, required: true
     class_option :include_timestamps, type: :boolean, default: false
+    class_option :skip_pod_install, type: :boolean, required: false, default: false
 
     protected
 
@@ -75,13 +78,7 @@ module RestKit
       columns
     end
 
-    def pod_install
-      Dir.chdir(options[:ios_path]) {
-        Bundler.with_clean_env {
-          system 'pod install --no-repo-update'
-        }
-      }
-    end
+    include RestKit::Helpers
 
   end
 end
