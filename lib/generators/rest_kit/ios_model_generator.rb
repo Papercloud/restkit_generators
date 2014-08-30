@@ -1,4 +1,5 @@
 module RestKit
+  # Abstract base class for iOS Mapping, Model and Route generators.
   class IosModelGenerator < Rails::Generators::NamedBase
     class_option :ios_path, type: :string, required: true
     class_option :include_timestamps, type: :boolean, default: false

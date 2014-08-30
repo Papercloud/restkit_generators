@@ -5,5 +5,8 @@ module RestkitGenerators
       g.assets false
       g.helper false
     end
+
+    Rails::Generators.hide_namespace "rest_kit:ios_model"
+
   end
 end
