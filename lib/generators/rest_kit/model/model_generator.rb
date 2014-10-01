@@ -20,7 +20,7 @@ module RestKit
 
     def generate_shared_header_inclusion
       template "shared_header.h.erb", destination_path("Generated.h"), skip: true
-      
+
       inject_into_file destination_path("Generated.h"), after: "// Forward class declarations\n" do
         "@class #{filename};\n"
       end
@@ -32,7 +32,7 @@ module RestKit
       else
         gsub_file(destination_path("Generated.h"), /#import "#{overwrite_filename}.h"\n/, '')
       end
-      
+
       inject_into_file destination_path("Generated.h"), after: "// Header includes\n" do
         "#import \"#{filename}.h\"\n"
       end
@@ -51,7 +51,7 @@ module RestKit
       else
         data_model_path = File.join(File.expand_path(options[:ios_path]), data_model_path)
       end
-      
+
       # Inject entity
       inject_into_file data_model_path, before: "<elements>" do |config|
         embed_template("entity.xml.erb", "    ")
@@ -80,7 +80,9 @@ module RestKit
         "text" => "String",
         "date" => "Date",
         "datetime" => "Date",
-        "boolean" => "Boolean"
+        "boolean" => "Boolean",
+        "float" => "Float",
+        "json" => "String"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type
       type
@@ -111,7 +113,9 @@ module RestKit
         "text" => "NSString *",
         "date" => "NSDate *",
         "datetime" => "NSDate *",
-        "boolean" => "BOOL "
+        "boolean" => "BOOL ",
+        "float" => "NSDecimalNumber *",
+        "json" => "NSString *"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into an Objective-C type" unless type
       type
