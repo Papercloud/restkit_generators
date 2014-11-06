@@ -7,30 +7,30 @@
 
 + (RKObjectMapping *)<%= category_name.camelize(:lower) %>
 {
-  RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
-  RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"<%= ios_class_name(model_name) %>"
-                                                 inManagedObjectStore:managedObjectStore];
-  mapping.identificationAttributes = @[@"primaryKey"];
+    RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
+    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"<%= ios_class_name(model_name) %>"
+                                                   inManagedObjectStore:managedObjectStore];
+    mapping.identificationAttributes = @[@"primaryKey"];
 
   // Plain attributes
   [mapping addAttributeMappingsFromDictionary:
-  @{
+     @{
 <%= (columns.map(&:name).map { |atr| 
-"   @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }\
+"       @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }\
 + has_many_associations.map { |a| 
-"   @\"" + a.name.to_s.singularize + "_ids\" : @\"" + ios_attr_name(a.name.to_s.singularize + "_ids") + "\"" }).join(",\n")
+"       @\"" + a.name.to_s.singularize + "_ids\" : @\"" + ios_attr_name(a.name.to_s.singularize + "_ids") + "\"" }).join(",\n")
 %>
-  }];
+       }];
 
 <% has_many_associations.map(&:name).each do |k| -%>
-  [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_ids") %>" : @"<%= id_name %>"}];
+    [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_ids") %>" : @"<%= id_name %>"}];
 <% end -%>
 
 <% belongs_to_associations.map(&:name).each do |k| -%>
-  [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_id") %>" : @"<%= id_name %>"}];
+    [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_id") %>" : @"<%= id_name %>"}];
 <% end -%>
 
-  return mapping;
+    return mapping;
 }
 
 @end
