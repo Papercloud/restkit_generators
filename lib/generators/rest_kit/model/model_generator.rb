@@ -81,7 +81,10 @@ module RestKit
         "date" => "Date",
         "datetime" => "Date",
         "boolean" => "Boolean",
-        "inet" => "String"
+        "inet" => "String",
+        "float" => "Float",
+        "json" => "String",
+        "uuid" => "String"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type
       type
@@ -113,7 +116,10 @@ module RestKit
         "date" => "NSDate *",
         "datetime" => "NSDate *",
         "boolean" => "BOOL ",
-        "inet" => "NSString *"
+        "inet" => "NSString *",
+        "float" => "NSDecimalNumber *",
+        "json" => "NSString *",
+        "uuid" => "NSString *"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into an Objective-C type" unless type
       type
