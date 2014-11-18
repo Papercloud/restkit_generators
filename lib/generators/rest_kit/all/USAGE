@@ -1,0 +1,5 @@
+Description:
+    Create an iOS SDK with models, mappings and routes for this Rails app.
+
+Example:
+    rails generate rest_kit:all

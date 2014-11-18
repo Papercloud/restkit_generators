@@ -64,7 +64,7 @@ module RestKit
     end
 
     def update_project
-      pod_install
+      pod_install unless options[:skip_pod_install]
     end
 
     private
@@ -81,8 +81,7 @@ module RestKit
         "date" => "Date",
         "datetime" => "Date",
         "boolean" => "Boolean",
-        "float" => "Float",
-        "json" => "String"
+        "inet" => "String"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type
       type
@@ -100,7 +99,7 @@ module RestKit
       explicit_inverse = association.options[:inverse_of]
       associated_class = association.class_name.constantize rescue nil
       if explicit_inverse
-        associated_class.reflect_on_assocation(explicit_inverse)
+        associated_class.reflect_on_association(explicit_inverse)
       elsif associated_class
         associated_class.reflect_on_association(association.active_record.name.underscore.to_sym) || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.to_sym)
       end
@@ -114,8 +113,7 @@ module RestKit
         "date" => "NSDate *",
         "datetime" => "NSDate *",
         "boolean" => "BOOL ",
-        "float" => "NSDecimalNumber *",
-        "json" => "NSString *"
+        "inet" => "NSString *"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into an Objective-C type" unless type
       type
