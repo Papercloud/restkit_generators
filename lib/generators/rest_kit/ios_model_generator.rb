@@ -1,4 +1,5 @@
 require_relative './helpers'
+require 'ostruct'
 
 module RestKit
   # Abstract base class for iOS Mapping, Model and Route generators.
@@ -83,9 +84,32 @@ module RestKit
     def columns
       columns = model.columns
       columns = columns.select{|c| not c.name.in? excluded_columns }
+      columns += additional_columns
       columns
     end
 
+    # @param model_name [String] The model's name
+    # @return [Array<String>] Columns to exclude for this model. Returns an empty array if none.
+    def excluded_columns_for_model(model_name)
+      config.fetch(:models, {}).fetch(model_name, {}).fetch(:exclude, [])
+    end
+
+    # @param model_name [String] The model's name
+    # @return [Array<Object>] Columns to add for this model (iOS config file should define name and type).
+    # Returns an empty array if none.
+    def additional_columns
+      additions = config.fetch(:models, {}).fetch(model_name, {}).fetch(:additions, [])
+
+      columns = []
+      additions.each do |a|
+        columns << photo = OpenStruct.new(
+          name: a[:name],
+          type: a[:type]
+        )
+      end
+
+      columns
+    end
     include RestKit::Helpers
 
   end
