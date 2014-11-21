@@ -8,6 +8,8 @@ module RestKit
     end
 
     def add_pod
+      pod_init unless Pathname.new(destination_path("Podfile")).exist?
+
       append_to_file destination_path("Podfile") do |config|
         "pod 'Generated', :path => './Generated.podspec'"
       end
