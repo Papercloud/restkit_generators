@@ -19,6 +19,16 @@ module RestKit
       empty_directory destination_path("Generated")
     end
 
+    def generate_config_file
+      unless File.exist? config_file_path
+        template "ios_sdk_config.yml.erb", config_file_path
+      else
+        puts "Using existing config gile at #{config_file_path}"
+      end
+    end
+
+    include RestKit::Helpers
+
     private
 
     def destination_path(filename=nil)
