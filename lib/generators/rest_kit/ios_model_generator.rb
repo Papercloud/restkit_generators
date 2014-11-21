@@ -1,5 +1,4 @@
 require_relative './helpers'
-require 'ostruct'
 
 module RestKit
   # Abstract base class for iOS Mapping, Model and Route generators.
@@ -28,7 +27,7 @@ module RestKit
       ios_project_root = options[:ios_path]
       raise "Couldn't find iOS project at #{ios_project_root}" unless File.directory? File.expand_path(ios_project_root)
 
-      return Dir[File.join(File.expand_path(ios_project_root), "**/#{filename}")].reject{ |f| 
+      return Dir[File.join(File.expand_path(ios_project_root), "**/#{filename}")].reject{ |f|
         f.include? File.join(File.expand_path(ios_project_root), "Generated") \
         or f.include? File.join(File.expand_path(ios_project_root), "Pods")
       }.length > 0
@@ -94,39 +93,12 @@ module RestKit
       columns
     end
 
-    # @param model_name [String] The model's name
-    # @return [Array<String>] Columns to exclude for this model. Returns an empty array if none.
     def excluded_columns_for_model(model_name)
-      config.fetch(:models, {}).fetch(model_name, {}).fetch(:exclude, [])
+      config.excluded_columns_for_model(model_name)
     end
 
-    # @param model_name [String] The model's name
-    # @return [Array<Object>] Columns to add for this model (iOS config file should define name and type).
-    # Returns an empty array if none.
     def additional_columns
-      additions = config.fetch(:models, {}).fetch(model_name, {}).fetch(:additions, [])
-
-      columns = []
-      additions.each do |a|
-        columns << photo = OpenStruct.new(
-          name: a[:name],
-          type: a[:type]
-        )
-      end
-
-      columns
-    end
-
-    # Path of the YAML config file used to persist settings for excluding classes between runs
-    # of this generator.
-    # @return [String] Absolute path to the config file.
-    def config_file_path
-      Rails.root.join('.ios_sdk_config.yml')
-    end
-
-    # @return [Hash] Config loaded from YAML config file.
-    def config
-      @config ||= YAML.load(File.open(config_file_path)).with_indifferent_access
+      config.additional_columns_for_model(model_name)
     end
 
     include RestKit::Helpers

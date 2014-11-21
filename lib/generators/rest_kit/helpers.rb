@@ -1,3 +1,5 @@
+require_relative './config'
+
 module RestKit
   module Helpers
 
@@ -17,6 +19,10 @@ module RestKit
           system 'pod install --no-repo-update'
         }
       }
+    end
+
+    def config
+      @config ||= Config.new()
     end
 
     # @return [Array<String>] Model class names that we want to exclude by default. Used to seed the config file.
