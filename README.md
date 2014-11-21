@@ -22,6 +22,14 @@ rails g rest_kit:install --ios-path=/Users/me/myWork/myiOSProject
 
 ### Features
 
+* Generate Configuration
+
+A configuration file, `.ios_sdk_config.yml`, can be generated to allow excluding models / columns, as well as adding in additional columns for the iOS model that might not be persisted on the backend. This will also generate the podspec and folder where your SDK will be generated (as well as a Podfile if you don't have one yet).
+
+```
+rails g rest_kit:install --ios-path=../path/to/ios/project/dir
+```
+
 * Generate Models
 
 A _ModelName class is generated with all the properties that your Serializer of the same name exposes, plus a Core Data entity is added. A ModelName class is also created if it doesn't already exist. If you create your own file named ModelName within your project directory, and re-run the generator, the auto-generated one will be removed.
@@ -42,6 +50,10 @@ This take a route name, including namespace, as it would be used in a named rout
 ```
 rails g rest_kit:route api_countries --ios-path=../path/to/ios/project/dir
 ```
+
+### Configuration
+
+
 
 ### Notes & Caveats
 
