@@ -59,15 +59,15 @@ module RestKit
     end
 
     def associations
-      model.reflect_on_all_associations
+      model.reflect_on_all_associations.reject{ |a| excluded_columns.include?(a.name.to_s) }
     end
 
     def has_many_associations
-      associations.select{|a| macro_to_many?(a.macro) }
+      associations.select{ |a| macro_to_many?(a.macro) }
     end
 
     def belongs_to_associations
-      associations.select{|a| not macro_to_many?(a.macro) }
+      associations.select{ |a| not macro_to_many?(a.macro) }
     end
 
     def macro_to_many?(macro)
