@@ -11,7 +11,7 @@ module RestKit
     end
 
     def excluded_models
-      @options.fetch(:exclude_models, {})
+      @options.fetch(:exclude_models, [])
     end
 
     # @param model_name [String] The model's name
