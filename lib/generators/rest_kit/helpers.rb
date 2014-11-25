@@ -22,26 +22,7 @@ module RestKit
     end
 
     def config
-      @config ||= Config.new()
-    end
-
-    # @return [Array<String>] Model class names that we want to exclude by default. Used to seed the config file.
-    def default_excluded_model_class_names
-      default_exclusion_regexes = [
-        /AdminUser$/,
-        /ActiveAdmin/
-      ]
-
-      all_model_class_names.select{ |name|
-        default_exclusion_regexes.any? { |pattern| pattern =~ name }
-      }
-    end
-
-    # @return [Hash] Config to be written to our config file as YAML.
-    def default_config_hash
-      {
-        'exclude_models' => default_excluded_model_class_names
-      }
+      @config ||= Config.new(config_file_path)
     end
 
     # @return [Array<String>] All model class names in the Rails project
@@ -50,6 +31,23 @@ module RestKit
         Dir[Rails.root.join("app/models/**/*.rb")].each {|file| require file }
         ActiveRecord::Base.descendants.map(&:name)
       }.call
+    end
+
+    # @return [Array<String>] Model class names that we want to exclude, according to the config file.
+    def excluded_model_class_names
+      config.excluded_models
+    end
+
+    # @return [Array<String] Model class names that we want included in the SDK.
+    def model_class_names
+      all_model_class_names - excluded_model_class_names
+    end
+
+    # Path of the YAML config file used to persist settings for excluding classes between runs
+    # of this generator.
+    # @return [String] Absolute path to the config file.
+    def config_file_path
+      Rails.root.join('.ios_sdk_config.yml')
     end
 
   end

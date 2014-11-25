@@ -2,9 +2,8 @@ require 'ostruct'
 
 module RestKit
   class Config
-
-    def initialize
-      @options = parse_config
+    def initialize(config_file_path)
+      @options = parse_config(config_file_path)
     end
 
     def models
@@ -25,7 +24,7 @@ module RestKit
     # @return [Array<Object>] Columns to add for this model (iOS config file should define name and type).
     # Returns an empty array if none.
     def additional_columns_for_model(model_name)
-      models.fetch(model_name, {}).fetch(:additions, []).map { |addition|
+      models.fetch(model_name, {}).fetch(:additions, {}).map { |addition|
         OpenStruct.new(
           name: addition[:name],
           type: addition[:type]
@@ -35,15 +34,8 @@ module RestKit
 
     private
 
-    # Path of the YAML config file used to persist settings for excluding classes between runs
-    # of this generator.
-    # @return [String] Absolute path to the config file.
-    def config_file_path
-      Rails.root.join('.ios_sdk_config.yml')
-    end
-
     # @return [Hash] Config loaded from YAML config file.
-    def parse_config
+    def parse_config(config_file_path)
       YAML.load(File.open(config_file_path)).with_indifferent_access
     rescue => e
       puts "No .ios_sdk_config.yml file found!"
