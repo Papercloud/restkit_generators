@@ -58,7 +58,17 @@ module RestKit
     end
 
     def associations
-      model.reflect_on_all_associations.reject{ |a| excluded_columns.include?(a.name.to_s) }
+      associations = model.reflect_on_all_associations.reject{ |a| excluded_columns.include?(a.name.to_s) }
+      associations.map! { |a| a.options[:polymorphic] ? unpolymorphise(a) : a }
+      associations.flatten
+    end
+
+    def unpolymorphise(association)
+      model_class_names.select { |m|
+        association_exists?(m.constantize, association)
+      }.map { |m|
+        OpenStruct.new(name: m.underscore.to_sym, macro: :belongs_to, options: {})
+      }
     end
 
     def has_many_associations
