@@ -24,16 +24,6 @@ class RestKit::AllGenerator < Rails::Generators::Base
 
   private
 
-  # @return [Array<String>] Model class names that we want to exclude, according to the config file.
-  def excluded_model_class_names
-    config.excluded_models
-  end
-
-  # @return [Array<String] Model class names that we want included in the SDK.
-  def model_class_names
-    all_model_class_names - excluded_model_class_names
-  end
-
   # @return [Array<String>] Names of routes that we want included in the SDK.
   def route_names
     model_class_names.map do |model_name|
