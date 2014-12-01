@@ -1,7 +1,7 @@
 module RestKit
   class RouteGenerator < IosModelGenerator
     source_root File.expand_path('../templates', __FILE__)
-    
+
     class_option :strip_namespace, type: :string, default: 'api',\
      desc: "Strip this namespace from the route's name in iOS"
 
@@ -60,7 +60,10 @@ module RestKit
     end
 
     def ios_route_path
-      route.optimized_path + ".json"
+      path = route.optimized_path
+      path = path.join("") if path.is_a? Array
+      path = path + ".json"
+      path
     end
 
     def category_name
