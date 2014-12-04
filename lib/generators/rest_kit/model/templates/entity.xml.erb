@@ -1,4 +1,4 @@
-<entity name="<%= model_name %>" representedClassName="<%= model_name %>" syncable="YES">
+<entity name="<%= model_name %>" representedClassName="<%= model_name %>" <%= "parentEntity=\"#{parent_class.name}\"" if parent_class %> syncable="YES">
 <% columns.each do |column| -%>
   <attribute name="<%= ios_attr_name(column.name) %>" optional="YES" attributeType="<%= core_data_type(column.type) %>" syncable="YES" <% if column.name == 'id' -%>indexed="YES"<% end -%> />
 <% end -%>
@@ -9,6 +9,6 @@
   <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" ordered="YES" toMany="YES" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.class_name) %>" syncable="YES" <% if inverse_of(ass) %>inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.class_name) %>" <% end %>/>
 <% end -%>
 <% belongs_to_associations.each do |ass| -%>
-  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.class_name) %>" syncable="YES" <% if inverse_of(ass) %>inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.class_name) %>" <% end %>/>  
+  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.class_name) %>" syncable="YES" <% if inverse_of(ass) %>inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.class_name) %>" <% end %>/>
 <% end -%>
 </entity>
