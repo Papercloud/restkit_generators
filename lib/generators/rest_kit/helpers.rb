@@ -27,8 +27,8 @@ module RestKit
 
     # @return [Array<String>] All model class names in the Rails project
     def all_model_class_names
-      @all_model_class_names ||= ->{
-        Dir[Rails.root.join("app/models/**/*.rb")].each {|file| require file }
+      @all_model_class_names ||= -> {
+        Rails.application.eager_load!
         ActiveRecord::Base.descendants.map(&:name)
       }.call
     end
@@ -40,7 +40,7 @@ module RestKit
 
     # @return [Array<String] Model class names that we want included in the SDK.
     def model_class_names
-      all_model_class_names - excluded_model_class_names
+      @model_class_names ||= all_model_class_names - excluded_model_class_names
     end
 
     # Path of the YAML config file used to persist settings for excluding classes between runs
