@@ -42,15 +42,19 @@ module RestKit
     end
 
     def ios_class_name(name)
-      name.to_s.singularize.camelize
+      name.to_s.singularize.camelize.gsub(/[:]/, '')
     end
 
     def ios_base_class_name(class_name=nil)
-      "_" + ios_class_name(class_name || model_name)
+      "_" + ios_class_name(class_name || entity_name)
     end
 
     def model_name
       name.camelize
+    end
+
+    def entity_name
+      model_name.gsub(/[:]/, '')
     end
 
     def model
@@ -98,9 +102,22 @@ module RestKit
 
     def columns
       columns = model.columns
+
+      if parent_class
+        columns.reject!{ |c| c.name.in?(parent_class.columns.map(&:name)) }
+      end
+
       columns = columns.select{|c| not c.name.in? excluded_columns }
       columns += additional_columns
       columns
+    end
+
+    def parent_class
+      model.base_class != model ? model.base_class : nil
+    end
+
+    def is_abstract?
+      # binding.pry
     end
 
     def excluded_columns_for_model(model_name)
