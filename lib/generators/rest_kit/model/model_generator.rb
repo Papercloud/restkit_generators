@@ -20,7 +20,7 @@ module RestKit
 
     def generate_shared_header_inclusion
       template "shared_header.h.erb", destination_path("Generated.h"), skip: true
-      
+
       inject_into_file destination_path("Generated.h"), after: "// Forward class declarations\n" do
         "@class #{filename};\n"
       end
@@ -32,7 +32,7 @@ module RestKit
       else
         gsub_file(destination_path("Generated.h"), /#import "#{overwrite_filename}.h"\n/, '')
       end
-      
+
       inject_into_file destination_path("Generated.h"), after: "// Header includes\n" do
         "#import \"#{filename}.h\"\n"
       end
@@ -51,7 +51,7 @@ module RestKit
       else
         data_model_path = File.join(File.expand_path(options[:ios_path]), data_model_path)
       end
-      
+
       # Inject entity
       inject_into_file data_model_path, before: "<elements>" do |config|
         embed_template("entity.xml.erb", "    ")
@@ -64,7 +64,7 @@ module RestKit
     end
 
     def update_project
-      pod_install
+      pod_install unless options[:skip_pod_install]
     end
 
     private
@@ -80,7 +80,11 @@ module RestKit
         "text" => "String",
         "date" => "Date",
         "datetime" => "Date",
-        "boolean" => "Boolean"
+        "boolean" => "Boolean",
+        "inet" => "String",
+        "float" => "Float",
+        "json" => "String",
+        "uuid" => "String"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type
       type
@@ -98,7 +102,7 @@ module RestKit
       explicit_inverse = association.options[:inverse_of]
       associated_class = association.class_name.constantize rescue nil
       if explicit_inverse
-        associated_class.reflect_on_assocation(explicit_inverse)
+        associated_class.reflect_on_association(explicit_inverse)
       elsif associated_class
         associated_class.reflect_on_association(association.active_record.name.underscore.to_sym) || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.to_sym)
       end
@@ -111,7 +115,11 @@ module RestKit
         "text" => "NSString *",
         "date" => "NSDate *",
         "datetime" => "NSDate *",
-        "boolean" => "BOOL "
+        "boolean" => "BOOL ",
+        "inet" => "NSString *",
+        "float" => "NSDecimalNumber *",
+        "json" => "NSString *",
+        "uuid" => "NSString *"
       }[ruby_type.to_s]
       raise "Don't know how to turn '#{ruby_type}' into an Objective-C type" unless type
       type
