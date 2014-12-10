@@ -69,7 +69,7 @@ module RestKit
 
     def unpolymorphise(association)
       model_class_names.select { |m|
-        association_exists?(m.constantize, association)
+        polymorphic_association_exists?(m.constantize, association)
       }.map { |m|
         OpenStruct.new(name: m.underscore.to_sym, macro: :belongs_to, options: {})
       }
