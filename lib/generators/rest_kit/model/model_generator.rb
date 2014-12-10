@@ -132,7 +132,7 @@ module RestKit
       type = ''
       if macro_to_many? macro
         type = 'NSOrderedSet *'
-      elsif macro == :belongs_to
+      elsif [:belongs_to, :has_one].include? macro
         type = ios_class_name(name) + " *"
       end
       raise "Don't know how to turn association '#{macro}` '#{name}' into an Objective-C property" unless type
