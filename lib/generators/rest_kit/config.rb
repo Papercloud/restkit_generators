@@ -32,6 +32,10 @@ module RestKit
       }
     end
 
+    def options_for_model(model_name)
+      models.fetch(model_name, {})
+    end
+
     private
 
     # @return [Hash] Config loaded from YAML config file.

@@ -69,7 +69,7 @@ module RestKit
 
     def unpolymorphise(association)
       model_class_names.select { |m|
-        association_exists?(m.constantize, association)
+        polymorphic_association_exists?(m.constantize, association)
       }.map { |m|
         OpenStruct.new(name: m.underscore.to_sym, macro: :belongs_to, options: {})
       }
@@ -89,7 +89,7 @@ module RestKit
 
     def excluded_columns
       excluded_columns = []
-      excluded_columns += ["created_at", "updated_at"] unless options[:include_timestamps]
+      excluded_columns += ["created_at", "updated_at"] unless include_timestamps?
 
       if options[:exclude_columns]
         excluded_columns += options[:exclude_columns].split(",") if options[:exclude_columns]
@@ -118,6 +118,10 @@ module RestKit
 
     def is_abstract?
       # binding.pry
+    end
+
+    def include_timestamps?
+      options[:include_timestamps] || config.options_for_model(model_name)[:include_timestamps]
     end
 
     def excluded_columns_for_model(model_name)
