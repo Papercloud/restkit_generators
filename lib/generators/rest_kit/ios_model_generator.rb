@@ -59,15 +59,15 @@ module RestKit
     end
 
     def associations
-      model.reflect_on_all_associations
+      model.reflect_on_all_associations.reject{ |a| excluded_columns.include?(a.name.to_s) }
     end
 
     def has_many_associations
-      associations.select{|a| macro_to_many?(a.macro) }
+      associations.select{ |a| macro_to_many?(a.macro) }
     end
 
     def belongs_to_associations
-      associations.select{|a| not macro_to_many?(a.macro) }
+      associations.select{ |a| not macro_to_many?(a.macro) }
     end
 
     def macro_to_many?(macro)
@@ -77,7 +77,13 @@ module RestKit
     def excluded_columns
       excluded_columns = []
       excluded_columns += ["created_at", "updated_at"] unless options[:include_timestamps]
-      excluded_columns += options[:exclude_columns].split(",") if options[:exclude_columns]
+
+      if options[:exclude_columns]
+        excluded_columns += options[:exclude_columns].split(",") if options[:exclude_columns]
+      else
+        excluded_columns += excluded_columns_for_model(model_name)
+      end
+
       excluded_columns
     end
 
@@ -110,6 +116,19 @@ module RestKit
 
       columns
     end
+
+    # Path of the YAML config file used to persist settings for excluding classes between runs
+    # of this generator.
+    # @return [String] Absolute path to the config file.
+    def config_file_path
+      Rails.root.join('.ios_sdk_config.yml')
+    end
+
+    # @return [Hash] Config loaded from YAML config file.
+    def config
+      @config ||= YAML.load(File.open(config_file_path)).with_indifferent_access
+    end
+
     include RestKit::Helpers
 
   end
