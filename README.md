@@ -15,20 +15,17 @@ Run bundle install from your Rails project root:
 bundle install
 ```
 
-Now run this from your Rails project root to install a local development Cocoapod to hold your generated code:
+Now run this from your Rails project root to install a local development Cocoapod to hold your generated code, as well as a configuration file for your Rails models:
+
 ```
 rails g rest_kit:install --ios-path=/Users/me/myWork/myiOSProject
 ```
 
 ### Features
 
-* Generate Configuration
+* Configuration File
 
 A configuration file, `.ios_sdk_config.yml`, can be generated to allow excluding models / columns, as well as adding in additional columns for the iOS model that might not be persisted on the backend. This will also generate the podspec and folder where your SDK will be generated (as well as a Podfile if you don't have one yet).
-
-```
-rails g rest_kit:install --ios-path=../path/to/ios/project/dir
-```
 
 * Generate Models
 
