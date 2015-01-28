@@ -1,4 +1,4 @@
-<entity name="<%= model_name %>" representedClassName="<%= model_name %>" <%= "parentEntity=\"#{parent_class.name}\"" if parent_class %> syncable="YES">
+<entity name="<%= entity_name %>" representedClassName="<%= entity_name %>" <%= "isAbstract=\"YES\"" if is_abstract? %> <%= "parentEntity=\"#{parent_class.name}\"" if parent_class %> syncable="YES">
 <% columns.each do |column| -%>
   <attribute name="<%= ios_attr_name(column.name) %>" optional="YES" attributeType="<%= core_data_type(column.type) %>" syncable="YES" <% if column.name == 'id' -%>indexed="YES"<% end -%> />
 <% end -%>

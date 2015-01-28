@@ -59,7 +59,7 @@ module RestKit
 
       # Add to elements list
       inject_into_file data_model_path, before: "</elements>" do |config|
-        "<element name=\"#{model_name}\" positionX=\"0\" positionY=\"0\" width=\"0\" height=\"0\"/>\n"
+        "<element name=\"#{entity_name}\" positionX=\"0\" positionY=\"0\" width=\"0\" height=\"0\"/>\n"
       end
     end
 
