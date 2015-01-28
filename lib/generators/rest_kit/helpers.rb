@@ -50,5 +50,12 @@ module RestKit
       Rails.root.join('.ios_sdk_config.yml')
     end
 
+    def association_exists?(model, association)
+      singular_symbol = association.active_record.name.underscore.to_sym
+      plural_symbol = association.active_record.name.pluralize.underscore.to_sym
+
+      model.reflect_on_association(singular_symbol) || model.reflect_on_association(plural_symbol) ? true : false
+    end
+
   end
 end
