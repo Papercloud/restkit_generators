@@ -26,7 +26,7 @@ class RestKit::AllGenerator < Rails::Generators::Base
 
   # @return [Array<String>] Model class names that we want to exclude, according to the config file.
   def excluded_model_class_names
-    config[:exclude_models]
+    config.excluded_models
   end
 
   # @return [Array<String] Model class names that we want included in the SDK.
@@ -46,20 +46,7 @@ class RestKit::AllGenerator < Rails::Generators::Base
   # @param model_name [String] The model's name
   # @return [Array<String>] Columns to exclude for this model. Returns an empty array if none.
   def excluded_columns_for_model(model_name)
-    # config[:models][model_name][:exclude]
-    config.fetch(:models, {}).fetch(model_name, {}).fetch(:exclude, [])
-  end
-
-  # Path of the YAML config file used to persist settings for excluding classes between runs
-  # of this generator.
-  # @return [String] Absolute path to the config file.
-  def config_file_path
-    Rails.root.join('.ios_sdk_config.yml')
-  end
-
-  # @return [Hash] Config loaded from YAML config file.
-  def config
-    @config ||= YAML.load(File.open(config_file_path)).with_indifferent_access
+    config.excluded_columns_for_model(model_name)
   end
 
   include RestKit::Helpers

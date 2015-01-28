@@ -27,6 +27,25 @@ module RestKit
       end
     end
 
+    # @return [Array<String>] Model class names that we want to exclude by default. Used to seed the config file.
+    def default_excluded_model_class_names
+      default_exclusion_regexes = [
+        /AdminUser$/,
+        /ActiveAdmin/
+      ]
+
+      all_model_class_names.select{ |name|
+        default_exclusion_regexes.any? { |pattern| pattern =~ name }
+      }
+    end
+
+    # @return [Hash] Config to be written to our config file as YAML.
+    def default_config_hash
+      {
+        'exclude_models' => default_excluded_model_class_names
+      }
+    end
+
     include RestKit::Helpers
 
     private
