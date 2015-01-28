@@ -5,16 +5,6 @@ class RestKit::AllGenerator < Rails::Generators::Base
   class_option :ios_path, type: :string, required: true
   class_option :data_model_path, type: :string, required: false, description: "Path to an existing /contents file with an xcdatamodel. Usually for your most recent model version."
 
-  # Generate a config file if we don't have one already, which persists preferences of classes
-  # and attributes to exclude when re-running this generator.
-  def generate_config_file
-    unless File.exist? config_file_path
-      template "ios_sdk_config.yml.erb", config_file_path
-    else
-      puts "Using existing config gile at #{config_file_path}"
-    end
-  end
-
   def run_other_generators
 
     # Generate model classes and Core Data entities.
@@ -34,25 +24,6 @@ class RestKit::AllGenerator < Rails::Generators::Base
 
   private
 
-  # @return [Array<String>] All model class names in the Rails project
-  def all_model_class_names
-    @all_model_class_names ||= ->{
-      Dir[Rails.root.join("app/models/**/*.rb")].each {|file| require file }
-      ActiveRecord::Base.descendants.map(&:name)
-    }.call
-  end
-
-  # @return [Array<String>] Model class names that we want to exclude by default. Used to seed the config file.
-  def default_excluded_model_class_names
-    default_exclusion_regexes = [
-      /AdminUser$/,
-      /ActiveAdmin/
-    ]
-    all_model_class_names.select{ |name|
-      default_exclusion_regexes.any? { |pattern| pattern =~ name }
-    }
-  end
-
   # @return [Array<String>] Model class names that we want to exclude, according to the config file.
   def excluded_model_class_names
     config[:exclude_models]
@@ -70,13 +41,6 @@ class RestKit::AllGenerator < Rails::Generators::Base
     end.select do |route_name|
       Rails.application.routes.routes.named_routes[route_name]
     end
-  end
-
-  # @return [Hash] Config to be written to our config file as YAML.
-  def default_config_hash
-    {
-      'exclude_models' => default_excluded_model_class_names
-    }
   end
 
   # @param model_name [String] The model's name

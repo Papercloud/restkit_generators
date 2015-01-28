@@ -8,6 +8,8 @@ module RestKit
     end
 
     def add_pod
+      pod_init unless Pathname.new(destination_path("Podfile")).exist?
+
       append_to_file destination_path("Podfile") do |config|
         "pod 'Generated', :path => './Generated.podspec'"
       end
@@ -16,6 +18,16 @@ module RestKit
     def generate_directory
       empty_directory destination_path("Generated")
     end
+
+    def generate_config_file
+      unless File.exist? config_file_path
+        template "ios_sdk_config.yml.erb", config_file_path
+      else
+        puts "Using existing config gile at #{config_file_path}"
+      end
+    end
+
+    include RestKit::Helpers
 
     private
 
