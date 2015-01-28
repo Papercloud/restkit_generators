@@ -98,9 +98,18 @@ module RestKit
 
     def columns
       columns = model.columns
+
+      if parent_class
+        columns.reject!{ |c| c.name.in?(parent_class.columns.map(&:name)) }
+      end
+
       columns = columns.select{|c| not c.name.in? excluded_columns }
       columns += additional_columns
       columns
+    end
+
+    def parent_class
+      model.base_class != model ? model.base_class : nil
     end
 
     def excluded_columns_for_model(model_name)
