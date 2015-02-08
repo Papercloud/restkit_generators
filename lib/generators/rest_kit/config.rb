@@ -13,6 +13,7 @@ module RestKit
     def excluded_models
       @options.fetch(:exclude_models, [])
     end
+
     # @param model_name [String] The model's name
     # @return [Array<String>] Columns to exclude for this model. Returns an empty array if none.
     def excluded_columns_for_model(model_name)
@@ -36,7 +37,6 @@ module RestKit
     def non_persisted_columns_for_model(model_name)
       models.fetch(model_name, {}).fetch(:non_persisted, [])
     end
-
 
     def options_for_model(model_name)
       models.fetch(model_name, {})
