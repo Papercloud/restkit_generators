@@ -7,7 +7,7 @@ module RestKit
         template "extension.swift.erb",   destination_path("#{filename}.swift")
       else
         template "interface.h.erb",       destination_path("#{filename}.h")
-        template "implementation.h.erb",  destination_path("#{filename}.m")
+        template "implementation.m.erb",  destination_path("#{filename}.m")
       end
     end
 
@@ -18,7 +18,7 @@ module RestKit
     end
 
     def filename
-      "#{ios_class_name(model_name)}+Validator"
+      "#{ios_base_class_name}+Validation"
     end
 
     def use_swift
