@@ -11,6 +11,10 @@ module RestKit
       end
     end
 
+    def update_project
+      pod_install
+    end
+
     private
 
     def destination_path(path)
