@@ -1,5 +1,15 @@
-extension SupplierAccount {
-    func errorMsg(field: String) -> String {
+extension <%= model_name%> {
+    func validate() -> Bool {
+        let validator = createValidator()
+
+        if hasErrors(validator: validator) {
+            return false
+        }
+
+        return true
+    }
+
+    private func errorMessage(field: String) -> String {
         let messageMap: [String : String] = [
         <%- presence_validations.each do |validation| -%>
             "<%= validation.camelize(:lower) %>" : "k<%= model_name %>No<%= validation.camelize %>",
@@ -9,21 +19,11 @@ extension SupplierAccount {
         if let localisableStringName = messageMap[field] {
             return NSLocalizedString(localisableStringName, comment: "Error field: \(field)")
         } else {
-            return NSLocalizedString("kSupplierGenericFailure", comment: "Error field missing: \(field)")
+            return NSLocalizedString("k<%= model_name %>GenericFailure", comment: "Error field missing: \(field)")
         }
     }
 
-    func validate() -> Bool {
-        let validator = initValidator()
-
-        if hasErrors(validator: validator) {
-            return false
-        }
-
-        return true
-    }
-
-    private func initValidator() -> PCDValidator {
+    private func createValidator() -> PCDValidator {
         var validator = PCDValidator(object: self)
         validator.addValidationForAttributes([
         <%- presence_validations.each do |validation| -%>
@@ -38,7 +38,7 @@ extension SupplierAccount {
         let errors = validator.validate() as [String]
 
         if let errorField = errors.first {
-            var message: String = errorMsg(errorField)
+            var message: String = errorMessage(errorField)
 
             PCDHUD.showErrorWithStatus(message)
 
