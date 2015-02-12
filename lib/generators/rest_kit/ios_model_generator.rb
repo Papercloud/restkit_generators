@@ -83,6 +83,10 @@ module RestKit
       associations.select{ |a| not macro_to_many?(a.macro) }
     end
 
+    def ios_deletion_rule(association)
+      association.macro == :has_and_belongs_to_many ? "Nullify" : "Cascade"
+    end
+
     def macro_to_many?(macro)
       (macro == :has_many or macro == :has_and_belongs_to_many)
     end
