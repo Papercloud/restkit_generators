@@ -1,0 +1,59 @@
+#import "<%= filename %>.h"
+
+@implementation <%= ios_base_class_name %> (Validation)
+
+- (BOOL)validate
+{
+  PCDValidator *validator = [self createValidator];
+
+  if ([self hasErrors:validator]) {
+    return false;
+  }
+
+  return true;
+}
+
+- (NSString *)errorMessage:(NSString *)field
+{
+    NSDictionary *messageMap = @{
+    <%- presence_validations.each do |validation| -%>
+    @"<%= validation.camelize(:lower) %>" : @"k<%= model_name %>No<%= validation.camelize %>",
+    <%- end -%>
+    };
+
+    if (messageMap[field]) {
+        return NSLocalizedString(messageMap[field], nil);
+    } else {
+        return NSLocalizedString(@"k<%= model_name %>GenericFailure", nil);
+    }
+}
+
+- (PCDValidator *)createValidator
+{
+    PCDValidator *validator = [[PCDValidator alloc] initWithObject:self];
+
+    [validator addValidationForAttributes:@[
+    <%- presence_validations.each do |validation| -%>
+    @"<%= validation.camelize(:lower) %>"
+    <%- end -%>
+    ]];
+
+    return validator;
+}
+
+- (BOOL)hasErrors:(PCDValidator *)validator
+{
+    NSArray *invalidKeyPaths = [validator validate];
+
+    if ([invalidKeyPaths firstObject]) {
+        NSString *message = [self errorMessage:[invalidKeyPaths firstObject]];
+
+        [PCDHUD showErrorWithStatus:message];
+
+        return true;
+    }
+
+    return false;
+}
+
+@end
