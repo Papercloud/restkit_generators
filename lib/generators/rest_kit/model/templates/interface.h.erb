@@ -7,7 +7,7 @@
 @interface <%= filename %> : NSManagedObject
 
 <% columns.each do |column| -%>
-@property (nonatomic<% if column.type != :boolean %>, retain<% end %>) <%= ios_type(column.type) %><%= ios_attr_name(column.name) %>;
+@property (nonatomic<% if column.type != :boolean %>, retain<% end %>) <%= ios_type(column) %><%= ios_attr_name(column.name) %>;
 <% end -%>
 
 <% has_many_associations.each do |association| -%>

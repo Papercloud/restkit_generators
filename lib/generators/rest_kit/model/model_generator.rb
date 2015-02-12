@@ -73,7 +73,9 @@ module RestKit
       super(File.join("Models", path))
     end
 
-    def core_data_type(ruby_type)
+    def core_data_type(column)
+      return "String" if column.name.end_with?('_id') || column.name == 'id'
+
       type = {
         "integer" => "Integer 32",
         "string" => "String",
@@ -85,8 +87,8 @@ module RestKit
         "float" => "Float",
         "json" => "String",
         "uuid" => "String"
-      }[ruby_type.to_s]
-      raise "Don't know how to turn '#{ruby_type}' into a Core Data type" unless type
+      }[column.type.to_s]
+      raise "Don't know how to turn '#{column.type}' into a Core Data type" unless type
       type
     end
 
@@ -108,7 +110,9 @@ module RestKit
       end
     end
 
-    def ios_type(ruby_type)
+    def ios_type(column)
+      return "NSString *" if column.name.end_with?('_id') || column.name == 'id'
+
       type = {
         "integer" => "NSNumber *",
         "string" => "NSString *",
@@ -120,8 +124,8 @@ module RestKit
         "float" => "NSDecimalNumber *",
         "json" => "NSString *",
         "uuid" => "NSString *"
-      }[ruby_type.to_s]
-      raise "Don't know how to turn '#{ruby_type}' into an Objective-C type" unless type
+      }[column.type.to_s]
+      raise "Don't know how to turn '#{column.type}' into an Objective-C type" unless type
       type
     end
 
