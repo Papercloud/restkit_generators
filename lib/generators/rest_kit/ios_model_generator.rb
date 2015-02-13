@@ -7,6 +7,7 @@ module RestKit
     class_option :include_timestamps, type: :boolean, default: false
     class_option :skip_pod_install, type: :boolean, required: false, default: false
     class_option :exclude_columns, type: :string, required: false, description: "Comma separated list of columns to exclude"
+    class_option :use_swift, type: :boolean, required: false, default: false, description: "Generate a swift version of the class instead of Objective-C"
 
     protected
 

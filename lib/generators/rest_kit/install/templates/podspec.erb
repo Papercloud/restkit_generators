@@ -8,8 +8,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '6.0'
   s.resources = 'Generated/**/DataModel.xcdatamodeld'
   s.dependency 'RestKit'
-   
-
 
   s.subspec 'Routes' do |ss|
     ss.source_files = 'Generated/Routes/*{h,m}'
@@ -21,5 +19,9 @@ Pod::Spec.new do |s|
 
   s.subspec 'Mappings' do |ss|
     ss.source_files = 'Generated/Mappings/*{h,m}'
+  end
+
+  s.subspec 'Validators' do |ss|
+    ss.source_files = 'Generated/Validators/*{h,m}'
   end
 end
