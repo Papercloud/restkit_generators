@@ -15,7 +15,7 @@ module RestKit
       File.join(File.expand_path(options[:ios_path]), 'Generated', filename)
     end
 
-    def embed_template(source, indent='', binding=binding)
+    def embed_template(source, indent='')
       template = File.join(self.class.source_root, source)
       ERB.new(IO.read(template), nil, '-').result(binding).gsub(/^/, indent)
     end
