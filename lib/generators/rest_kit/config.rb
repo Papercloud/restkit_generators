@@ -14,6 +14,10 @@ module RestKit
       @options.fetch(:exclude_models, [])
     end
 
+    def exclusively_included_models
+      @options.fetch(:exclusively_include_models, [])
+    end
+
     # @param model_name [String] The model's name
     # @return [Array<String>] Columns to exclude for this model. Returns an empty array if none.
     def excluded_columns_for_model(model_name)
