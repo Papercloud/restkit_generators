@@ -17,6 +17,9 @@ class RestKit::AllGenerator < Rails::Generators::Base
       args << " --exclude-columns=#{excluded_columns_for_model(name).join(',')}"
       puts "Invoking rest_kit:model " + args
       generate "rest_kit:model", args
+
+      puts "Invoking rest_kit:mapping " + args
+      generate "rest_kit:mapping", args
     end
 
     pod_install
