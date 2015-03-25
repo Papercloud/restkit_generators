@@ -36,7 +36,7 @@ module RestKit
     end
 
     def update_project
-      pod_install
+      pod_install unless options[:skip_pod_install]
     end
 
     private
@@ -60,7 +60,10 @@ module RestKit
     end
 
     def ios_route_path
-      route.optimized_path + ".json"
+      path = (route.optimized_path.respond_to? :join)\
+        ? route.optimized_path.join('')
+        : route.optimized_path
+      path + ".json"
     end
 
     def category_name
