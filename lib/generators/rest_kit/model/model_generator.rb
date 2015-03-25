@@ -138,7 +138,7 @@ module RestKit
 
     def ios_association_type(association)
       macro = association.macro
-      name = association.name
+      name = association.klass.name
 
       type = ''
       if macro_to_many? macro

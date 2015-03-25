@@ -4,6 +4,7 @@ class RestKit::AllGenerator < Rails::Generators::Base
   source_root File.expand_path('../templates', __FILE__)
   class_option :ios_path, type: :string, required: true
   class_option :data_model_path, type: :string, required: false, description: "Path to an existing /contents file with an xcdatamodel. Usually for your most recent model version."
+  class_option :skip_pod_install, type: :boolean, required: false, default: false
 
   def run_other_generators
 
@@ -22,7 +23,7 @@ class RestKit::AllGenerator < Rails::Generators::Base
       generate "rest_kit:mapping", args
     end
 
-    pod_install
+    pod_install unless options[:skip_pod_install]
   end
 
   private
