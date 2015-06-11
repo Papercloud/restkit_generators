@@ -102,11 +102,18 @@ module RestKit
 
     def inverse_of(association)
       explicit_inverse = association.options[:inverse_of]
-      associated_class = association.class_name.constantize rescue nil
+      associated_class = association.klass.name.constantize rescue nil
       if explicit_inverse
         associated_class.reflect_on_association(explicit_inverse)
       elsif associated_class
-        associated_class.reflect_on_association(association.active_record.name.underscore.to_sym) || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.to_sym)
+        # Try a few guesses for the inverse.
+        # The last four are in case of a namespaced class which would underscore as 'module_name/class_name'
+        associated_class.reflect_on_association(association.active_record.name.underscore.to_sym)\
+        || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.to_sym)\
+        || associated_class.reflect_on_association(association.active_record.name.underscore.gsub("/","_").to_sym)\
+        || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.gsub("/","_").to_sym)\
+        || associated_class.reflect_on_association(association.active_record.name.underscore.split("/").last.to_sym)\
+        || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.split("/").last.to_sym)
       end
     end
 
@@ -131,7 +138,7 @@ module RestKit
 
     def ios_association_type(association)
       macro = association.macro
-      name = association.name
+      name = association.klass.name
 
       type = ''
       if macro_to_many? macro

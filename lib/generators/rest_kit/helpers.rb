@@ -38,9 +38,14 @@ module RestKit
       config.excluded_models
     end
 
+    # @return [Array<String>] Model class names that we want to include, implying exclusion of any others, according to the config file.
+    def included_model_class_names
+      config.exclusively_included_models
+    end
+
     # @return [Array<String] Model class names that we want included in the SDK.
     def model_class_names
-      @model_class_names ||= all_model_class_names - excluded_model_class_names
+      @model_class_names ||= ((included_model_class_names.any?) ? included_model_class_names : all_model_class_names) - excluded_model_class_names
     end
 
     # Path of the YAML config file used to persist settings for excluding classes between runs
