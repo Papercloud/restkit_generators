@@ -1,5 +1,3 @@
-require_relative './config'
-
 module RestKit
   module Helpers
 
@@ -22,7 +20,7 @@ module RestKit
     end
 
     def config
-      @config ||= Config.new(config_file_path)
+      @config ||= RestkitGenerators::Config.new(config_file_path)
     end
 
     # @return [Array<String>] All model class names in the Rails project
