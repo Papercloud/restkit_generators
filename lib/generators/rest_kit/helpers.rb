@@ -60,14 +60,5 @@ module RestKit
       model.reflect_on_association(singular_symbol) || model.reflect_on_association(plural_symbol) ? true : false
     end
 
-    def polymorphic_association_exists?(model, association)
-      singular_symbol = association.active_record.name.demodulize.underscore.to_sym
-      plural_symbol = association.active_record.name.demodulize.pluralize.underscore.to_sym
-
-      poly_association = model.reflect_on_association(singular_symbol) || model.reflect_on_association(plural_symbol)
-
-      poly_association && poly_association.options[:as] == association.name ? true : false
-    end
-
   end
 end
