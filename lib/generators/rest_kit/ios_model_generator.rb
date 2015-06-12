@@ -72,7 +72,13 @@ module RestKit
       model_class_names.select { |m|
         polymorphic_association_exists?(m.constantize, association)
       }.map { |m|
-        OpenStruct.new(name: m.underscore.to_sym, macro: :belongs_to, options: {})
+        OpenStruct.new({
+          klass: m.constantize,
+          active_record: association.active_record,
+          name: m.underscore.to_sym,
+          macro: :belongs_to,
+          options: {}
+        })
       }
     end
 
