@@ -18,7 +18,7 @@ module RestKit
     end
 
     def filename
-      ios_base_class_name + "+" + category_name
+      model.ios_base_class_name + "+" + category_name
     end
 
     def category_name
