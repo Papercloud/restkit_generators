@@ -1,7 +1,9 @@
 module RestKit
   class RouteGenerator < IosModelGenerator
+    include RestKit::Helpers
+
     source_root File.expand_path('../templates', __FILE__)
-    
+
     class_option :strip_namespace, type: :string, default: 'api',\
      desc: "Strip this namespace from the route's name in iOS"
 
@@ -41,6 +43,18 @@ module RestKit
 
     private
 
+    def route
+      route = Rails.application.routes.routes.named_routes[name]
+      raise "Could not find named route '#{name}'" unless route
+      route
+    end
+
+    def model_name
+      model_name = route.name.split("_").last
+      raise "Can't infer serializer name from model name from '#{route.name}'" unless model_name
+      model_name.singularize
+    end
+
     def model
       @model ||= RestkitGenerators::Ios::Model.new(model_name, config)
     end
@@ -78,12 +92,6 @@ module RestKit
       "RKObjectManager+" + (ios_route_name + "_route").camelize
     end
 
-    def route
-      route = Rails.application.routes.routes.named_routes[name]
-      raise "Could not find named route '#{name}'" unless route
-      route
-    end
-
     def serializer
       if options[:serializer] and options[:serializer].camelize.include? "Serializer"
         options[:serializer].constantize
@@ -92,12 +100,6 @@ module RestKit
       else
         (model_name + "_serializer").camelize.constantize
       end
-    end
-
-    def model_name
-      model_name = route.name.split("_").last
-      raise "Can't infer serializer name from model name from '#{route.name}'" unless model_name
-      model_name.singularize
     end
 
     # Associations specified in the serializer, which we assume are embedded as unique objects under their own root.
