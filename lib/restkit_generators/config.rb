@@ -1,6 +1,6 @@
 require 'ostruct'
 
-module RestKit
+module RestkitGenerators
   class Config
     def initialize(config_file_path)
       @options = parse_config(config_file_path)

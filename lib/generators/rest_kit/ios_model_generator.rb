@@ -34,116 +34,49 @@ module RestKit
       }.length > 0
     end
 
-    def ios_attr_name(attr_name)
-      { "id" => id_name }[attr_name.to_s] ||= attr_name.to_s.camelize(:lower)
-    end
-
-    def id_name
-      "primaryKey"
-    end
-
-    def ios_class_name(name)
-      name.to_s.singularize.camelize.gsub(/[:]/, '')
-    end
-
-    def ios_base_class_name(class_name=nil)
-      "_" + ios_class_name(class_name || entity_name)
-    end
-
-    def model_name
-      name.camelize
-    end
-
-    def entity_name
-      model_name.gsub(/[:]/, '')
-    end
-
     def model
-      model_name.constantize
+      @model ||= RestkitGenerators::Ios::Model.new(name, config)
+    end
+
+    def ios_attr_name(attr_name)
+      { "id" => model.id_name }[attr_name.to_s] ||= attr_name.to_s.camelize(:lower)
     end
 
     def associations
-      associations = model.reflect_on_all_associations.reject{ |a| excluded_columns.include?(a.name.to_s) }
-      associations.map! { |a| a.options[:polymorphic] ? unpolymorphise(a) : a }
+      associations = model.associations.reject{ |a| excluded_columns.include?(a.name.to_s) }
+      associations = associations.map{ |a| RestkitGenerators::Ios::Association.new(a, config) }
+      associations = associations.map{ |a| a.is_polymorphic? ? a.unpolymorphise(model_class_names) : a }
       associations.flatten
     end
 
-    def unpolymorphise(association)
-      model_class_names.select { |m|
-        polymorphic_association_exists?(m.constantize, association)
-      }.map { |m|
-        OpenStruct.new({
-          klass: m.constantize,
-          active_record: association.active_record,
-          name: m.underscore.to_sym,
-          macro: :belongs_to,
-          options: {}
-        })
-      }
-    end
-
     def has_many_associations
-      associations.select{ |a| macro_to_many?(a.macro) }
+      associations.select{ |a| a.to_many? }
     end
 
     def belongs_to_associations
-      associations.select{ |a| not macro_to_many?(a.macro) }
-    end
-
-    def ios_deletion_rule(association)
-      association.macro == :has_and_belongs_to_many ? "Nullify" : "Cascade"
-    end
-
-    def macro_to_many?(macro)
-      (macro == :has_many or macro == :has_and_belongs_to_many)
+      associations.select{ |a| !a.to_many? }
     end
 
     def excluded_columns
       excluded_columns = []
-      excluded_columns += ["created_at", "updated_at"] unless include_timestamps?
-
-      if options[:exclude_columns]
-        excluded_columns += options[:exclude_columns].split(",") if options[:exclude_columns]
-      else
-        excluded_columns += excluded_columns_for_model(model_name)
-      end
+      excluded_columns += ["created_at", "updated_at"] unless options[:include_timestamps]
+      excluded_columns += options[:exclude_columns].split(",") if options[:exclude_columns]
 
       excluded_columns
     end
 
     def columns
-      columns = model.columns
-
-      if parent_class
-        columns.reject!{ |c| c.name.in?(parent_class.columns.map(&:name)) }
-      end
-
-      columns = columns.select{|c| not c.name.in? excluded_columns }
-      columns += additional_columns
-      columns
+      model.columns(excluded_columns)
     end
 
-    def parent_class
-      model.base_class != model ? model.base_class : nil
+    def ios_class_name(class_name)
+      class_name.singularize.camelize.gsub(/[:]/, '')
     end
 
-    def is_abstract?
-      # binding.pry
-    end
-
-    def include_timestamps?
-      options[:include_timestamps] || config.options_for_model(model_name)[:include_timestamps]
-    end
-
-    def excluded_columns_for_model(model_name)
-      config.excluded_columns_for_model(model_name)
-    end
-
-    def additional_columns
-      config.additional_columns_for_model(model_name)
+    def ios_base_class_name(class_name)
+      "_#{ios_class_name(class_name)}"
     end
 
     include RestKit::Helpers
-
   end
 end
