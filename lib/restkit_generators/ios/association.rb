@@ -58,13 +58,15 @@ module RestkitGenerators
         possible_models.select { |m|
           polymorphic_association_exists?(m.constantize)
         }.map { |m|
-          OpenStruct.new({
+          association = OpenStruct.new({
             klass: m.constantize,
             active_record: @association.active_record,
             name: m.underscore.to_sym,
             macro: :belongs_to,
             options: {}
           })
+
+          Association.new(association, @config)
         }
       end
 
