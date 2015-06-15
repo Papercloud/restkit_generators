@@ -1,6 +1,6 @@
-[objectManager addResponseDescriptor:[RKResponseDescriptor responseDescriptorWithMapping:[<%= ios_base_class_name(association) %> mapping]
+[objectManager addResponseDescriptor:[RKResponseDescriptor responseDescriptorWithMapping:[<%= association.model.ios_base_class_name %> mapping]
                                                                                   method:RKRequestMethodGET
                                                                              pathPattern:@"<%= ios_route_path %>"
-                                                                                 keyPath:@"<%= association %>"
+                                                                                 keyPath:@"<%= association.name %>"
                                                                              statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
 

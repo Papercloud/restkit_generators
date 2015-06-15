@@ -1,7 +1,9 @@
 module RestKit
   class RouteGenerator < IosModelGenerator
+    include RestKit::Helpers
+
     source_root File.expand_path('../templates', __FILE__)
-    
+
     class_option :strip_namespace, type: :string, default: 'api',\
      desc: "Strip this namespace from the route's name in iOS"
 
@@ -15,7 +17,7 @@ module RestKit
     end
 
     def generate_response_descriptors
-      (associations + [root_name]).each do |association|
+      associations.each do |association|
         inject_into_file destination_path("#{filename}.m"), after: "{\n" do |config|
           embed_template("response_descriptor.m.erb", "  ", binding())
         end
@@ -40,6 +42,22 @@ module RestKit
     end
 
     private
+
+    def route
+      route = Rails.application.routes.routes.named_routes[name]
+      raise "Could not find named route '#{name}'" unless route
+      route
+    end
+
+    def model_name
+      model_name = route.name.split("_").last
+      raise "Can't infer serializer name from model name from '#{route.name}'" unless model_name
+      model_name.singularize
+    end
+
+    def model
+      @model ||= RestkitGenerators::Ios::Model.new(model_name, config)
+    end
 
     def destination_path(path)
       super(File.join("Routes", path))
@@ -74,12 +92,6 @@ module RestKit
       "RKObjectManager+" + (ios_route_name + "_route").camelize
     end
 
-    def route
-      route = Rails.application.routes.routes.named_routes[name]
-      raise "Could not find named route '#{name}'" unless route
-      route
-    end
-
     def serializer
       if options[:serializer] and options[:serializer].camelize.include? "Serializer"
         options[:serializer].constantize
@@ -90,25 +102,19 @@ module RestKit
       end
     end
 
-    def model_name
-      model_name = route.name.split("_").last
-      raise "Can't infer serializer name from model name from '#{route.name}'" unless model_name
-      model_name.singularize
-    end
-
     # Associations specified in the serializer, which we assume are embedded as unique objects under their own root.
     def associations
-      serializer._associations.keys.map(&:to_s).map(&:pluralize)
+      serializer_associations = serializer._associations.keys
+      model.associations.select{ |a| serializer_associations.include?(a.name) }.map{ |a| RestkitGenerators::Ios::Association.new(a, config) }
     end
 
     # Root for the main object requested. Plural for index actions, singular for show and others.
     def root_name
       if route.defaults[:action] == "index"
-        model_name.pluralize
+        model.model_name.downcase.pluralize
       else
-        model_name.singularize
+        model_name.downcase.singularize
       end
     end
-
   end
 end

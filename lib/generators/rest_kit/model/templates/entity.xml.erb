@@ -1,6 +1,6 @@
-<entity name="<%= entity_name %>" representedClassName="<%= entity_name %>" <%= "isAbstract=\"YES\"" if is_abstract? %> <%= "parentEntity=\"#{parent_class.name}\"" if parent_class %> syncable="YES">
+<entity name="<%= model.entity_name %>" representedClassName="<%= model.entity_name %>" syncable="YES">
 <% columns.each do |column| -%>
-  <% unless config.non_persisted_columns_for_model(entity_name).include? column.name -%>
+  <% unless model.non_persisted_columns.include?(column.name) -%>
     <attribute name="<%= ios_attr_name(column.name) %>" optional="YES" attributeType="<%= core_data_type(column) %>" syncable="YES" <% if column.name == 'id' -%>indexed="YES"<% end -%> />
   <% end -%>
 <% end -%>
@@ -8,9 +8,9 @@
   <attribute name="<%= ios_attr_name(a.name.to_s.singularize + "_ids") %>" optional="YES" attributeType="Transformable" syncable="YES"/>
 <% end -%>
 <% has_many_associations.each do |ass| -%>
-  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" ordered="YES" toMany="YES" deletionRule="<%= ios_deletion_rule(ass) %>" destinationEntity="<%= ios_class_name(ass.klass.name) %>" syncable="YES" <% if inverse_of(ass) %>inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.klass.name) %>" <% end %>/>
+  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" ordered="YES" toMany="YES" deletionRule="<%= ass.ios_deletion_rule %>" destinationEntity="<%= ios_class_name(ass.klass.name) %>" syncable="YES" <% if ass.inverse_of %>inverseName="<%= ios_attr_name(ass.inverse_of.name) %>" inverseEntity="<%= ios_class_name(ass.klass.name) %>" <% end %>/>
 <% end -%>
 <% belongs_to_associations.each do |ass| -%>
-  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.klass.name) %>" syncable="YES" <% if inverse_of(ass) %>inverseName="<%= ios_attr_name(inverse_of(ass).name) %>" inverseEntity="<%= ios_class_name(ass.klass.name) %>" <% end %>/>
+  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.klass.name) %>" syncable="YES" <% if ass.inverse_of %>inverseName="<%= ios_attr_name(ass.inverse_of.name) %>" inverseEntity="<%= ios_class_name(ass.klass.name) %>" <% end %>/>
 <% end -%>
 </entity>
