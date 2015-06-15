@@ -41,6 +41,10 @@ module RestKit
 
     private
 
+    def model
+      @model ||= RestkitGenerators::Ios::Model.new(model_name, config)
+    end
+
     def destination_path(path)
       super(File.join("Routes", path))
     end
@@ -98,7 +102,8 @@ module RestKit
 
     # Associations specified in the serializer, which we assume are embedded as unique objects under their own root.
     def associations
-      serializer._associations.keys.map(&:to_s).map(&:pluralize)
+      serializer_associations = serializer._associations.keys
+      model.associations.select{ |a| serializer_associations.include?(a.name) }.map{ |a| RestkitGenerators::Ios::Association.new(a, config) }
     end
 
     # Root for the main object requested. Plural for index actions, singular for show and others.
