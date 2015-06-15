@@ -1,5 +1,6 @@
 #import <RestKit/RestKit.h>
 #import "Generated.h"
+#import "<%= model.ios_base_class_name %>+Mapping.h"
 <% associations.each do |association| -%>
 #import "<%= association.model.ios_base_class_name %>+Mapping.h"
 <% end -%>

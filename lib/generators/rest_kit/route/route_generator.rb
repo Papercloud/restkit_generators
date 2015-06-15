@@ -15,7 +15,7 @@ module RestKit
     end
 
     def generate_response_descriptors
-      (associations + [root_name]).each do |association|
+      associations.each do |association|
         inject_into_file destination_path("#{filename}.m"), after: "{\n" do |config|
           embed_template("response_descriptor.m.erb", "  ", binding())
         end
@@ -109,11 +109,10 @@ module RestKit
     # Root for the main object requested. Plural for index actions, singular for show and others.
     def root_name
       if route.defaults[:action] == "index"
-        model_name.pluralize
+        model.model_name.downcase.pluralize
       else
-        model_name.singularize
+        model_name.downcase.singularize
       end
     end
-
   end
 end
