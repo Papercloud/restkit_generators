@@ -27,7 +27,13 @@ module RestKit
     def all_model_class_names
       @all_model_class_names ||= -> {
         Rails.application.eager_load!
-        ActiveRecord::Base.descendants.map(&:name)
+
+        models = Dir["#{Rails.root}/app/models/**/*.rb"].map do |m|
+          mp = m.reverse.chomp("#{Rails.root}/app/models/".reverse).reverse
+          mp.chomp('.rb').camelize
+        end
+
+        ActiveRecord::Base.descendants.map(&:name) & models
       }.call
     end
 
