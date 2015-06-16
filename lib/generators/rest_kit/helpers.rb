@@ -1,5 +1,3 @@
-require_relative './config'
-
 module RestKit
   module Helpers
 
@@ -22,14 +20,20 @@ module RestKit
     end
 
     def config
-      @config ||= Config.new(config_file_path)
+      @config ||= RestkitGenerators::Config.new(config_file_path)
     end
 
     # @return [Array<String>] All model class names in the Rails project
     def all_model_class_names
       @all_model_class_names ||= -> {
         Rails.application.eager_load!
-        ActiveRecord::Base.descendants.map(&:name)
+
+        models = Dir["#{Rails.root}/app/models/**/*.rb"].map do |m|
+          mp = m.reverse.chomp("#{Rails.root}/app/models/".reverse).reverse
+          mp.chomp('.rb').camelize
+        end
+
+        ActiveRecord::Base.descendants.map(&:name) & models
       }.call
     end
 
@@ -60,15 +64,6 @@ module RestKit
       plural_symbol = association.active_record.name.demodulize.pluralize.underscore.to_sym
 
       model.reflect_on_association(singular_symbol) || model.reflect_on_association(plural_symbol) ? true : false
-    end
-
-    def polymorphic_association_exists?(model, association)
-      singular_symbol = association.active_record.name.demodulize.underscore.to_sym
-      plural_symbol = association.active_record.name.demodulize.pluralize.underscore.to_sym
-
-      poly_association = model.reflect_on_association(singular_symbol) || model.reflect_on_association(plural_symbol)
-
-      poly_association && poly_association.options[:as] == association.name ? true : false
     end
 
   end

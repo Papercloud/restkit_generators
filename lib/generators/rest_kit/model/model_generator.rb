@@ -59,7 +59,7 @@ module RestKit
 
       # Add to elements list
       inject_into_file data_model_path, before: "</elements>" do |config|
-        "<element name=\"#{entity_name}\" positionX=\"0\" positionY=\"0\" width=\"0\" height=\"0\"/>\n"
+        "<element name=\"#{model.entity_name}\" positionX=\"0\" positionY=\"0\" width=\"0\" height=\"0\"/>\n"
       end
     end
 
@@ -93,28 +93,11 @@ module RestKit
     end
 
     def overwrite_filename
-      ios_class_name(model_name)
+      model.ios_class_name
     end
 
     def filename
-      ios_base_class_name
-    end
-
-    def inverse_of(association)
-      explicit_inverse = association.options[:inverse_of]
-      associated_class = association.klass.name.constantize rescue nil
-      if explicit_inverse
-        associated_class.reflect_on_association(explicit_inverse)
-      elsif associated_class
-        # Try a few guesses for the inverse.
-        # The last four are in case of a namespaced class which would underscore as 'module_name/class_name'
-        associated_class.reflect_on_association(association.active_record.name.underscore.to_sym)\
-        || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.to_sym)\
-        || associated_class.reflect_on_association(association.active_record.name.underscore.gsub("/","_").to_sym)\
-        || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.gsub("/","_").to_sym)\
-        || associated_class.reflect_on_association(association.active_record.name.underscore.split("/").last.to_sym)\
-        || associated_class.reflect_on_association(association.active_record.name.pluralize.underscore.split("/").last.to_sym)
-      end
+      model.ios_base_class_name
     end
 
     def ios_type(column)
@@ -135,20 +118,5 @@ module RestKit
       raise "Don't know how to turn '#{column.type}' into an Objective-C type" unless type
       type
     end
-
-    def ios_association_type(association)
-      macro = association.macro
-      name = association.klass.name
-
-      type = ''
-      if macro_to_many? macro
-        type = 'NSOrderedSet *'
-      elsif [:belongs_to, :has_one].include? macro
-        type = ios_class_name(name) + " *"
-      end
-      raise "Don't know how to turn association '#{macro}` '#{name}' into an Objective-C property" unless type
-      type
-    end
-
   end
 end
