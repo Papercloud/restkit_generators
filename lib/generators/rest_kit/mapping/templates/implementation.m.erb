@@ -1,3 +1,5 @@
+#import "MappingProtocol.h"
+
 #import "<%= filename %>.h"
 <% associations.each do |ass| -%>
 #import "<%= ios_base_class_name(ass.klass.name) %>+Mapping.h"
@@ -29,6 +31,10 @@
 <% belongs_to_associations.map(&:name).each do |k| -%>
     [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_id") %>" : @"<%= model.id_name %>"}];
 <% end -%>
+
+    if([<%= model.ios_class_name %> respondsToSelector:@selector(customizeMapping:)]) {
+      [[<%= model.ios_class_name %> class] performSelector:@selector(customizeMapping:) withObject:mapping];
+    }
 
     return mapping;
 }
