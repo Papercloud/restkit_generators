@@ -1,5 +1,6 @@
-#import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+#import <RestKit/RestKit.h>
+
 <% associations.each do |association| -%>
 @class <%= ios_class_name(association.klass.name) %>;
 <% end -%>
@@ -15,7 +16,7 @@
 <% end -%>
 
 <% associations.each do |association| -%>
-@property (nonatomic, strong) <%= ios_association_type(association) %><%= ios_attr_name(association.name) %>;
+@property (nonatomic, strong) <%= association.ios_association_type %><%= ios_attr_name(association.name) %>;
 <% end -%>
 
 @end

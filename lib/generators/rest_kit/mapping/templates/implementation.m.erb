@@ -1,34 +1,40 @@
+#import "MappingProtocol.h"
+
 #import "<%= filename %>.h"
 <% associations.each do |ass| -%>
 #import "<%= ios_base_class_name(ass.klass.name) %>+Mapping.h"
 <% end -%>
 
-@implementation <%= ios_base_class_name %> (<%= category_name %>)
+@implementation <%= model.ios_base_class_name %> (<%= category_name %>)
 
 + (RKObjectMapping *)<%= category_name.camelize(:lower) %>
 {
     RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
-    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"<%= ios_class_name(model_name) %>"
+    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"<%= model.ios_class_name %>"
                                                    inManagedObjectStore:managedObjectStore];
     mapping.identificationAttributes = @[@"primaryKey"];
 
   // Plain attributes
   [mapping addAttributeMappingsFromDictionary:
      @{
-<%= (columns.map(&:name).map { |atr| 
+<%= (columns.map(&:name).map { |atr|
 "       @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }\
-+ has_many_associations.map { |a| 
++ has_many_associations.map { |a|
 "       @\"" + a.name.to_s.singularize + "_ids\" : @\"" + ios_attr_name(a.name.to_s.singularize + "_ids") + "\"" }).join(",\n")
 %>
        }];
 
 <% has_many_associations.map(&:name).each do |k| -%>
-    [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_ids") %>" : @"<%= id_name %>"}];
+    [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_ids") %>" : @"<%= model.id_name %>"}];
 <% end -%>
 
 <% belongs_to_associations.map(&:name).each do |k| -%>
-    [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_id") %>" : @"<%= id_name %>"}];
+    [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_id") %>" : @"<%= model.id_name %>"}];
 <% end -%>
+
+    if([<%= model.ios_class_name %> respondsToSelector:@selector(customizeMapping:)]) {
+      [[<%= model.ios_class_name %> class] performSelector:@selector(customizeMapping:) withObject:mapping];
+    }
 
     return mapping;
 }

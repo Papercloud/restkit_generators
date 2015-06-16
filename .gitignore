@@ -6,5 +6,7 @@ spec/dummy/db/*.sqlite3-journal
 spec/dummy/log/*.log
 spec/dummy/tmp/
 spec/dummy/.sass-cache
+spec/dummy-ios/Dummy/Generated
+spec/dummy-ios/Dummy/Pods
 tmp/
 .DS_Store
