@@ -2,9 +2,15 @@ module RestKit
   class MappingGenerator < IosModelGenerator
     source_root File.expand_path('../templates', __FILE__)
 
+    def generate_protocol
+      return if Pathname.new(destination_path('MappingProtocol.h')).exist?
+
+      template 'protocol.h.erb', destination_path('MappingProtocol.h')
+    end
+
     def generate_mapping_protocol
-      template "interface.h.erb",       destination_path("#{filename}.h")
-      template "implementation.m.erb",  destination_path("#{filename}.m")
+      template 'interface.h.erb',       destination_path("#{filename}.h")
+      template 'implementation.m.erb',  destination_path("#{filename}.m")
     end
 
     def update_project

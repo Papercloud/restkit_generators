@@ -2,7 +2,9 @@
 
 @implementation <%= filename %>
 
+<% if columns.length > 0 %>
 @dynamic <%= columns.map{|c| ios_attr_name(c.name) }.join(", ") %>;
+<% end %>
 <% if associations.length > 0 %>
 @dynamic <%= associations.map{|a| ios_attr_name(a.name) }.join(", ") %>;
 <% end %>
