@@ -65,22 +65,22 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Generated:
-    :path: ./Generated.podspec
+    :path: "./Generated.podspec"
   PCDefaults:
-    :path: ~/Work/Tools/PCDefaultsDemo/PCDefaults.podspec
+    :path: "~/Work/Tools/PCDefaultsDemo/PCDefaults.podspec"
   RestKit:
     :commit: 5ea7f9c510dd440dcc686ee0b64c358be8515430
     :git: git@github.com:markst/RestKit.git
 
 SPEC CHECKSUMS:
   AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
-  Generated: e28b6d83b6a76b7283fc913633259712f7364776
+  Generated: c09cc9975f430c8e7a17a332a005ac758cdd1435
   Inflections: e77c455409381402163911a75835892fd406ff99
   ISO8601DateFormatterValueTransformer: d0af1f50a9df42db72d7418db31938b8473e0af8
   MagicalRecord: b1fc46c99a9749fe7fe7e6f43a89b62ef5201933
-  PCDefaults: 2dbbae77d54e33b15c61718d048a759cf5f73023
+  PCDefaults: 688a3090ab2de29092269382db8b172f40e18313
   RegexKitLite: f7af7b4d2b675cd2ec9a4abab6aad6ae1f6499c0
-  RestKit: dc107a0aa4f962575ad0385bac5b3c5e4f591f4e
+  RestKit: ec544d6cc352901b9691a2fa855d2ac7b448173a
   RKValueTransformers: 1562d458b9c9d59ce777bfc5982f2e1aef2e9182
   SOCKit: 2f3bc4d07910de12dcc202815e07db68a3802581
   TransitionKit: 433284465abacdc07852d7db6dd0cc075010059a
