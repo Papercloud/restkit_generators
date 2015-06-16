@@ -9,8 +9,8 @@ module RestKit
     end
 
     def generate_mapping_protocol
-      template "interface.h.erb",       destination_path("#{filename}.h")
-      template "implementation.m.erb",  destination_path("#{filename}.m")
+      template 'interface.h.erb',       destination_path("#{filename}.h")
+      template 'implementation.m.erb',  destination_path("#{filename}.m")
     end
 
     def update_project
