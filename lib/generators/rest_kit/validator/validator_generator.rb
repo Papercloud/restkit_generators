@@ -19,7 +19,7 @@ module RestKit
     end
 
     def update_project
-      pod_install
+      pod_install unless options[:skip_pod_install]
     end
 
     private
