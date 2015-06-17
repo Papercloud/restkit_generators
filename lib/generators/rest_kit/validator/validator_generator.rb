@@ -36,15 +36,12 @@ module RestKit
       options[:use_swift]
     end
 
-    def validators
-      model.validators
+    def category_name
+      'Validation'
     end
 
-    def presence_validations
-      presence_validator = validators.find { |v| v.is_a? ActiveRecord::Validations::PresenceValidator }
-
-      presence_validator.try(:attributes).map(&:to_s) || []
+    def validator_filename
+      'RKGValidator'
     end
-
   end
 end
