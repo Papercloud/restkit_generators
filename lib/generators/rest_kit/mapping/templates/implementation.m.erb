@@ -14,8 +14,8 @@
                                                    inManagedObjectStore:managedObjectStore];
     mapping.identificationAttributes = @[@"primaryKey"];
 
-  // Plain attributes
-  [mapping addAttributeMappingsFromDictionary:
+    // Plain attributes
+    [mapping addAttributeMappingsFromDictionary:
      @{
 <%= (columns.map(&:name).map { |atr|
 "       @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }\
