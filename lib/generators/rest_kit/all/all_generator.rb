@@ -21,6 +21,9 @@ class RestKit::AllGenerator < Rails::Generators::Base
 
       puts "Invoking rest_kit:mapping " + args
       generate "rest_kit:mapping", args
+
+      puts "Invoking rest_kit:validator " + args
+      generate "rest_kit:validator", args
     end
 
     pod_install unless options[:skip_pod_install]
