@@ -116,9 +116,9 @@ module RestKit
     # Root for the main object requested. Plural for index actions, singular for show and others.
     def root_name
       if route.defaults[:action] == "index"
-        model.model_name.downcase.pluralize
+        model.model_name.demodulize.downcase.pluralize
       else
-        model_name.downcase.singularize
+        model.model_name.demodulize.downcase.singularize
       end
     end
   end
