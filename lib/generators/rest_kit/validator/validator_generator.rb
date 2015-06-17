@@ -2,6 +2,13 @@ module RestKit
   class ValidatorGenerator < IosModelGenerator
     source_root File.expand_path('../templates', __FILE__)
 
+    def generate_validator_class
+      return if Pathname.new(destination_path("#{validator_filename}.h")).exist?
+
+      template 'validator.h.erb', destination_path("#{validator_filename}.h")
+      template 'validator.m.erb', destination_path("#{validator_filename}.m")
+    end
+
     def generate_validator_extension
       if use_swift
         template "extension.swift.erb",   destination_path("#{filename}.swift")
