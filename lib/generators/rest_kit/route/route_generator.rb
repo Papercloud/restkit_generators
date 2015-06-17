@@ -10,6 +10,9 @@ module RestKit
     class_option :serializer, type: :string, default: nil,\
      desc: "Name of the active_model_serializer from which infer RKResponseDescriptors"
 
+    class_option :model, type: :string, default: nil,\
+     desc: "Name of the active_model_serializer from which infer RKResponseDescriptors"
+
     def generate_route
       empty_directory destination_path("")
       template "interface.h.erb",       destination_path("#{filename}.h")
@@ -50,8 +53,10 @@ module RestKit
     end
 
     def model_name
-      model_name = route.name.split("_").last
+      model_name = options[:model].present? ? options[:model] : route.name.split("_").last
+
       raise "Can't infer serializer name from model name from '#{route.name}'" unless model_name
+
       model_name.singularize
     end
 
