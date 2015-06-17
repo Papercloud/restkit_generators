@@ -29,7 +29,7 @@ module RestKit
     end
 
     def filename
-      "#{ios_base_class_name}+Validation"
+      "#{model.ios_base_class_name}+Validation"
     end
 
     def use_swift
