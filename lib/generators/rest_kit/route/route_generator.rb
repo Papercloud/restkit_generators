@@ -83,10 +83,7 @@ module RestKit
     end
 
     def ios_route_path
-      path = (route.optimized_path.respond_to? :join)\
-        ? route.optimized_path.join('')
-        : route.optimized_path
-      path + ".json"
+      route.path.spec.map(&:left).select{ |p| p.is_a? String }.join.gsub(':format', 'json')
     end
 
     def category_name
