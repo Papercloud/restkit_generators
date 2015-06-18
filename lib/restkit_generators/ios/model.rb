@@ -56,6 +56,16 @@ module RestkitGenerators
         @config.non_persisted_columns_for_model(@model_name)
       end
 
+      def validators
+        @validators ||= model.validators
+      end
+
+      def presence_validators
+        presence_validators = validators.find { |v| v.is_a? ActiveRecord::Validations::PresenceValidator }
+
+        presence_validators.present? ? presence_validators.attributes.map(&:to_s) : []
+      end
+
       private
 
       def excluded_columns

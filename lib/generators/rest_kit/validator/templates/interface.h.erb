@@ -1,11 +1,13 @@
 #import "Generated.h"
+#import "<%= validator_filename %>.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
-#import <PCDefaults/PCDValidator.h>
-#import <PCDefaults/PCDHUD.h>
 
-@interface <%= ios_base_class_name %> (Validation)
+@interface <%= model.ios_base_class_name %> (<%= category_name %>)
+
+@property (nonatomic, readonly) NSArray *errorPaths;
 
 - (BOOL)validate;
++ (NSString *)errorMessage:(NSString *)field;
 
 @end

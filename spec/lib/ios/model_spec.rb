@@ -35,6 +35,14 @@ module RestkitGenerators
       expect(subject.columns(['date', 'name']).map(&:name)).to include 'id'
     end
 
+    it 'returns the models validators' do
+      expect(subject.validators.length).to eq 1
+    end
+
+    it 'returns the models presence validator' do
+      expect(subject.presence_validators).to eq ['name']
+    end
+
     context 'single word model' do
       subject do
         RestkitGenerators::Ios::Model.new('user', config)
