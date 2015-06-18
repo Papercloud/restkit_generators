@@ -4,15 +4,15 @@
 
 + (void)setup<%= category_name %>WithObjectManager:(RKObjectManager *)objectManager
 {
-  [objectManager addResponseDescriptor:[RKResponseDescriptor responseDescriptorWithMapping:[<%= model.ios_base_class_name %> mapping]
+  [objectManager addResponseDescriptor:[RKResponseDescriptor responseDescriptorWithMapping:[<%= route.model.ios_base_class_name %> mapping]
                                                                                     method:RKRequestMethodGET
-                                                                               pathPattern:@"<%= ios_route_path %>"
-                                                                                   keyPath:@"<%= root_name %>"
+                                                                               pathPattern:@"<%= route.ios_route_path %>"
+                                                                                   keyPath:@"<%= route.root_name %>"
                                                                                statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
 
-  [objectManager.router.routeSet addRoute:[RKRoute routeWithName:@"<%= ios_route_name %>"
-                                                     pathPattern:@"<%= ios_route_path %>"
-                                                          method:RKRequestMethod<%= ios_route_verb %>]];
+  [objectManager.router.routeSet addRoute:[RKRoute routeWithName:@"<%= route.ios_route_name %>"
+                                                     pathPattern:@"<%= route.ios_route_path %>"
+                                                          method:RKRequestMethod<%= route.ios_route_verb %>]];
 }
 
 @end
