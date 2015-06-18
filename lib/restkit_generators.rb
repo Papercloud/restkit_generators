@@ -6,6 +6,7 @@ require 'restkit_generators/config'
 
 require 'restkit_generators/ios/model'
 require 'restkit_generators/ios/association'
+require 'restkit_generators/ios/route'
 
 module RestkitGenerators
 end
