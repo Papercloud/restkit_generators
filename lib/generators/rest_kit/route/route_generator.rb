@@ -11,7 +11,7 @@ module RestKit
      desc: "Name of the active_model_serializer from which infer RKResponseDescriptors"
 
     class_option :model, type: :string, default: nil,\
-     desc: "Name of the active_model_serializer from which infer RKResponseDescriptors"
+     desc: "Name of the model"
 
     def generate_route
       empty_directory destination_path("")
