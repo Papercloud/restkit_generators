@@ -7,4 +7,8 @@ class Api::PostsController < ApplicationController
   def show
     render json: Post.find(params[:id])
   end
+
+  def create
+    render json: Post.all
+  end
 end
