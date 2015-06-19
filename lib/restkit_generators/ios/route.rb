@@ -31,7 +31,7 @@ module RestkitGenerators
       end
 
       def ios_route_verb
-        @route.verb.source.gsub(/[$^]/, '')
+        @ios_route_verb ||= extract_verbs.map{ |v| 'RKRequestMethod' << v }.join('|')
       end
 
       def ios_route_path
@@ -74,6 +74,15 @@ module RestkitGenerators
         Rails.application.routes.routes.named_routes[name].tap do |route|
           raise "Could not find named route '#{name}'" unless route
         end
+      end
+
+      def extract_verbs
+        routes = Rails.application.routes.routes.routes # The hell?
+        route_names = routes.map(&:name)
+        route_index = route_names.index(@route.name)
+        route_group = routes[route_index..-1].take_while{|n| n.name == @route.name || n.name.nil? }
+
+        route_group.map{ |r| r.verb.source.gsub(/[$^]/, '') }
       end
     end
   end
