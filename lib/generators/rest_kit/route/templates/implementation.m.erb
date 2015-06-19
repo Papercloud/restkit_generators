@@ -12,7 +12,7 @@
 
   [objectManager.router.routeSet addRoute:[RKRoute routeWithName:@"<%= route.ios_route_name %>"
                                                      pathPattern:@"<%= route.ios_route_path %>"
-                                                          method:RKRequestMethod<%= route.ios_route_verb %>]];
+                                                          method:<%= route.ios_route_verb %>]];
 }
 
 @end
