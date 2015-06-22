@@ -2,7 +2,7 @@
 
 #import "<%= filename %>.h"
 <% associations.each do |ass| -%>
-#import "<%= ios_base_class_name(ass.klass.name) %>+Mapping.h"
+#import "<%= ass.model.ios_base_class_name %>+Mapping.h"
 <% end -%>
 
 @implementation <%= model.ios_base_class_name %> (<%= category_name %>)

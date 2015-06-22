@@ -2,7 +2,7 @@
 #import <RestKit/RestKit.h>
 
 <% associations.each do |association| -%>
-@class <%= ios_class_name(association.klass.name) %>;
+@class <%= association.model.entity_name %>;
 <% end -%>
 
 @interface <%= filename %> : NSManagedObject

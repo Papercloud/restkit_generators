@@ -13,7 +13,7 @@ module RestkitGenerators
       end
 
       def ios_class_name
-        @model_name.singularize.camelize.gsub(/[:]/, '')
+        @ios_class_name ||= options['drop_namespace'] ? @model_name.demodulize : @model_name.gsub(/[:]/, '')
       end
 
       def ios_base_class_name
@@ -21,7 +21,7 @@ module RestkitGenerators
       end
 
       def entity_name
-        @model_name.gsub(/[:]/, '')
+        ios_class_name
       end
 
       def model

@@ -8,9 +8,9 @@
   <attribute name="<%= ios_attr_name(a.name.to_s.singularize + "_ids") %>" optional="YES" attributeType="Transformable" syncable="YES"/>
 <% end -%>
 <% has_many_associations.each do |ass| -%>
-  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" ordered="YES" toMany="YES" deletionRule="<%= ass.ios_deletion_rule %>" destinationEntity="<%= ios_class_name(ass.klass.name) %>" syncable="YES" <% if ass.inverse_of %>inverseName="<%= ios_attr_name(ass.inverse_of.name) %>" inverseEntity="<%= ios_class_name(ass.klass.name) %>" <% end %>/>
+  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" ordered="YES" toMany="YES" deletionRule="<%= ass.ios_deletion_rule %>" destinationEntity="<%= ass.model.entity_name %>" syncable="YES" <% if ass.inverse_of %>inverseName="<%= ios_attr_name(ass.inverse_of.name) %>" inverseEntity="<%= ass.model.entity_name %>" <% end %>/>
 <% end -%>
 <% belongs_to_associations.each do |ass| -%>
-  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ios_class_name(ass.klass.name) %>" syncable="YES" <% if ass.inverse_of %>inverseName="<%= ios_attr_name(ass.inverse_of.name) %>" inverseEntity="<%= ios_class_name(ass.klass.name) %>" <% end %>/>
+  <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ass.model.entity_name %>" syncable="YES" <% if ass.inverse_of %>inverseName="<%= ios_attr_name(ass.inverse_of.name) %>" inverseEntity="<%= ass.model.entity_name %>" <% end %>/>
 <% end -%>
 </entity>
