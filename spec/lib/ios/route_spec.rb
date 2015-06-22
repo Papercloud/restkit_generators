@@ -59,6 +59,16 @@ module RestkitGenerators
           expect(subject.ios_route_path).to eq '/api/posts.json'
         end
       end
+
+      context 'member action' do
+        subject do
+          RestkitGenerators::Ios::Route.new('report_api_post', { strip_namespace: 'api' }, config)
+        end
+
+        it 'strips the namespace out from the middle of the route name' do
+          expect(subject.ios_route_name).to eq 'report_post'
+        end
+      end
     end
 
     describe '#root_name' do

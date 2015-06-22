@@ -11,4 +11,8 @@ class Api::PostsController < ApplicationController
   def create
     render json: Post.all
   end
+
+  def report
+    render json: Post.all
+  end
 end
