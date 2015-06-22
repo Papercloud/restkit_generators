@@ -21,10 +21,8 @@ module RestkitGenerators
       end
 
       def ios_route_name
-        strip = @options[:strip_namespace]
-        if @route.name[0...strip.length] == strip
-          strip = strip + "_" unless strip.include? "_"
-          return @route.name[strip.length..@route.name.length]
+        if has_namespace?
+          strip_namespace
         else
           @route.name
         end
@@ -69,6 +67,39 @@ module RestkitGenerators
       end
 
       private
+
+      def namespace
+        @options[:strip_namespace]
+      end
+
+      def action
+        @route.defaults[:action]
+      end
+
+      def is_member_action?
+        @route.name.start_with?(action)
+      end
+
+      def namespace_start
+        is_member_action? ? action.length + 1 : 0
+      end
+
+      def has_namespace?
+        @route.name.slice(namespace_start, namespace.length).eql? namespace
+      end
+
+      def strip_namespace
+        strip = namespace.end_with?('_') ? namespace : namespace + '_'
+        route_name = @route.name
+
+        if namespace_start > 0
+          route_name.slice!(namespace_start, strip.length)
+        else
+          route_name = route_name[strip.length..-1]
+        end
+
+        route_name
+      end
 
       def find_route(name)
         Rails.application.routes.routes.named_routes[name].tap do |route|
