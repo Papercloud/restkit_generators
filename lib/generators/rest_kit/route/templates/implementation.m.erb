@@ -5,7 +5,7 @@
 + (void)setup<%= category_name %>WithObjectManager:(RKObjectManager *)objectManager
 {
   [objectManager addResponseDescriptor:[RKResponseDescriptor responseDescriptorWithMapping:[<%= route.model.ios_base_class_name %> mapping]
-                                                                                    method:RKRequestMethodGET
+                                                                                    method:<%= route.ios_route_verb %>
                                                                                pathPattern:@"<%= route.ios_route_path %>"
                                                                                    keyPath:@"<%= route.root_name %>"
                                                                                statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
