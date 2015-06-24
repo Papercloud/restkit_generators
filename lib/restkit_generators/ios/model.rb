@@ -45,8 +45,8 @@ module RestkitGenerators
       def columns(exclusions = [])
         columns = model.columns
 
-        columns = columns.reject{ |c| c.name.in?(exclusions) } if exclusions.any?
-        columns = columns.reject{ |c| c.name.in?(excluded_columns) } if exclusions.empty?
+        columns = columns.reject{ |c| c.name.in?(exclusions) }
+        columns = columns.reject{ |c| c.name.in?(excluded_columns) }
         columns = columns.reject{ |c| c.name.in?(parent_columns.map(&:name)) }
 
         columns.concat(additional_columns)
