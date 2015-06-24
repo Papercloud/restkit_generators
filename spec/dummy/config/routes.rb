@@ -7,6 +7,8 @@ Dummy::Application.routes.draw do
 
   namespace :api do
     resources :posts, only: [:index, :show, :create] do
+      put 'report', on: :member
+
       resources :comments, only: [:index]
       resources :tags, only: [:index]
       resource :user, only: [:show]
