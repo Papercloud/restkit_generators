@@ -43,7 +43,15 @@ module RestkitGenerators
     end
 
     def options_for_model(model_name)
-      models.fetch(model_name, {})
+      models.fetch(model_name.underscore, {})
+    end
+
+    def route_config
+      @route_config ||= @options.fetch(:routes)
+    end
+
+    def named_routes
+      route_config.fetch(:named_routes)
     end
 
     private

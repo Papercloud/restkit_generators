@@ -52,6 +52,10 @@ module RestKit
       @model_class_names ||= ((included_model_class_names.any?) ? included_model_class_names : all_model_class_names) - excluded_model_class_names
     end
 
+    def named_routes
+      @named_routes ||= config.named_routes
+    end
+
     # Path of the YAML config file used to persist settings for excluding classes between runs
     # of this generator.
     # @return [String] Absolute path to the config file.

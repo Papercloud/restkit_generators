@@ -16,7 +16,7 @@ describe RestkitGenerators::Config do
 
     describe 'model configuration' do
       it 'allows model-specifc config to be specified' do
-        expect(default_config.models.keys).to eq(['User'])
+        expect(default_config.models.keys).to eq(['user'])
       end
 
       describe 'field exclusion' do
@@ -48,6 +48,16 @@ describe RestkitGenerators::Config do
         it 'returns an empty array if the specified model isnt configured' do
           expect(default_config.non_persisted_columns_for_model('Monster')).to eq([])
         end
+      end
+    end
+
+    describe 'route configuration' do
+      it 'allows a namespace to be specified that will be stripped' do
+        expect(default_config.route_config[:strip_namespace]).to eq 'api'
+      end
+
+      it 'allows a list of named routes to be specified that will be generated via the route generator' do
+        expect(default_config.named_routes).to include 'api_posts'
       end
     end
   end

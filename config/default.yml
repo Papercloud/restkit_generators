@@ -14,7 +14,7 @@ exclusively_include_models:
 
 # You can exclude and add additional columns from individual models, for example:
 models:
-  User:
+  user:
     exclude:
         - encrypted_password
         - reset_password_token
@@ -23,3 +23,8 @@ models:
         type: float
     non_persisted:
       - authentication_token
+
+routes:
+  strip_namespace: api
+  named_routes:
+    - api_posts
