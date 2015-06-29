@@ -9,10 +9,14 @@
                                                                                pathPattern:@"<%= route.ios_route_path %>"
                                                                                    keyPath:@"<%= route.root_name %>"
                                                                                statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
-
+  <% if route.http_verbs.any? %>
+  <% route.http_verbs.each do |verb| %>
   [objectManager.router.routeSet addRoute:[RKRoute routeWithName:@"<%= route.ios_route_name %>"
                                                      pathPattern:@"<%= route.ios_route_path %>"
-                                                          method:<%= route.ios_route_verb %>]];
+                                                          method:RKRequestMethod<%= verb %>]];
+
+  <% end -%>
+  <% end -%>
 }
 
 @end

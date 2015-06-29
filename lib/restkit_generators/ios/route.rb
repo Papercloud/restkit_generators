@@ -28,8 +28,12 @@ module RestkitGenerators
         end
       end
 
+      def http_verbs
+        extract_verbs
+      end
+
       def ios_route_verb
-        @ios_route_verb ||= extract_verbs.map{ |v| 'RKRequestMethod' << v }.join('|')
+        @ios_route_verb ||= http_verbs.map{ |v| 'RKRequestMethod' << v }.join('|')
       end
 
       def ios_route_path
