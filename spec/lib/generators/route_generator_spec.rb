@@ -57,8 +57,8 @@ describe RestKit::RouteGenerator do
       expect(subject).to include 'keyPath:@"tags"'
     end
 
-    it 'includes response descriptors for the user keypath' do
-      expect(subject).to include 'keyPath:@"user"'
+    it 'includes response descriptors for the users keypath' do
+      expect(subject).to include 'keyPath:@"users"'
     end
 
     it 'includes response descriptors for the comments keypath' do
