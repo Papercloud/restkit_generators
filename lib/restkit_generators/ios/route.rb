@@ -140,7 +140,9 @@ module RestkitGenerators
       end
 
       def search_namespaces(namespaces = [])
-        namespaces.join('::').classify.constantize
+        namespaces.join('::').classify.constantize.tap do |klass|
+          raise NameError unless klass.descends_from_active_record?
+        end
       rescue NameError => e
         if namespaces.length > 0
           search_namespaces namespaces[1..-1]
