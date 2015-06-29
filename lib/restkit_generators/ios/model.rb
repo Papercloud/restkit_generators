@@ -28,16 +28,6 @@ module RestkitGenerators
         @model_name.constantize
       end
 
-      def parent_class
-        model.base_class != model ? model.base_class : nil
-      end
-
-      def parent_columns
-        return [] if parent_class.nil?
-
-        parent_class.columns
-      end
-
       def associations
         model.reflect_on_all_associations
       end
@@ -78,6 +68,16 @@ module RestkitGenerators
 
       def options
         @config.options_for_model(@model_name)
+      end
+
+      def parent_class
+        model.base_class != model ? model.base_class : nil
+      end
+
+      def parent_columns
+        return [] if parent_class.nil? || options['honour_parent'] == false
+
+        parent_class.columns
       end
     end
   end
