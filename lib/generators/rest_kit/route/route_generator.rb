@@ -20,12 +20,11 @@ module RestKit
     end
 
     def generate_constants
-      empty_directory destination_path("")
-      template "constants.h.erb", destination_path("#{constants_filename}.h")
-      template "constants.m.erb", destination_path("#{constants_filename}.m")
+      template "constants.h.erb", destination_path("#{constants_filename}.h"), skip: true
+      template "constants.m.erb", destination_path("#{constants_filename}.m"), skip: true
 
       route.http_verbs.each do |verb|
-        inject_into_file destination_path("#{constants_filename}.h"), before: "#endif" do |config|
+        inject_into_file destination_path("#{constants_filename}.h"), after: "#define Application_Routes_h\n" do |config|
           "extern NSString *const #{route.ios_constant_name(verb)};\n"
         end
 
