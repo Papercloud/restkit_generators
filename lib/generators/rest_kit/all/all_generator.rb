@@ -26,6 +26,17 @@ class RestKit::AllGenerator < Rails::Generators::Base
       generate "rest_kit:validator", args
     end
 
+    named_routes.each do |name|
+      args = ''
+      args << name
+      args << " --ios-path=#{options[:ios_path]}" if options[:ios_path]
+      args << " --skip-pod-install=true"
+      args << " --strip-namespace=#{config.route_config[:strip_namespace]}" if config.route_config[:strip_namespace]
+
+      puts "Invoking rest_kit:route " + args
+      generate "rest_kit:route", args
+    end
+
     pod_install unless options[:skip_pod_install]
   end
 
