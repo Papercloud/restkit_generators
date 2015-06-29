@@ -33,6 +33,10 @@ module RestkitGenerators
           expect(subject.ios_route_name).to eq 'post'
         end
 
+        it 'extracts the verbs into an array' do
+          expect(subject.http_verbs).to match_array ['GET']
+        end
+
         it 'formats the ios route verb' do
           expect(subject.ios_route_verb).to eq 'RKRequestMethodGET'
         end
@@ -49,6 +53,10 @@ module RestkitGenerators
 
         it 'formats the ios route name' do
           expect(subject.ios_route_name).to eq 'posts'
+        end
+
+        it 'extracts the verbs into an array' do
+          expect(subject.http_verbs).to match_array ['POST', 'GET']
         end
 
         it 'formats the ios route verb' do

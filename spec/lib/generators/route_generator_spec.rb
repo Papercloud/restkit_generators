@@ -72,5 +72,13 @@ describe RestKit::RouteGenerator do
     it 'specifies the correct http verbs' do
       expect(subject).to include 'method:RKRequestMethodGET|RKRequestMethodPOST'
     end
+
+    it 'creates a route for the index action' do
+      expect(subject).to include 'routeWithName:@"get_posts"'
+    end
+
+    it 'creates a route for the create action' do
+      expect(subject).to include 'routeWithName:@"post_posts"'
+    end
   end
 end
