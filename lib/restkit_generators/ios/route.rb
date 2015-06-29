@@ -9,11 +9,11 @@ module RestkitGenerators
 
       def model_name
         @model_name ||= @options[:model]
-        @model_name ||= (@route.defaults[:controller] + '_controller').camelize.constantize.controller_name.classify
+        @model_name ||= guess_name.to_s
 
-        raise "Can't infer serializer name from model name from '#{route.name}'" unless @model_name
+        raise "Can't infer serializer name from model name from '#{@route.name}'" unless @model_name
 
-        @model_name.singularize
+        @model_name
       end
 
       def model
@@ -114,6 +114,27 @@ module RestkitGenerators
         route_group = routes[route_index..-1].take_while{|n| n.name == @route.name || n.name.nil? }
 
         route_group.map{ |r| r.verb.source.gsub(/[$^]/, '') }
+      end
+
+      def controller
+        @controller ||= (@route.defaults[:controller] + '_controller').camelize.constantize
+      end
+
+      def guess_name
+        namespaces = controller.name.gsub(/Controller$/, '').split('::')
+        search_namespaces(namespaces)
+      rescue NameError => e
+        nil
+      end
+
+      def search_namespaces(namespaces = [])
+        namespaces.join('::').classify.constantize
+      rescue NameError => e
+        if namespaces.length > 0
+          search_namespaces namespaces[1..-1]
+        else
+          raise NameError
+        end
       end
     end
   end
