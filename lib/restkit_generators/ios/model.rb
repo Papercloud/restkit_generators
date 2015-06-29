@@ -29,7 +29,7 @@ module RestkitGenerators
       end
 
       def associations
-        model.reflect_on_all_associations
+        model.reflect_on_all_associations - parent_associations
       end
 
       def columns(exclusions = [])
@@ -78,6 +78,12 @@ module RestkitGenerators
         return [] if parent_class.nil? || options['honour_parent'] == false
 
         parent_class.columns
+      end
+
+      def parent_associations
+        return [] if parent_class.nil? || options['honour_parent'] == false
+
+        parent_class.reflect_on_all_associations
       end
     end
   end
