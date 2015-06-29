@@ -28,6 +28,14 @@ module RestkitGenerators
         end
       end
 
+      def ios_prefixed_route(verb)
+        "#{verb.downcase}_#{ios_route_name}"
+      end
+
+      def ios_constant_name(verb)
+        "k#{ios_prefixed_route(verb).camelize}Route"
+      end
+
       def http_verbs
         extract_verbs
       end

@@ -19,6 +19,22 @@ module RestKit
       template "implementation.m.erb",  destination_path("#{filename}.m")
     end
 
+    def generate_constants
+      empty_directory destination_path("")
+      template "constants.h.erb", destination_path("#{constants_filename}.h")
+      template "constants.m.erb", destination_path("#{constants_filename}.m")
+
+      route.http_verbs.each do |verb|
+        inject_into_file destination_path("#{constants_filename}.h"), before: "#endif" do |config|
+          "extern NSString *const #{route.ios_constant_name(verb)};\n"
+        end
+
+        inject_into_file destination_path("#{constants_filename}.m"), after: "// Route Name Constants:\n" do |config|
+          "NSString *const #{route.ios_constant_name(verb)} = @\"#{route.ios_prefixed_route(verb)}\";\n"
+        end
+      end
+    end
+
     def generate_response_descriptors
       route.associations.each do |association|
         inject_into_file destination_path("#{filename}.m"), after: "{\n" do |config|
@@ -60,6 +76,10 @@ module RestKit
 
     def filename
       "RKObjectManager+" << category_name
+    end
+
+    def constants_filename
+      "RKObjectManager+ApplicationRoutes"
     end
   end
 end

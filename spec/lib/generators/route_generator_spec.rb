@@ -18,12 +18,46 @@ describe RestKit::RouteGenerator do
     expect(File).to exist(File.join(destination_root, 'Routes/RKObjectManager+Routes.m'))
   end
 
+  subject do
+    File.read(file)
+  end
+
+  context 'constants' do
+    it 'creates a constants interface file' do
+      expect(File).to exist(File.join(destination_root, 'Routes/RKObjectManager+ApplicationRoutes.h'))
+    end
+
+    it 'creates a constants implementation file' do
+      expect(File).to exist(File.join(destination_root, 'Routes/RKObjectManager+ApplicationRoutes.m'))
+    end
+
+    describe 'interface' do
+      let(:file) { File.join(destination_root, 'Routes/RKObjectManager+ApplicationRoutes.h') }
+
+      it 'includes a reference to the GET route constant' do
+        expect(subject).to include 'extern NSString *const kGetPostsRoute;'
+      end
+
+      it 'includes a reference to the POST route constant' do
+        expect(subject).to include 'extern NSString *const kPostPostsRoute;'
+      end
+    end
+
+    describe 'implementation' do
+      let(:file) { File.join(destination_root, 'Routes/RKObjectManager+ApplicationRoutes.m') }
+
+      it 'defines the GET route constant' do
+        expect(subject).to include 'NSString *const kGetPostsRoute = @"get_posts";'
+      end
+
+      it 'defines the POST route constant' do
+        expect(subject).to include 'NSString *const kPostPostsRoute = @"post_posts";'
+      end
+    end
+  end
+
   context 'interface file' do
     let(:file) { File.join(destination_root, 'Routes/RKObjectManager+PostsRoute.h') }
-
-    subject do
-      File.read(file)
-    end
 
     it 'creates an interface file' do
       expect(File).to exist(file)
@@ -36,10 +70,6 @@ describe RestKit::RouteGenerator do
 
   context 'implementation file' do
     let(:file) { File.join(destination_root, 'Routes/RKObjectManager+PostsRoute.m') }
-
-    subject do
-      File.read(file)
-    end
 
     it 'creates an implementation file' do
       expect(File).to exist(file)
@@ -74,11 +104,11 @@ describe RestKit::RouteGenerator do
     end
 
     it 'creates a route for the index action' do
-      expect(subject).to include 'routeWithName:@"get_posts"'
+      expect(subject).to include 'routeWithName:kGetPostsRoute'
     end
 
     it 'creates a route for the create action' do
-      expect(subject).to include 'routeWithName:@"post_posts"'
+      expect(subject).to include 'routeWithName:kPostPostsRoute'
     end
   end
 end
