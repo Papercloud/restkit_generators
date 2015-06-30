@@ -1,21 +1,25 @@
 #import <RestKit/CoreData.h>
 #import <RestKit/RestKit.h>
 
-<% associations.each do |association| -%>
+<% model.associations.each do |association| -%>
 @class <%= association.model.entity_name %>;
 <% end -%>
 
 @interface <%= filename %> : NSManagedObject
 
-<% columns.each do |column| -%>
+<% model.columns.each do |column| -%>
 @property (nonatomic<% if column.type != :boolean %>, retain<% end %>) <%= ios_type(column) %><%= ios_attr_name(column.name) %>;
 <% end -%>
 
-<% has_many_associations.each do |association| -%>
+<% model.has_one_associations.each do |association| -%>
+@property (nonatomic, strong) NSString *<%= ios_attr_name(association.name.to_s.singularize + "_id") %>;
+<% end -%>
+
+<% model.has_many_associations.each do |association| -%>
 @property (nonatomic, strong) NSArray *<%= ios_attr_name(association.name.to_s.singularize + "_ids") %>;
 <% end -%>
 
-<% associations.each do |association| -%>
+<% model.associations.each do |association| -%>
 @property (nonatomic, strong) <%= association.ios_association_type %><%= ios_attr_name(association.name) %>;
 <% end -%>
 

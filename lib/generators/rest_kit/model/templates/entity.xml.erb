@@ -1,16 +1,19 @@
 <entity name="<%= model.entity_name %>" representedClassName="<%= model.entity_name %>" syncable="YES">
-<% columns.each do |column| -%>
+<% model.columns.each do |column| -%>
   <% unless model.non_persisted_columns.include?(column.name) -%>
     <attribute name="<%= ios_attr_name(column.name) %>" optional="YES" attributeType="<%= core_data_type(column) %>" syncable="YES" <% if column.name == 'id' -%>indexed="YES"<% end -%> />
   <% end -%>
 <% end -%>
-<% has_many_associations.each do |a| -%>
+<% model.has_one_associations.each do |a| -%>
+  <attribute name="<%= ios_attr_name(a.name.to_s.singularize + "_id") %>" optional="YES" attributeType="Transformable" syncable="YES"/>
+<% end -%>
+<% model.has_many_associations.each do |a| -%>
   <attribute name="<%= ios_attr_name(a.name.to_s.singularize + "_ids") %>" optional="YES" attributeType="Transformable" syncable="YES"/>
 <% end -%>
-<% has_many_associations.each do |ass| -%>
+<% model.has_many_associations.each do |ass| -%>
   <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" ordered="YES" toMany="YES" deletionRule="<%= ass.ios_deletion_rule %>" destinationEntity="<%= ass.model.entity_name %>" syncable="YES" <% if ass.inverse_of %>inverseName="<%= ios_attr_name(ass.inverse_of.name) %>" inverseEntity="<%= ass.model.entity_name %>" <% end %>/>
 <% end -%>
-<% belongs_to_associations.each do |ass| -%>
+<% (model.belongs_to_associations + model.has_one_associations).each do |ass| -%>
   <relationship name="<%= ios_attr_name(ass.name) %>" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="<%= ass.model.entity_name %>" syncable="YES" <% if ass.inverse_of %>inverseName="<%= ios_attr_name(ass.inverse_of.name) %>" inverseEntity="<%= ass.model.entity_name %>" <% end %>/>
 <% end -%>
 </entity>

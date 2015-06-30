@@ -2,14 +2,17 @@
 
 @implementation <%= filename %>
 
-<% if columns.length > 0 %>
-@dynamic <%= columns.map{|c| ios_attr_name(c.name) }.join(", ") %>;
+<%- if model.columns.length > 0 -%>
+@dynamic <%= model.columns.map{|c| ios_attr_name(c.name) }.join(", ") %>;
 <% end %>
-<% if associations.length > 0 %>
-@dynamic <%= associations.map{|a| ios_attr_name(a.name) }.join(", ") %>;
+<% if model.associations.length > 0 -%>
+@dynamic <%= model.associations.map{|a| ios_attr_name(a.name) }.join(", ") %>;
 <% end %>
-<% if has_many_associations.length > 0 -%>
-@dynamic <%= has_many_associations.map{|a| ios_attr_name(a.name.to_s.singularize + "_ids") }.join(", ") %>;
+<% if model.has_one_associations.length > 0 -%>
+@dynamic <%= model.has_one_associations.map{|a| ios_attr_name(a.name.to_s.singularize + "_id") }.join(", ") %>;
+<% end %>
+<% if model.has_many_associations.length > 0 -%>
+@dynamic <%= model.has_many_associations.map{|a| ios_attr_name(a.name.to_s.singularize + "_ids") }.join(", ") %>;
 <% end -%>
 
 @end
