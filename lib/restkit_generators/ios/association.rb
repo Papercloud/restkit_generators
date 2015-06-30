@@ -51,6 +51,14 @@ module RestkitGenerators
         [:has_many, :has_and_belongs_to_many].include?(@association.macro)
       end
 
+      def belongs_to?
+        [:belongs_to].include?(@association.macro)
+      end
+
+      def has_one?
+        [:has_one].include?(@association.macro)
+      end
+
       def unpolymorphise(possible_models = [])
         return unless is_polymorphic?
 
@@ -71,6 +79,10 @@ module RestkitGenerators
 
       def is_polymorphic?
         @association.options[:polymorphic]
+      end
+
+      def macro
+        @association.macro
       end
 
       private
