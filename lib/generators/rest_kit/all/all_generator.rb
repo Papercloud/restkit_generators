@@ -9,13 +9,15 @@ class RestKit::AllGenerator < Rails::Generators::Base
   def run_other_generators
 
     # Generate model classes and Core Data entities.
-    model_class_names.each do |name|
+    RestkitGenerators.model_class_names.each do |name|
+      model = RestkitGenerators::Ios::Model.new(name)
+
       args = ''
       args << name
       args << " --ios-path=#{options[:ios_path]}" if options[:ios_path]
       args << " --data-model-path=#{options[:data_model_path]}" if options[:data_model_path]
       args << " --skip-pod-install=true"
-      args << " --exclude-columns=#{excluded_columns_for_model(name).join(',')}"
+      args << " --exclude-columns=#{model.excluded_columns.join(',')}"
       puts "Invoking rest_kit:model " + args
       generate "rest_kit:model", args
 
@@ -26,12 +28,14 @@ class RestKit::AllGenerator < Rails::Generators::Base
       generate "rest_kit:validator", args
     end
 
-    named_routes.each do |name|
+    RestkitGenerators.named_routes.each do |name|
+      route_config = RestkitGenerators.config.route_config
+
       args = ''
       args << name
       args << " --ios-path=#{options[:ios_path]}" if options[:ios_path]
       args << " --skip-pod-install=true"
-      args << " --strip-namespace=#{config.route_config[:strip_namespace]}" if config.route_config[:strip_namespace]
+      args << " --strip-namespace=#{route_config[:strip_namespace]}" if route_config[:strip_namespace]
 
       puts "Invoking rest_kit:route " + args
       generate "rest_kit:route", args
@@ -51,12 +55,5 @@ class RestKit::AllGenerator < Rails::Generators::Base
     end
   end
 
-  # @param model_name [String] The model's name
-  # @return [Array<String>] Columns to exclude for this model. Returns an empty array if none.
-  def excluded_columns_for_model(model_name)
-    config.excluded_columns_for_model(model_name)
-  end
-
   include RestKit::Helpers
-
 end
