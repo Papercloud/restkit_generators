@@ -62,7 +62,7 @@ module RestKit
     private
 
     def route
-      @route ||= RestkitGenerators::Ios::Route.new(name, options, config)
+      @route ||= RestkitGenerators::Ios::Route.new(name, options)
     end
 
     def destination_path(path)
