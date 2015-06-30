@@ -1,13 +1,12 @@
 module RestkitGenerators
   module Ios
     class Association
-      def initialize(association, config)
+      def initialize(association)
         @association = association
-        @config = config
       end
 
       def model
-        @model ||= Model.new(@association.klass.name, @config)
+        @model ||= Model.new(@association.klass.name)
       end
 
       def name
@@ -66,7 +65,7 @@ module RestkitGenerators
             options: {}
           })
 
-          Association.new(association, @config)
+          Association.new(association)
         }
       end
 
