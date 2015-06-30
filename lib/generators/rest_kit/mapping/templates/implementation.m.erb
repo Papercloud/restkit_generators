@@ -1,7 +1,7 @@
 #import "MappingProtocol.h"
 
 #import "<%= filename %>.h"
-<% associations.each do |ass| -%>
+<% model.associations.each do |ass| -%>
 #import "<%= ass.model.ios_base_class_name %>+Mapping.h"
 <% end -%>
 
@@ -17,18 +17,18 @@
     // Plain attributes
     [mapping addAttributeMappingsFromDictionary:
      @{
-<%= (columns.map(&:name).map { |atr|
+<%= (model.columns.map(&:name).map { |atr|
 "       @\"#{atr}\" : @\"#{ios_attr_name(atr)}\"" }\
-+ has_many_associations.map { |a|
++ model.has_many_associations.map { |a|
 "       @\"" + a.name.to_s.singularize + "_ids\" : @\"" + ios_attr_name(a.name.to_s.singularize + "_ids") + "\"" }).join(",\n")
 %>
        }];
 
-<% has_many_associations.map(&:name).each do |k| -%>
+<% model.has_many_associations.map(&:name).each do |k| -%>
     [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_ids") %>" : @"<%= model.id_name %>"}];
 <% end -%>
 
-<% belongs_to_associations.map(&:name).each do |k| -%>
+<% model.belongs_to_associations.map(&:name).each do |k| -%>
     [mapping addConnectionForRelationship:@"<%= ios_attr_name(k) %>" connectedBy:@{ @"<%= ios_attr_name(k.to_s.singularize + "_id") %>" : @"<%= model.id_name %>"}];
 <% end -%>
 
