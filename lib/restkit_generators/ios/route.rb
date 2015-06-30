@@ -1,10 +1,9 @@
 module RestkitGenerators
   module Ios
     class Route
-      def initialize(route_name, options, config)
+      def initialize(route_name, options)
         @route    = find_route(route_name)
         @options  = options
-        @config   = config
       end
 
       def model_name
@@ -17,7 +16,7 @@ module RestkitGenerators
       end
 
       def model
-        @model ||= RestkitGenerators::Ios::Model.new(model_name, @config)
+        @model ||= RestkitGenerators::Ios::Model.new(model_name)
       end
 
       def ios_route_name
@@ -65,7 +64,7 @@ module RestkitGenerators
         model.associations.select{ |a|
           serializer_associations.include?(a.name)
         }.map{ |a|
-          RestkitGenerators::Ios::Association.new(a, @config)
+          RestkitGenerators::Ios::Association.new(a)
         }
       end
 
