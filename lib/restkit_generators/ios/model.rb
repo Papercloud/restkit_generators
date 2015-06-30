@@ -3,9 +3,9 @@ module RestkitGenerators
     class Model
       attr_reader :model_name
 
-      def initialize(model_name, config)
+      def initialize(model_name, options={})
         @model_name = model_name.camelize
-        @config = config
+        @options = options
       end
 
       def id_name
@@ -29,13 +29,16 @@ module RestkitGenerators
       end
 
       def associations
-        model.reflect_on_all_associations - parent_associations
+        associations = model.reflect_on_all_associations - parent_associations
+        associations = associations.reject{ |a| excluded_columns.include?(a.name.to_s) }
+        associations = associations.map{ |a| RestkitGenerators::Ios::Association.new(a) }
+        associations = associations.map{ |a| a.is_polymorphic? ? a.unpolymorphise(RestkitGenerators.model_class_names) : a }
+        associations.flatten
       end
 
-      def columns(exclusions = [])
+      def columns
         columns = model.columns
 
-        columns = columns.reject{ |c| c.name.in?(exclusions) }
         columns = columns.reject{ |c| c.name.in?(excluded_columns) }
         columns = columns.reject{ |c| c.name.in?(parent_columns.map(&:name)) }
 
@@ -43,7 +46,7 @@ module RestkitGenerators
       end
 
       def non_persisted_columns
-        @config.non_persisted_columns_for_model(@model_name)
+        RestkitGenerators.config.non_persisted_columns_for_model(@model_name)
       end
 
       def validators
@@ -56,18 +59,33 @@ module RestkitGenerators
         presence_validators.present? ? presence_validators.attributes.map(&:to_s) : []
       end
 
+      def has_many_associations
+        @has_many_associations ||= associations.select{ |a| a.to_many? }
+      end
+
+      def belongs_to_associations
+        @belongs_to_associations ||= associations.select{ |a| a.belongs_to? }
+      end
+
+      def has_one_associations
+        @has_one_associations ||= associations.select{ |a| a.has_one? }
+      end
+
       private
 
       def excluded_columns
-        @config.excluded_columns_for_model(@model_name)
+        excluded_columns = [].tap do |column_array|
+          column_array.concat(["created_at", "updated_at"]) unless options[:include_timestamps]
+          column_array.concat(options[:exclude_columns].split(",").map(&:strip)) if options[:exclude_columns]
+        end
       end
 
       def additional_columns
-        @config.additional_columns_for_model(@model_name)
+        RestkitGenerators.config.additional_columns_for_model(@model_name)
       end
 
       def options
-        @config.options_for_model(@model_name)
+        RestkitGenerators.config.options_for_model(@model_name).merge(@options)
       end
 
       def parent_class

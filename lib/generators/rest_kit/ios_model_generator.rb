@@ -35,38 +35,11 @@ module RestKit
     end
 
     def model
-      @model ||= RestkitGenerators::Ios::Model.new(name, config)
+      @model ||= RestkitGenerators::Ios::Model.new(name, options)
     end
 
     def ios_attr_name(attr_name)
       { "id" => model.id_name }[attr_name.to_s] ||= attr_name.to_s.camelize(:lower)
-    end
-
-    def associations
-      associations = model.associations.reject{ |a| excluded_columns.include?(a.name.to_s) }
-      associations = associations.map{ |a| RestkitGenerators::Ios::Association.new(a, config) }
-      associations = associations.map{ |a| a.is_polymorphic? ? a.unpolymorphise(model_class_names) : a }
-      associations.flatten
-    end
-
-    def has_many_associations
-      associations.select{ |a| a.to_many? }
-    end
-
-    def belongs_to_associations
-      associations.select{ |a| !a.to_many? }
-    end
-
-    def excluded_columns
-      excluded_columns = []
-      excluded_columns += ["created_at", "updated_at"] unless options[:include_timestamps]
-      excluded_columns += options[:exclude_columns].split(",") if options[:exclude_columns]
-
-      excluded_columns
-    end
-
-    def columns
-      model.columns(excluded_columns)
     end
 
     def ios_class_name(class_name)
