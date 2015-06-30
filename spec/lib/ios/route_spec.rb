@@ -2,10 +2,14 @@ require 'spec_helper'
 
 module RestkitGenerators
   describe Ios::Route do
-    let(:config) { RestkitGenerators::Config.new('config/default.yml') }
+    before do
+      allow(RestkitGenerators).to receive(:config_file_path) { 'config/default.yml' }
+    end
+
+    let(:options) {{ strip_namespace: 'api' }}
 
     subject do
-      RestkitGenerators::Ios::Route.new('api_post', { strip_namespace: 'api' }, config)
+      RestkitGenerators::Ios::Route.new('api_post', options)
     end
 
     context 'no options' do
@@ -26,7 +30,7 @@ module RestkitGenerators
 
       context 'collection' do
         subject do
-          RestkitGenerators::Ios::Route.new('api_post', { strip_namespace: 'api' }, config)
+          RestkitGenerators::Ios::Route.new('api_post', options)
         end
 
         it 'formats the ios route name' do
@@ -48,7 +52,7 @@ module RestkitGenerators
 
       context 'single instance' do
         subject do
-          RestkitGenerators::Ios::Route.new('api_posts', { strip_namespace: 'api' }, config)
+          RestkitGenerators::Ios::Route.new('api_posts', options)
         end
 
         it 'formats the ios route name' do
@@ -70,7 +74,7 @@ module RestkitGenerators
 
       context 'member action' do
         subject do
-          RestkitGenerators::Ios::Route.new('report_api_post', { strip_namespace: 'api' }, config)
+          RestkitGenerators::Ios::Route.new('report_api_post', options)
         end
 
         it 'strips the namespace out from the middle of the route name' do
@@ -82,7 +86,7 @@ module RestkitGenerators
     describe '#root_name' do
       context 'index action' do
         subject do
-          RestkitGenerators::Ios::Route.new('api_posts', { strip_namespace: 'api' }, config)
+          RestkitGenerators::Ios::Route.new('api_posts', options)
         end
 
         it 'returns the root keypath to be used for the mapped route action' do
@@ -92,7 +96,7 @@ module RestkitGenerators
 
       context 'non-index action' do
         subject do
-          RestkitGenerators::Ios::Route.new('api_post', { strip_namespace: 'api' }, config)
+          RestkitGenerators::Ios::Route.new('api_post', options)
         end
 
         it 'returns the root keypath to be used for the mapped route action' do
@@ -102,8 +106,10 @@ module RestkitGenerators
     end
 
     context 'specified model' do
+      let(:options) {{ strip_namespace: 'api', model: 'Tag' }}
+
       subject do
-        RestkitGenerators::Ios::Route.new('api_posts', { strip_namespace: 'api', model: 'Tag' }, config)
+        RestkitGenerators::Ios::Route.new('api_posts', options)
       end
 
       it 'returns the model name based off the specified model' do
@@ -116,8 +122,10 @@ module RestkitGenerators
     end
 
     context 'specified serializer' do
+      let(:options) {{ strip_namespace: 'api', serializer: 'TagSerializer' }}
+
       subject do
-        RestkitGenerators::Ios::Route.new('api_posts', { strip_namespace: 'api', serializer: 'TagSerializer' }, config)
+        RestkitGenerators::Ios::Route.new('api_posts', options)
       end
 
       it 'returns the serializer based off the specified serializer' do

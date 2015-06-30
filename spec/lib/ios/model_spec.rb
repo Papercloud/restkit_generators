@@ -2,10 +2,12 @@ require 'spec_helper'
 
 module RestkitGenerators
   describe Ios::Model do
-    let(:config) { RestkitGenerators::Config.new('config/default.yml') }
+    before do
+      allow(RestkitGenerators).to receive(:config_file_path) { 'config/default.yml' }
+    end
 
     subject do
-      RestkitGenerators::Ios::Model.new('post', config)
+      RestkitGenerators::Ios::Model.new('post')
     end
 
     it 'controls the id name for the model' do
@@ -18,21 +20,17 @@ module RestkitGenerators
     end
 
     it 'returns the models columns' do
-      expect(subject.columns.map(&:name)).to eq ['id', 'name', 'date', 'views', 'user_id', 'created_at', 'updated_at']
-    end
-
-    it 'returns the models columns minus specified exclusions' do
-      expect(subject.columns(['name']).map(&:name)).to eq ['id', 'date', 'views', 'user_id', 'created_at', 'updated_at']
+      expect(subject.columns.map(&:name)).to eq ['id', 'name', 'date', 'views', 'user_id']
     end
 
     it 'returns the models columns minus config exclusions' do
       allow(subject).to receive(:excluded_columns) { ['id', 'date', 'name'] }
-      expect(subject.columns.map(&:name)).to eq ['views', 'user_id', 'created_at', 'updated_at']
+      expect(subject.columns.map(&:name)).not_to include('id', 'date', 'name')
     end
 
-    it 'overrides config exclusions with specified exclusions' do
-      allow(subject).to receive(:excluded_columns) { ['id', 'date', 'name'] }
-      expect(subject.columns(['date', 'name']).map(&:name)).to include 'id'
+    it 'returns the models columns minus specified exclusions' do
+      allow(subject).to receive(:options) {{ exclude_columns: 'id, date, name' }}
+      expect(subject.columns.map(&:name)).not_to include('id', 'date', 'name')
     end
 
     it 'returns the models validators' do
@@ -45,7 +43,7 @@ module RestkitGenerators
 
     context 'single word model' do
       subject do
-        RestkitGenerators::Ios::Model.new('user', config)
+        RestkitGenerators::Ios::Model.new('user')
       end
 
       it 'camelizes the model name on init' do
@@ -67,7 +65,7 @@ module RestkitGenerators
 
     context 'multi word model' do
       subject do
-        RestkitGenerators::Ios::Model.new('customer_account', config)
+        RestkitGenerators::Ios::Model.new('customer_account')
       end
 
       it 'camelizes the model name on init' do
@@ -89,7 +87,7 @@ module RestkitGenerators
 
     context 'namespaced model' do
       subject do
-        RestkitGenerators::Ios::Model.new('chat/message', config)
+        RestkitGenerators::Ios::Model.new('chat/message')
       end
 
       it 'camelizes the model name on init' do
@@ -111,7 +109,7 @@ module RestkitGenerators
 
     context 'subclass model' do
       subject do
-        RestkitGenerators::Ios::Model.new('user', config)
+        RestkitGenerators::Ios::Model.new('user')
       end
 
       it 'returns the models base class' do
