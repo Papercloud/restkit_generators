@@ -5,16 +5,40 @@
 
 + (void)setup<%= category_name %>WithObjectManager:(RKObjectManager *)objectManager
 {
+    // Response Descriptors:
     [objectManager addResponseDescriptor:[RKResponseDescriptor responseDescriptorWithMapping:[<%= route.model.ios_base_class_name %> mapping]
                                                                                       method:<%= route.ios_route_verb %>
                                                                                  pathPattern:@"<%= route.ios_route_path %>"
                                                                                      keyPath:@"<%= route.root_name %>"
                                                                                  statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
+
+    // Request Descriptors:
+    [objectManager addRequestDescriptor:[RKRequestDescriptor requestDescriptorWithMapping:[self requestMapping]
+                                                                              objectClass:self
+                                                                              rootKeyPath:@"<%= route.root_name.singularize %>"
+                                                                                   method:<%= route.ios_route_verb %>]];
+
     <% route.http_verbs.each do |verb| %>
     [objectManager.router.routeSet addRoute:[RKRoute routeWithName:<%= route.ios_constant_name(verb) %>
                                                        pathPattern:@"<%= route.ios_route_path %>"
                                                             method:RKRequestMethod<%= verb %>]];
     <%- end %>
+}
+
++ (RKMapping *)requestMapping
+{
+    RKObjectMapping * requestMapping = [[<%= route.model.ios_base_class_name %> mapping] inverseMapping];
+
+    <%- route.model.nested_associations.each do |a| -%>
+    // <%= "#{a.model.entity_name} Mapping:" %>
+    {
+        [requestMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"<%= a.name %>"
+                                                                                       toKeyPath:@"<%= "#{a.name}_attributes" %>"
+                                                                                     withMapping:[<%= a.model.entity_name %>.mapping inverseMapping]]];
+    }
+    <%- end -%>
+
+    return requestMapping;
 }
 
 @end

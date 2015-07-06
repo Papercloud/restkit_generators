@@ -36,7 +36,7 @@ module RestKit
 
     def generate_response_descriptors
       route.associations.each do |association|
-        inject_into_file destination_path("#{filename}.m"), after: "{\n" do |config|
+        inject_into_file destination_path("#{filename}.m"), after: "// Response Descriptors:\n" do |config|
           embed_template("response_descriptor.m.erb", "    ", binding())
         end
       end
