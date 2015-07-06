@@ -71,6 +71,12 @@ module RestkitGenerators
         @has_one_associations ||= associations.select{ |a| a.has_one? }
       end
 
+      def nested_associations
+        association_names = model.nested_attributes_options.keys
+
+        associations.select{ |a| association_names.include? a.name }
+      end
+
       private
 
       def excluded_columns

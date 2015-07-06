@@ -41,6 +41,10 @@ module RestkitGenerators
       expect(subject.presence_validators).to eq ['name']
     end
 
+    it 'returns the associations the model accepts nested attributes for' do
+      expect(subject.nested_associations.map(&:name)).to match_array [:tags]
+    end
+
     context 'single word model' do
       subject do
         RestkitGenerators::Ios::Model.new('user')
