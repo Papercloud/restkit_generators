@@ -5,16 +5,16 @@
 
 + (void)setup<%= category_name %>WithObjectManager:(RKObjectManager *)objectManager
 {
-  [objectManager addResponseDescriptor:[RKResponseDescriptor responseDescriptorWithMapping:[<%= route.model.ios_base_class_name %> mapping]
-                                                                                    method:<%= route.ios_route_verb %>
-                                                                               pathPattern:@"<%= route.ios_route_path %>"
-                                                                                   keyPath:@"<%= route.root_name %>"
-                                                                               statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
-  <% route.http_verbs.each do |verb| %>
-  [objectManager.router.routeSet addRoute:[RKRoute routeWithName:<%= route.ios_constant_name(verb) %>
-                                                     pathPattern:@"<%= route.ios_route_path %>"
-                                                          method:RKRequestMethod<%= verb %>]];
-  <%- end %>
+    [objectManager addResponseDescriptor:[RKResponseDescriptor responseDescriptorWithMapping:[<%= route.model.ios_base_class_name %> mapping]
+                                                                                      method:<%= route.ios_route_verb %>
+                                                                                 pathPattern:@"<%= route.ios_route_path %>"
+                                                                                     keyPath:@"<%= route.root_name %>"
+                                                                                 statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)]];
+    <% route.http_verbs.each do |verb| %>
+    [objectManager.router.routeSet addRoute:[RKRoute routeWithName:<%= route.ios_constant_name(verb) %>
+                                                       pathPattern:@"<%= route.ios_route_path %>"
+                                                            method:RKRequestMethod<%= verb %>]];
+    <%- end %>
 }
 
 @end

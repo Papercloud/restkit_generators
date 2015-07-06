@@ -37,7 +37,7 @@ module RestKit
     def generate_response_descriptors
       route.associations.each do |association|
         inject_into_file destination_path("#{filename}.m"), after: "{\n" do |config|
-          embed_template("response_descriptor.m.erb", "  ", binding())
+          embed_template("response_descriptor.m.erb", "    ", binding())
         end
       end
     end
@@ -51,7 +51,7 @@ module RestKit
       end
 
       inject_into_file destination_path("RKObjectManager+Routes.m"), after: "{\n" do |config|
-        "  [self setup#{category_name}WithObjectManager:[RKObjectManager sharedManager]];\n"
+        "    [self setup#{category_name}WithObjectManager:[RKObjectManager sharedManager]];\n"
       end
     end
 
